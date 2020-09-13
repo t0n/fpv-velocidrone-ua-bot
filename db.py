@@ -67,7 +67,8 @@ def get_track_of_the_day():
         if len(rows) > 1:
             print("Error! too many rows")
         print(rows)
-        track_info = (rows[0][1], rows[0][2], rows[0][3], rows[0][4])
+        if rows and len(rows) == 1 and rows[0]:
+            track_info = (rows[0][1], rows[0][2], rows[0][3], rows[0][4])
     else:
         print("Error! cannot create database connection.")
     return track_info
