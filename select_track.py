@@ -10,37 +10,43 @@ from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 from update_leaderboard import parse_leaderboard
 
 # TODO add rules and how to set up your Velocidrone to participate
-MAP_OF_THE_DAY_MESSAGE = '🚀 Трек дня в Велосідроні: <b>{}</b>\n---\nTODO: Інфо, правила і т.д.'  # starts with rocket emoji
+# starts with rocket emoji
+MAP_OF_THE_DAY_MESSAGE = '🚀 Трек дня в Велосідроні: <b>{}</b>\n' \
+                         '---' \
+                         '\nРендомний трек обирається кожен день в 17-00\n' \
+                         'Оновлення результатів кожні 2 хвилини\n' \
+                         '---\n' \
+                         'Gentlemen, start your drones! Goggles down, thumbs up!'
 
 CONFIG_SCENERIES = [
-    # (3, 'Hangar'),
-    # (7, 'Industrial Wasteland'),
-    # (8, 'Football Stadium'),
-    # (12, 'Countryside'),
-    # (13, 'Night Factory'),
-    # (14, 'Karting Track'),
-    # (15, 'Subway'),
-    # (16, 'Empty Scene Day'),
-    # (17, 'Empty Scene Night'),
-    # (18, 'NEC Birmingham'),
-    # (19, 'Warehouse'),
-    # (20, 'Underground Carpark'),
-    # (21, 'Sports Hall'),
-    # (22, 'Coastal'),
-    # (23, 'River2'),
-    # (24, 'City'),
-    # (25, 'Redbull Ring'),
-    # (26, 'Large Carpark'),
-    # (29, 'Basketball Stadium'),
-    # (30, 'Bando'),
-    # (31, 'IndoorGoKart'),
-    # (32, 'Slovenia Krvavec'),
-    # (33, 'Dynamic Weather'),
-    # (34, 'La Mothe'),
-    # (35, 'Castle Sneznik'),
-    # # (37, 'Library'),  # micros
-    # # (38, 'NightClub'),  # micros
-    # # (39, 'House'),  # micros
+    (3, 'Hangar'),
+    (7, 'Industrial Wasteland'),
+    (8, 'Football Stadium'),
+    (12, 'Countryside'),
+    (13, 'Night Factory'),
+    (14, 'Karting Track'),
+    (15, 'Subway'),
+    (16, 'Empty Scene Day'),
+    (17, 'Empty Scene Night'),
+    (18, 'NEC Birmingham'),
+    (19, 'Warehouse'),
+    (20, 'Underground Carpark'),
+    (21, 'Sports Hall'),
+    (22, 'Coastal'),
+    (23, 'River2'),
+    (24, 'City'),
+    (25, 'Redbull Ring'),
+    (26, 'Large Carpark'),
+    (29, 'Basketball Stadium'),
+    (30, 'Bando'),
+    (31, 'IndoorGoKart'),
+    (32, 'Slovenia Krvavec'),
+    (33, 'Dynamic Weather'),
+    (34, 'La Mothe'),
+    (35, 'Castle Sneznik'),
+    # (37, 'Library'),  # micros
+    # (38, 'NightClub'),  # micros
+    # (39, 'House'),  # micros
     (40, 'Future Hangar'),
     (43, 'Future Hangar Empty'),
 ]

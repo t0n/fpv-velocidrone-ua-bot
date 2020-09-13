@@ -1,7 +1,7 @@
 # add these lines to crontab:
 
 # run each 5 minutes
-*/5 * * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/update_leaderboard.py
+*/2 * * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/update_leaderboard.py
 
-# run once a day at 17:00
-0 17 * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/select_track.py
+# run once a day at 17:00 (12:00 GMT)
+0 12 * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/select_track.py
