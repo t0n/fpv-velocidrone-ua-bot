@@ -4,4 +4,4 @@
 */5 * * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/update_leaderboard.py
 
 # run once a day at 17:00
-* 17 * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/select_track.py
+0 17 * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/select_track.py
