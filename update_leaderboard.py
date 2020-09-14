@@ -54,6 +54,7 @@ def compare_leaderboards(old, new):
             if old_record['name'] == new_record['name']:
                 old_record_found = True
                 if Decimal(new_record['time']) < Decimal(old_record['time']):
+                    print('match: new {} old {}'.format(new_record['time'], old_record['time']))
                     updates.append({
                         'record': new_record,
                         'improved_time': str(Decimal(old_record['time']) - Decimal(new_record['time'])),
@@ -85,6 +86,7 @@ def main():
     print('old new_leaderboard:')
     print(previous_leaderboard)
 
+    message_parts = []
     for diff in compare_leaderboards(previous_leaderboard, new_leaderboard):
 
         # filter by country
@@ -104,10 +106,14 @@ def main():
             message_text = LEADERBOARD_UPDATE_MESSAGE.format(text_name, text_country, text_time, text_position)
             print('message_text: ' + message_text)
 
-            bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text, parse_mode=ParseMode.HTML)
+            message_parts.append(message_text)
 
         else:
             print('not supported country: ' + diff['record']['country'])
+
+    if message_parts:
+        message = '\n'.join(message_parts)
+        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=ParseMode.HTML)
 
 
 if __name__ == "__main__":
