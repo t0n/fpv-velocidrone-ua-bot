@@ -12,7 +12,7 @@ from update_leaderboard import parse_leaderboard
 # TODO add rules and how to set up your Velocidrone to participate
 # starts with rocket emoji
 MAP_OF_THE_DAY_MESSAGE = '🔴 🚀Трек дня: <b>{}</b>\n' \
-                         '<hr/>\n' \
+                         '---\n' \
                          '<br/>\n' \
                          '<b>Ласкаво просимо на щоденний онлайн-турнір з дрон перегонів ім. Віктора Дзензеля!</b>\n' \
                          '<br/>\n' \
@@ -29,9 +29,9 @@ MAP_OF_THE_DAY_MESSAGE = '🔴 🚀Трек дня: <b>{}</b>\n' \
                          '🔵 В кінці періоду публікується звіт з результатами щоденного турніру (Work In Progress :D ).\n' \
                          '<br/>\n' \
                          '🔵 Запрошуй друзів та покращуй свої результати разом із ними!\n' \
-                         '<hr/>\n' \
+                         '---\n' \
                          '🔵 Gentlemen, start your drones! Goggles down, thumbs up!\n' \
-                         '<hr/>\n' \
+                         '---\n' \
                          '🔴 🚀Трек дня: <b>{}</b>'
 
 CONFIG_SCENERIES = [
