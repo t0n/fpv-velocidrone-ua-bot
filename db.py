@@ -75,7 +75,7 @@ def get_track_of_the_day():
 
 
 def save_leaderboard(leaderboard):
-    print('leaderboard: ' + str(leaderboard))
+    print('save_leaderboard - leaderboard: ' + str(leaderboard))
     connection = _create_connection(DB_FILE)
     if connection is not None:
         _create_leaderboard_table_if_not_exists(connection)
@@ -83,12 +83,12 @@ def save_leaderboard(leaderboard):
         cur.execute('DELETE FROM leaderboard')
         connection.commit()
         json_data = json.dumps(leaderboard)
-        print('json_data: ' + json_data)
+        print('save_leaderboard - json_data: ' + json_data)
         sql = 'INSERT INTO leaderboard(data)  VALUES(?)'
         cur.execute(sql, (json_data,))
         connection.commit()
     else:
-        print("Error! cannot create database connection.")
+        print("save_leaderboard - Error! cannot create database connection.")
 
 
 def get_leaderboard():
@@ -101,12 +101,12 @@ def get_leaderboard():
         rows = cur.fetchall()
         if len(rows) > 1:
             print("Error! too many rows")
-        print('rows: ' + str(rows))
+        print('get_leaderboard - rows: ' + str(rows))
         if rows:
             leaderboard = json.loads(rows[0][1])  # skip PK row
         else:
             leaderboard = []
     else:
-        print("Error! cannot create database connection.")
+        print("get_leaderboard - Error! cannot create database connection.")
     return leaderboard
 
