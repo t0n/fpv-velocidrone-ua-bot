@@ -118,7 +118,7 @@ def main():
 
     # post message about new track of the day
     track_text = saved_track[1] + ' - ' + saved_track[2]
-    message_text = MAP_OF_THE_DAY_MESSAGE.format(track_text)
+    message_text = MAP_OF_THE_DAY_MESSAGE.format(track_text, track_text)
     response = bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text, parse_mode=ParseMode.HTML)
     message_id = response.message_id
     bot.pin_chat_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, message_id=message_id)
