@@ -8,7 +8,7 @@ from telegram import ParseMode
 from db import get_track_of_the_day, save_leaderboard, get_leaderboard
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 
-LEADERBOARD_UPDATE_MESSAGE = '🏁 <b>{}</b> ({}) - <b>{}</b> / {}'  # starts with flag emoji
+LEADERBOARD_UPDATE_MESSAGE = '🏁 <b>{}</b> ({}) - {} / <b>{}</b>'  # starts with flag emoji
 
 
 def parse_leaderboard(track_info):
@@ -95,7 +95,7 @@ def main():
             text_time = text_time + '(-' + improved_time + 's)'
         text_name = diff['record']['name']
         text_country = diff['record']['country']
-        message_text = LEADERBOARD_UPDATE_MESSAGE.format(text_name, text_country, text_position, text_time)
+        message_text = LEADERBOARD_UPDATE_MESSAGE.format(text_name, text_country, text_time, text_position)
         print('message_text: ' + message_text)
 
         response = bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text, parse_mode=ParseMode.HTML)
