@@ -8,7 +8,14 @@ from telegram import ParseMode
 from db import get_track_of_the_day, save_leaderboard, get_leaderboard
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 
+
 LEADERBOARD_UPDATE_MESSAGE = '🏁 <b>{}</b> ({}) - {} / <b>{}</b>'  # starts with flag emoji
+
+SUPPORTED_COUNTRIES = [
+    'Ukraine',
+    'Russian Federation',  # do we need it?
+    'Belarus',
+]
 
 
 def parse_leaderboard(track_info):
@@ -78,27 +85,29 @@ def main():
     print('old new_leaderboard:')
     print(previous_leaderboard)
 
-    # tweak for testing purposes
-    # new_leaderboard[4]['time'] = '10.0'
-    # new_leaderboard[4]['position'] = '20'
-    # new_leaderboard[5]['name'] = 'Anton'
-
     for diff in compare_leaderboards(previous_leaderboard, new_leaderboard):
-        print(diff)
-        text_position = '#' + diff['record']['position']
-        improved_position = diff.get('improved_position')
-        if improved_position:
-            text_position = text_position + '(#' + improved_position + ')'
-        text_time = diff['record']['time'] + 's'
-        improved_time = diff.get('improved_time')
-        if improved_time:
-            text_time = text_time + '(-' + improved_time + 's)'
-        text_name = diff['record']['name']
-        text_country = diff['record']['country']
-        message_text = LEADERBOARD_UPDATE_MESSAGE.format(text_name, text_country, text_time, text_position)
-        print('message_text: ' + message_text)
 
-        response = bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text, parse_mode=ParseMode.HTML)
+        # filter by country
+        if diff['record']['country'] in SUPPORTED_COUNTRIES:
+
+            print(diff)
+            text_position = '#' + diff['record']['position']
+            improved_position = diff.get('improved_position')
+            if improved_position:
+                text_position = text_position + '(#' + improved_position + ')'
+            text_time = diff['record']['time'] + 's'
+            improved_time = diff.get('improved_time')
+            if improved_time:
+                text_time = text_time + '(-' + improved_time + 's)'
+            text_name = diff['record']['name']
+            text_country = diff['record']['country']
+            message_text = LEADERBOARD_UPDATE_MESSAGE.format(text_name, text_country, text_time, text_position)
+            print('message_text: ' + message_text)
+
+            bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text, parse_mode=ParseMode.HTML)
+
+        else:
+            print('not supported country: ' + diff['record']['country'])
 
 
 if __name__ == "__main__":
