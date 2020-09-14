@@ -31,8 +31,6 @@ MAP_OF_THE_DAY_MESSAGE = '🔴 Трек дня: <b>{}</b>\n' \
                          '\n' \
                          '🔵 Gentlemen, start your drones! Goggles down, thumbs up!\n' \
                          '\n' \
-                         '🔵 http://kwadd.com - коммьюніті для FPV-пілотів з мапою локацій\n' \
-                         '\n' \
                          '🔴 Трек дня: <b>{}</b>'
 
 CONFIG_SCENERIES = [
