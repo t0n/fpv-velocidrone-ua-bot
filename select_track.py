@@ -55,15 +55,15 @@ CONFIG_SCENERIES = [
     (29, 'Basketball Stadium'),
     (30, 'Bando'),
     (31, 'IndoorGoKart'),
-    (32, 'Slovenia Krvavec'),
+    # (32, 'Slovenia Krvavec'),  # premium
     (33, 'Dynamic Weather'),
-    (34, 'La Mothe'),
-    (35, 'Castle Sneznik'),
-    # (37, 'Library'),  # micros
-    # (38, 'NightClub'),  # micros
-    # (39, 'House'),  # micros
+    # (34, 'La Mothe'),  # premium
+    # (35, 'Castle Sneznik'),  # premium
+    # (37, 'Library'),  # premium / micros
+    # (38, 'NightClub'),  # premium / micros
+    # (39, 'House'),  # premium / micros
     (40, 'Future Hangar'),
-    (43, 'Future Hangar Empty'),
+    # (43, 'Future Hangar Empty'),  # not visible in Velocidrone?
 ]
 
 SOUP_TRACK_LINK_CLASS = 'track-grid__li'
