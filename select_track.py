@@ -73,7 +73,7 @@ def get_tracks():
     # return link, scenery, track
     tracks = []
     for scenery_id, scenery_name in CONFIG_SCENERIES:
-        scenery_page_url = 'https://www.velocidrone.com/leaderboard_by_version/{}/All'.format(scenery_id)
+        scenery_page_url = 'https://www.velocidrone.com/leaderboard_by_version/{}/1.16'.format(scenery_id)
         response = requests.get(scenery_page_url)
         # print(response.text)
         soup = BeautifulSoup(response.content, 'html.parser')

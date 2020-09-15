@@ -28,6 +28,10 @@ def parse_leaderboard(track_info):
     track_leaderboard_url = track_info[3]
     print('track_leaderboard_url: ' + str(track_leaderboard_url))
 
+    # TODO remove
+    if track_leaderboard_url.endswith('All'):
+        track_leaderboard_url = track_leaderboard_url.replace('/All', '/1.16')
+
     response = requests.get(track_leaderboard_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
