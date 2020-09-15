@@ -15,6 +15,10 @@ SUPPORTED_COUNTRIES = [
     'Ukraine',
     'Russian Federation',  # do we need it?
     'Belarus',
+
+    'Poland',
+    'Hungary',
+    'Czech Republic',
 ]
 
 
@@ -37,9 +41,10 @@ def parse_leaderboard(track_info):
             'time': cells[1].text,
             'name': cells[2].text.strip(),
             'country': cells[3].text.strip(),
-            # 'ranking': cells[4].text,
-            # 'model': cells[5].text.strip(),
-            # 'date': cells[6].text,
+            'ranking': cells[4].text,
+            'model': cells[5].text.strip(),
+            'date': cells[6].text,
+            'version': cells[7].text,
         }
         print('new_record: ' + str(new_record))
         records.append(new_record)
@@ -50,18 +55,21 @@ def compare_leaderboards(old, new):
     updates = []
     for new_record in new:
         old_record_found = False
+        # Update: sometimes there are 2 records by same player but different versions, so we need to dedup
         for old_record in old:
-            if old_record['name'] == new_record['name']:
+
+            # TODO remove this later
+            if 'version' not in old_record:
+                old_record['version'] = -1
+
+            if old_record['name'] == new_record['name'] and old_record['version'] == new_record['version']:
                 old_record_found = True
                 if Decimal(new_record['time']) < Decimal(old_record['time']):
-                    print('+++ match: new {} old {}'.format(Decimal(new_record['time']), Decimal(old_record['time'])))
                     updates.append({
                         'record': new_record,
                         'improved_time': str(Decimal(old_record['time']) - Decimal(new_record['time'])),
                         'improved_position': old_record['position'],
                     })
-                else:
-                    print('--- same: new {} old {}'.format(Decimal(new_record['time']), Decimal(old_record['time'])))
         if not old_record_found:
             updates.append({
                 'record': new_record,
@@ -82,20 +90,16 @@ def main():
 
     previous_leaderboard = get_leaderboard()
 
-    print('-' * 80)
-    print('old leaderboard:')
-    print(previous_leaderboard)
-
     new_leaderboard = parse_leaderboard(saved_track)
     save_leaderboard(new_leaderboard)
 
     print('-' * 80)
-    print('new_leaderboard:')
-    print(new_leaderboard)
-
-    print('-' * 80)
     print('old leaderboard:')
     print(previous_leaderboard)
+
+    print('-' * 80)
+    print('new_leaderboard:')
+    print(new_leaderboard)
 
     message_parts = []
     for diff in compare_leaderboards(previous_leaderboard, new_leaderboard):
