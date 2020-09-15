@@ -45,10 +45,10 @@ def parse_leaderboard(track_info):
             'time': cells[1].text,
             'name': cells[2].text.strip(),
             'country': cells[3].text.strip(),
-            # 'ranking': cells[4].text,
-            # 'model': cells[5].text.strip(),
-            # 'date': cells[6].text,
-            # 'version': cells[7].text,
+            'ranking': cells[4].text,
+            'model': cells[5].text.strip(),
+            'date': cells[6].text,
+            'version': cells[7].text if len(cells) > 7 else '1.16',  # okay there might be no version here
         }
         print('new_record: ' + str(new_record))
         records.append(new_record)
