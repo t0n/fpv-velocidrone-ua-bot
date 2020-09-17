@@ -5,3 +5,6 @@
 
 # run once a day at 17:00 (12:00 GMT)
 0 12 * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/select_track.py
+
+# run once a day at 16:59 (11:59 GMT)
+59 11 * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/publish_results.py

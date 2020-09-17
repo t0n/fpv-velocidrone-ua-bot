@@ -8,7 +8,7 @@ from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 from update_leaderboard import parse_leaderboard
 
 LEADERBOARD_HELLO_MESSAGE = '🇺🇦🇺🇦🇺🇦 Результати 🇺🇦🇺🇦🇺🇦'  # with UA flag emojis
-LEADERBOARD_UPDATE_MESSAGE = '<b>#{}</b> - <b>{}</b> - {} / (#{} в загальному заліку)'
+LEADERBOARD_UPDATE_MESSAGE = '<b>#{}</b> - <b>{}</b> - {}s / (#{} в загальному заліку)'
 
 
 SUPPORTED_COUNTRIES = [
@@ -44,7 +44,7 @@ def main():
             messages.append(LEADERBOARD_UPDATE_MESSAGE.format(num+1, result['name'], result['time'], result['position']))
 
         message = '\n\n'.join(messages)
-        message = LEADERBOARD_HELLO_MESSAGE + '\n---\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
+        message = LEADERBOARD_HELLO_MESSAGE + '\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
         print('-' * 80)
         print('message: ' + str(message))
         bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=ParseMode.HTML)
