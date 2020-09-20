@@ -2,6 +2,7 @@ from _decimal import Decimal
 
 import telegram
 import requests
+import flag
 from bs4 import BeautifulSoup
 from telegram import ParseMode
 
@@ -9,17 +10,17 @@ from db import get_track_of_the_day, save_leaderboard, get_leaderboard
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 
 
-LEADERBOARD_UPDATE_MESSAGE = '🏁 <b>{}</b> ({}) - {} / <b>{}</b>'  # starts with flag emoji
+LEADERBOARD_UPDATE_MESSAGE = '{} <b>{}</b> - {} / <b>{}</b>'  # starts with flag emoji
 
-SUPPORTED_COUNTRIES = [
-    'Ukraine',
-    'Russian Federation',  # do we need it?
-    'Belarus',
+SUPPORTED_COUNTRIES = {
+    'Ukraine': 'UA',
+    'Russian Federation': 'RU',  # do we need it?
+    'Belarus': 'BY',
 
-    'Poland',
-    'Hungary',
-    'Czech Republic',
-]
+    'Poland': 'PL',
+    'Hungary': 'HU',
+    'Czech Republic': 'CZ',
+}
 
 
 def parse_leaderboard(track_info):
@@ -111,7 +112,7 @@ def main():
         print(diff)
 
         # filter by country
-        if diff['record']['country'] in SUPPORTED_COUNTRIES:
+        if diff['record']['country'] in list(SUPPORTED_COUNTRIES.keys()):
 
             text_position = '#' + diff['record']['position']
             improved_position = diff.get('improved_position')
@@ -122,8 +123,8 @@ def main():
             if improved_time:
                 text_time = text_time + '(-' + improved_time + 's)'
             text_name = diff['record']['name']
-            text_country = diff['record']['country']
-            message_text = LEADERBOARD_UPDATE_MESSAGE.format(text_name, text_country, text_time, text_position)
+            country_flag = flag.flag(SUPPORTED_COUNTRIES[diff['record']['country']])
+            message_text = LEADERBOARD_UPDATE_MESSAGE.format(country_flag, text_name, text_time, text_position)
             print('message_text: ' + message_text)
 
             message_parts.append(message_text)
