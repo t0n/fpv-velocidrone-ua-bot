@@ -9,8 +9,6 @@ from db import update_track_of_the_day, get_track_of_the_day, get_leaderboard, s
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 from update_leaderboard import parse_leaderboard
 
-# TODO add rules and how to set up your Velocidrone to participate
-# starts with rocket emoji
 MAP_OF_THE_DAY_MESSAGE = '🔴 Трек дня: <b>{}</b>\n' \
                          '\n' \
                          '<b>Ласкаво просимо на щоденний онлайн-турнір з дрон перегонів ім. Віктора Дзензеля!</b>\n' \
@@ -96,7 +94,6 @@ def main():
     bot = telegram.Bot(TELEGRAM_KEY)
     # print(bot)
 
-    # TODO get old leaderboard, post top results (filtered by country?)
     old_track = get_track_of_the_day()
     print('Old track: ' + str(old_track))
     previous_leaderboard = get_leaderboard()

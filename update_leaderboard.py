@@ -29,8 +29,8 @@ def parse_leaderboard(track_info):
     print('track_leaderboard_url: ' + str(track_leaderboard_url))
 
     # TODO remove
-    if track_leaderboard_url.endswith('All'):
-        track_leaderboard_url = track_leaderboard_url.replace('/All', '/1.16')
+    # if track_leaderboard_url.endswith('All'):
+    #     track_leaderboard_url = track_leaderboard_url.replace('/All', '/1.16')
 
     response = requests.get(track_leaderboard_url)
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -38,20 +38,25 @@ def parse_leaderboard(track_info):
     records = []
     rows = soup.find('tbody').findAll('tr')
     for row in rows:
-        # print('row: ' + str(row))
-        cells = row.findAll('td')
-        new_record = {
-            'position': cells[0].text,
-            'time': cells[1].text,
-            'name': cells[2].text.strip(),
-            'country': cells[3].text.strip(),
-            'ranking': cells[4].text,
-            'model': cells[5].text.strip(),
-            'date': cells[6].text,
-            'version': cells[7].text if len(cells) > 7 else '1.16',  # okay there might be no version here
-        }
-        print('new_record: ' + str(new_record))
-        records.append(new_record)
+        try:
+            # print('row: ' + str(row))
+            cells = row.findAll('td')
+            new_record = {
+                'position': cells[0].text,
+                'time': cells[1].text,
+                'name': cells[2].text.strip().decode('utf-8', 'ignore').encode("utf-8"),  # skip non-UTF characters
+                'country': cells[3].text.strip(),
+                'ranking': cells[4].text,
+                'model': cells[5].text.strip(),
+                'date': cells[6].text,
+                'version': cells[7].text if len(cells) > 7 else '1.16',  # okay there might be no version here
+            }
+            print('new_record: ' + str(new_record))
+            records.append(new_record)
+        except Exception as e:
+            print('Cannot parse row!')
+            print(row)
+            print(e)
     return records
 
 
@@ -63,8 +68,8 @@ def compare_leaderboards(old, new):
         for old_record in old:
 
             # TODO remove this later
-            if 'version' not in old_record:
-                old_record['version'] = -1
+            # if 'version' not in old_record:
+            #     old_record['version'] = -1
 
             if old_record['name'] == new_record['name'] and old_record['version'] == new_record['version']:
                 old_record_found = True
