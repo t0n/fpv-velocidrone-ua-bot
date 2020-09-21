@@ -44,7 +44,7 @@ def parse_leaderboard(track_info):
             new_record = {
                 'position': cells[0].text,
                 'time': cells[1].text,
-                'name': cells[2].text.strip().decode('utf-8', 'ignore').encode("utf-8"),  # skip non-UTF characters
+                'name': bytes(cells[2].text.strip(), 'utf-8').decode('utf-8', 'ignore'),
                 'country': cells[3].text.strip(),
                 'ranking': cells[4].text,
                 'model': cells[5].text.strip(),
