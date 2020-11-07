@@ -117,37 +117,44 @@ def main():
     # print(bot)
 
     try:
-        old_track = get_track_of_the_day()
-        print('Old track: ' + str(old_track))
-        previous_leaderboard = get_leaderboard()
-        print('Old leaderboard: ' + str(previous_leaderboard))
-    except Exception as e:
-        print('Error while printing old leaderboard:')
-        print(e)
 
-    # get list of all sceneries X all tracks
-    tracks = get_tracks()
-    tracks = filter_tracks(tracks)
-    random_track = random.choice(tracks)
-    print('Random track: ' + str(random_track))
+        # this may fail due to some non-ascii messages previously saved in the leaderboard
+        # hacky fix
+        try:
+            old_track = get_track_of_the_day()
+            print('Old track: ' + str(old_track))
+            previous_leaderboard = get_leaderboard()
+            print('Old leaderboard: ' + str(previous_leaderboard))
+        except Exception as e:
+            print('Error while printing old leaderboard:')
+            print(e)
 
-    # save ToD
-    update_track_of_the_day(random_track)
-    saved_track = get_track_of_the_day()
-    print('Saved track: ' + str(saved_track))
+        # get list of all sceneries X all tracks
+        tracks = get_tracks()
+        tracks = filter_tracks(tracks)
+        random_track = random.choice(tracks)
+        print('Random track: ' + str(random_track))
 
-    # save new leaderboard
-    new_leaderboard = parse_leaderboard(saved_track)
-    save_leaderboard(new_leaderboard)
-    saved_leaderboard = get_leaderboard()
-    print('Saved leaderboard: ' + str(saved_leaderboard))
+        # save ToD
+        update_track_of_the_day(random_track)
+        saved_track = get_track_of_the_day()
+        print('Saved track: ' + str(saved_track))
 
-    # post message about new track of the day
-    track_text = saved_track[1] + ' - ' + saved_track[2]
-    message_text = MAP_OF_THE_DAY_MESSAGE.format(track_text, track_text)
-    response = bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text, parse_mode=ParseMode.HTML)
-    message_id = response.message_id
-    bot.pin_chat_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, message_id=message_id)
+        # save new leaderboard
+        new_leaderboard = parse_leaderboard(saved_track)
+        save_leaderboard(new_leaderboard)
+        saved_leaderboard = get_leaderboard()
+        print('Saved leaderboard: ' + str(saved_leaderboard))
+
+        # post message about new track of the day
+        track_text = saved_track[1] + ' - ' + saved_track[2]
+        message_text = MAP_OF_THE_DAY_MESSAGE.format(track_text, track_text)
+        response = bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text, parse_mode=ParseMode.HTML)
+        message_id = response.message_id
+        bot.pin_chat_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, message_id=message_id)
+
+    except Exception as error:
+        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text='Error in select_track: ' + str(error), parse_mode=ParseMode.HTML)
 
 
 if __name__ == "__main__":

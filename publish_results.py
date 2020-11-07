@@ -22,34 +22,39 @@ def main():
     bot = telegram.Bot(TELEGRAM_KEY)
     print(bot)
 
-    saved_track = get_track_of_the_day()
-    print('-' * 80)
-    print('Track of the day: ' + str(saved_track))
+    try:
 
-    new_leaderboard = parse_leaderboard(saved_track)
-    print('-' * 80)
-    print('new_leaderboard:')
-    print(new_leaderboard)
-
-    results = []
-    for result in new_leaderboard:
-        print(result)
-        # filter by country
-        if result['country'] in SUPPORTED_COUNTRIES:
-            results.append(result)
-
-    if results:
-        messages = []
-        for num, result in enumerate(results):
-            messages.append(LEADERBOARD_UPDATE_MESSAGE.format(num+1, result['name'], result['time'], result['position']))
-
-        message = '\n\n'.join(messages)
-        message = LEADERBOARD_HELLO_MESSAGE + '\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
+        saved_track = get_track_of_the_day()
         print('-' * 80)
-        print('message: ' + str(message))
-        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=ParseMode.HTML)
-    else:
-        print('No records!')
+        print('Track of the day: ' + str(saved_track))
+
+        new_leaderboard = parse_leaderboard(saved_track)
+        print('-' * 80)
+        print('new_leaderboard:')
+        print(new_leaderboard)
+
+        results = []
+        for result in new_leaderboard:
+            print(result)
+            # filter by country
+            if result['country'] in SUPPORTED_COUNTRIES:
+                results.append(result)
+
+        if results:
+            messages = []
+            for num, result in enumerate(results):
+                messages.append(LEADERBOARD_UPDATE_MESSAGE.format(num+1, result['name'], result['time'], result['position']))
+
+            message = '\n\n'.join(messages)
+            message = LEADERBOARD_HELLO_MESSAGE + '\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
+            print('-' * 80)
+            print('message: ' + str(message))
+            bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=ParseMode.HTML)
+        else:
+            print('No records!')
+
+    except Exception as error:
+        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text='Error in publish_results: ' + str(error), parse_mode=ParseMode.HTML)
 
 
 if __name__ == "__main__":
