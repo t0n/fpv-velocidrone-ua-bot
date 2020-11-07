@@ -23,6 +23,7 @@ SUPPORTED_COUNTRIES = {
 }
 
 
+# TODO change to parsing leaderboards for all versions
 def parse_leaderboard(track_info):
     print('track_info: ' + str(track_info))
 
@@ -50,14 +51,19 @@ def parse_leaderboard(track_info):
                 'ranking': cells[4].text,
                 'model': cells[5].text.strip(),
                 'date': cells[6].text,
+                # TODO update version below VVVVVV
                 'version': cells[7].text if len(cells) > 7 else '1.16',  # okay there might be no version here
             }
             print('new_record: ' + str(new_record))
             records.append(new_record)
         except Exception as e:
             print('Cannot parse row!')
-            print(row)
+            try:
+                print(row.encode('utf-8'))
+            except Exception:
+                pass
             print(e)
+            print('continuing...')
     return records
 
 
