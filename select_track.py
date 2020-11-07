@@ -45,7 +45,7 @@ CONFIG_SCENERIES = [
     (18, 'NEC Birmingham'),
     (19, 'Warehouse'),
     (20, 'Underground Carpark'),
-    (21, 'Sports Hall'),
+    (21, 'Sports Hall'),  # too small maps here? TODO: check maps
     (22, 'Coastal'),
     (23, 'River2'),
     (24, 'City'),
@@ -67,12 +67,15 @@ CONFIG_SCENERIES = [
 
 SOUP_TRACK_LINK_CLASS = 'track-grid__li'
 
+VERSION_GET_TRACKS = '1.16'  # leaderboard URL wil be stored with this version in it
+VERSIONS_GET_LEADERBOARDS = ['1.16', '1.17']
+
 
 def get_tracks():
     # return link, scenery, track
     tracks = []
     for scenery_id, scenery_name in CONFIG_SCENERIES:
-        scenery_page_url = 'https://www.velocidrone.com/leaderboard_by_version/{}/1.16'.format(scenery_id)
+        scenery_page_url = 'https://www.velocidrone.com/leaderboard_by_version/{}/{}'.format(scenery_id, VERSION_GET_TRACKS)
         response = requests.get(scenery_page_url)
         # print(response.text)
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -99,10 +102,12 @@ def main():
     previous_leaderboard = get_leaderboard()
     print('Old leaderboard: ' + str(previous_leaderboard))
 
+    # get list of all sceneries X all tracks
     tracks = get_tracks()
     random_track = random.choice(tracks)
     print('Random track: ' + str(random_track))
 
+    # save ToD
     update_track_of_the_day(random_track)
     saved_track = get_track_of_the_day()
     print('Saved track: ' + str(saved_track))

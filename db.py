@@ -1,6 +1,8 @@
 import json
 import sqlite3
 
+from secrets import DB_TABLE_PREFIX  # to support test instance
+
 DB_FILE = 'main.db'
 
 
@@ -16,7 +18,7 @@ def _create_connection(db_file):
 
 
 def _create_totd_table_if_not_exists(connection):
-    query = 'CREATE TABLE IF NOT EXISTS track_of_the_day (' \
+    query = 'CREATE TABLE IF NOT EXISTS ' + DB_TABLE_PREFIX + 'track_of_the_day (' \
             'id integer PRIMARY KEY,' \
             'scenery_id integer NOT NULL, ' \
             'scenery_name integer NOT NULL, ' \
@@ -31,7 +33,7 @@ def _create_totd_table_if_not_exists(connection):
 
 
 def _create_leaderboard_table_if_not_exists(connection):
-    query = 'CREATE TABLE IF NOT EXISTS leaderboard (' \
+    query = 'CREATE TABLE IF NOT EXISTS ' + DB_TABLE_PREFIX + 'leaderboard (' \
             'id integer PRIMARY KEY,' \
             'data text NOT NULL' \
             ');'
@@ -47,9 +49,9 @@ def update_track_of_the_day(track_info):
     if connection is not None:
         _create_totd_table_if_not_exists(connection)
         cur = connection.cursor()
-        cur.execute('DELETE FROM track_of_the_day')
+        cur.execute('DELETE FROM ' + DB_TABLE_PREFIX + 'track_of_the_day')
         connection.commit()
-        sql = 'INSERT INTO track_of_the_day(scenery_id,scenery_name,track_name,track_url)  VALUES(?,?,?,?)'
+        sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'track_of_the_day(scenery_id,scenery_name,track_name,track_url) VALUES(?,?,?,?)'
         cur.execute(sql, track_info)
         connection.commit()
     else:
@@ -62,7 +64,7 @@ def get_track_of_the_day():
     if connection is not None:
         _create_totd_table_if_not_exists(connection)
         cur = connection.cursor()
-        cur.execute("SELECT * FROM track_of_the_day")
+        cur.execute('SELECT * FROM ' + DB_TABLE_PREFIX + 'track_of_the_day')
         rows = cur.fetchall()
         if len(rows) > 1:
             print("Error! too many rows")
@@ -97,7 +99,7 @@ def get_leaderboard():
     if connection is not None:
         _create_leaderboard_table_if_not_exists(connection)
         cur = connection.cursor()
-        cur.execute("SELECT * FROM leaderboard")
+        cur.execute('SELECT * FROM ' + DB_TABLE_PREFIX + 'leaderboard')
         rows = cur.fetchall()
         if len(rows) > 1:
             print("Error! too many rows")
