@@ -116,10 +116,14 @@ def main():
     bot = telegram.Bot(TELEGRAM_KEY)
     # print(bot)
 
-    old_track = get_track_of_the_day()
-    print('Old track: ' + str(old_track))
-    previous_leaderboard = get_leaderboard()
-    print('Old leaderboard: ' + str(previous_leaderboard))
+    try:
+        old_track = get_track_of_the_day()
+        print('Old track: ' + str(old_track))
+        previous_leaderboard = get_leaderboard()
+        print('Old leaderboard: ' + str(previous_leaderboard))
+    except Exception as e:
+        print('Error while printing old leaderboard:')
+        print(e)
 
     # get list of all sceneries X all tracks
     tracks = get_tracks()

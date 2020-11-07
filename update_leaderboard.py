@@ -40,6 +40,7 @@ def parse_leaderboard(track_info):
     records = []
     rows = soup.find('tbody').findAll('tr')
     for row in rows:
+        new_record = None
         try:
             # print('row: ' + str(row))
             cells = row.findAll('td')
