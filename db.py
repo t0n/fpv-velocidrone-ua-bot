@@ -82,11 +82,11 @@ def save_leaderboard(leaderboard):
     if connection is not None:
         _create_leaderboard_table_if_not_exists(connection)
         cur = connection.cursor()
-        cur.execute('DELETE FROM leaderboard')
+        cur.execute('DELETE FROM ' + DB_TABLE_PREFIX + 'leaderboard')
         connection.commit()
         json_data = json.dumps(leaderboard)
         print('save_leaderboard - json_data: ' + json_data)
-        sql = 'INSERT INTO leaderboard(data)  VALUES(?)'
+        sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'leaderboard(data)  VALUES(?)'
         cur.execute(sql, (json_data,))
         connection.commit()
     else:

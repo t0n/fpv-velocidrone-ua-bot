@@ -1,3 +1,4 @@
 .env
 .idea
 main.db
+secrets.py
