@@ -45,7 +45,7 @@ CONFIG_SCENERIES = [
     (18, 'NEC Birmingham'),
     (19, 'Warehouse'),
     (20, 'Underground Carpark'),
-    (21, 'Sports Hall'),  # too small maps here? TODO: check maps
+    # (21, 'Sports Hall'),  # too small maps here / micros?
     (22, 'Coastal'),
     (23, 'River2'),
     (24, 'City'),
@@ -61,7 +61,7 @@ CONFIG_SCENERIES = [
     # (37, 'Library'),  # premium / micros
     # (38, 'NightClub'),  # premium / micros
     # (39, 'House'),  # premium / micros
-    (40, 'Future Hangar'),
+    # (40, 'Future Hangar'),  # seems to be not loading / unable to fly tracks here
     # (43, 'Future Hangar Empty'),  # not visible in Velocidrone?
 ]
 
@@ -69,6 +69,25 @@ SOUP_TRACK_LINK_CLASS = 'track-grid__li'
 
 VERSION_GET_TRACKS = '1.16'  # leaderboard URL wil be stored with this version in it
 VERSIONS_GET_LEADERBOARDS = ['1.16', '1.17']
+
+
+TRACK_NAMES_BLOCK_LIST = [
+    'pylons',  # too easy
+    'covid',  # whoops
+]
+
+
+def filter_tracks(tracks_in):
+    tracks_out = []
+    for scenery_id, scenery_name, track_name, track_url in tracks_in:
+        excluded = False
+        for block_name in TRACK_NAMES_BLOCK_LIST:
+            if block_name in track_name.lower():
+                excluded = True
+                print('TRACK EXCLUDED: ' + str((scenery_id, scenery_name, track_name, track_url)))
+        if not excluded:
+            tracks_out.append((scenery_id, scenery_name, track_name, track_url))
+    return tracks_out
 
 
 def get_tracks():
@@ -104,6 +123,7 @@ def main():
 
     # get list of all sceneries X all tracks
     tracks = get_tracks()
+    tracks = filter_tracks(tracks)
     random_track = random.choice(tracks)
     print('Random track: ' + str(random_track))
 
