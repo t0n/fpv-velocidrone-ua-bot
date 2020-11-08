@@ -30,6 +30,11 @@ def parse_leaderboard_by_url(track_leaderboard_url, version):
     print('parse_leaderboard_by_url - track_leaderboard_url: ' + str(track_leaderboard_url))
     print('parse_leaderboard_by_url - version: ' + str(version))
 
+    today_date = datetime.now().replace(hour=23, minute=59, second=59)
+    older_date = (today_date - timedelta(days=LEADERBOARD_DAYS_LOOKBACK)).replace(hour=0, minute=0, second=1)
+    print('parse_leaderboard_by_url - today_date: ' + str(today_date))
+    print('parse_leaderboard_by_url - older_date: ' + str(older_date))
+
     response = requests.get(track_leaderboard_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -44,8 +49,6 @@ def parse_leaderboard_by_url(track_leaderboard_url, version):
                 cells = row.findAll('td')
                 record_date_text = cells[6].text  # 25/10/2020
                 record_date = datetime.strptime(record_date_text, LEADERBOARD_DATE_FORMAT)
-                today_date = datetime.now().replace(hour=23, minute=59, second=59)
-                older_date = (today_date - timedelta(days=LEADERBOARD_DAYS_LOOKBACK)).replace(hour=0, minute=0, second=1)
                 if older_date <= record_date <= today_date:
                     new_record = {
                         'position': cells[0].text,
@@ -60,7 +63,7 @@ def parse_leaderboard_by_url(track_leaderboard_url, version):
                     print('new_record: ' + str(new_record))
                     records.append(new_record)
                 else:
-                    print('Record too old!')
+                    print('Record too old: ' + str(record_date))
             except Exception as e:
                 print('Cannot parse row!')
                 print('e')
