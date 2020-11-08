@@ -61,8 +61,6 @@ def main():
 
         if message_parts:
             message = '\n\n'.join(message_parts)
-            print('-' * 80)
-            print('message: ' + str(message))
             bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=ParseMode.HTML)
         else:
             print('No updates!')
