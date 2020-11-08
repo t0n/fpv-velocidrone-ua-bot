@@ -1,19 +1,10 @@
-from _decimal import Decimal
-
 import telegram
 from telegram import ParseMode
 
+from constants import PUBLISH_RESULTS_HELLO_MESSAGE, PUBLISH_RESULTS_LINE_TEMPLATE, RESULTS_SUPPORTED_COUNTRIES
 from db import get_track_of_the_day
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
-from update_leaderboard import parse_leaderboard
-
-LEADERBOARD_HELLO_MESSAGE = '🇺🇦🇺🇦🇺🇦 Результати 🇺🇦🇺🇦🇺🇦'  # with UA flag emojis
-LEADERBOARD_UPDATE_MESSAGE = '<b>#{}</b> - <b>{}</b> - {}s / (#{} в загальному заліку)'
-
-
-SUPPORTED_COUNTRIES = [
-    'Ukraine',
-]
+from utils import parse_leaderboard
 
 
 def main():
@@ -37,16 +28,17 @@ def main():
         for result in new_leaderboard:
             print(result)
             # filter by country
-            if result['country'] in SUPPORTED_COUNTRIES:
+            if result['country'] in RESULTS_SUPPORTED_COUNTRIES:
                 results.append(result)
 
         if results:
             messages = []
             for num, result in enumerate(results):
-                messages.append(LEADERBOARD_UPDATE_MESSAGE.format(num+1, result['name'], result['time'], result['position']))
+                messages.append(
+                    PUBLISH_RESULTS_LINE_TEMPLATE.format(num + 1, result['name'], result['time'], result['position']))
 
             message = '\n\n'.join(messages)
-            message = LEADERBOARD_HELLO_MESSAGE + '\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
+            message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
             print('-' * 80)
             print('message: ' + str(message))
             bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=ParseMode.HTML)
@@ -54,6 +46,8 @@ def main():
             print('No records!')
 
     except Exception as error:
+        print('Uncaught error: ')
+        print(error)
         bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text='Error in publish_results: ' + str(error), parse_mode=ParseMode.HTML)
 
 
