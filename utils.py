@@ -3,12 +3,13 @@ Common/shared functions
 """
 
 from _decimal import Decimal
+from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
 
 from constants import TRACK_NAMES_BLOCK_LIST, CONFIG_SCENERIES, VERSION_GET_TRACKS, SOUP_TRACK_LINK_CLASS, \
-    VERSIONS_GET_LEADERBOARDS
+    VERSIONS_GET_LEADERBOARDS, LEADERBOARD_DATE_FORMAT, LEADERBOARD_DAYS_LOOKBACK
 
 
 def parse_leaderboard(track_info):
@@ -37,18 +38,25 @@ def parse_leaderboard_by_url(track_leaderboard_url, version):
         try:
             # print('row: ' + str(row))
             cells = row.findAll('td')
-            new_record = {
-                'position': cells[0].text,
-                'time': cells[1].text,
-                'name': bytes(cells[2].text.strip(), 'utf-8').decode('utf-8', 'ignore'),  # TODO: is this working?
-                'country': cells[3].text.strip(),
-                'ranking': cells[4].text,
-                'model': cells[5].text.strip(),
-                'date': cells[6].text,
-                'version': cells[7].text if len(cells) > 7 else version,
-            }
-            print('new_record: ' + str(new_record))
-            records.append(new_record)
+            record_date_text = cells[6].text  # 25/10/2020
+            record_date = datetime.strptime(record_date_text, LEADERBOARD_DATE_FORMAT)
+            today_date = datetime.now().replace(hour=23, minute=59, second=59)
+            older_date = (today_date - timedelta(days=LEADERBOARD_DAYS_LOOKBACK)).replace(hour=0, minute=0, second=1)
+            if older_date <= record_date <= today_date:
+                new_record = {
+                    'position': cells[0].text,
+                    'time': cells[1].text,
+                    'name': bytes(cells[2].text.strip(), 'utf-8').decode('utf-8', 'ignore'),  # TODO: is this working?
+                    'country': cells[3].text.strip(),
+                    'ranking': cells[4].text,
+                    'model': cells[5].text.strip(),
+                    'date': cells[6].text,
+                    'version': cells[7].text if len(cells) > 7 else version,
+                }
+                print('new_record: ' + str(new_record))
+                records.append(new_record)
+            else:
+                print('Record too old!')
         except Exception as e:
             print('Cannot parse row!')
             print('e')

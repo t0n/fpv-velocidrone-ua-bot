@@ -20,6 +20,9 @@ LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES = {
     'Czech Republic': 'CZ',
 }
 
+LEADERBOARD_DAYS_LOOKBACK = 1
+LEADERBOARD_DATE_FORMAT = '%d/%m/%Y'
+
 
 """
 Section: Select Track
@@ -86,8 +89,8 @@ SOUP_TRACK_LINK_CLASS = 'track-grid__li'
 
 VERSION_GET_TRACKS = '1.16'  # leaderboard URL wil be stored with this version in it
 
-# VERSIONS_GET_LEADERBOARDS = ['1.16', '1.17']
-VERSIONS_GET_LEADERBOARDS = ['1.16', ]
+VERSIONS_GET_LEADERBOARDS = ['1.15', '1.16', '1.17']
+# VERSIONS_GET_LEADERBOARDS = ['1.16', ]
 
 TRACK_NAMES_BLOCK_LIST = [
     'pylons',  # too easy
@@ -100,7 +103,7 @@ Section: Publish resutls
 """
 
 
-PUBLISH_RESULTS_HELLO_MESSAGE = '🇺🇦🇺🇦🇺🇦 Результати 🇺🇦🇺🇦🇺🇦'
+PUBLISH_RESULTS_HELLO_MESSAGE = '🇺🇦🏁🇺🇦 Результати 🇺🇦🏁🇺🇦'
 
 PUBLISH_RESULTS_LINE_TEMPLATE = '<b>#{}</b> - <b>{}</b> - {}s / (#{} в загальному заліку)'
 

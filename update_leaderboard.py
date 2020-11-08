@@ -70,7 +70,7 @@ def main():
         print(error)
         import traceback
         traceback.print_exc()
-        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text='Error in update_leaderboard: ' + str(error), parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text='⚠️ @antonkoba Error in update_leaderboard: ' + str(error), parse_mode=ParseMode.HTML)
 
 
 if __name__ == "__main__":
