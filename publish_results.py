@@ -40,6 +40,7 @@ def main():
             message = '\n\n'.join(messages)
             message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
             print('-' * 80)
+            # print('message: ' + str(message.encode('utf-8')))  # will have Ukrainian text in it
             print('message: ' + str(message))
             bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=ParseMode.HTML)
         else:

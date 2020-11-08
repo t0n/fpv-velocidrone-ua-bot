@@ -29,7 +29,7 @@ Section: Select Track
 """
 
 
-MAP_OF_THE_DAY_MESSAGE = '🔴 Трек дня: <b>{}</b>\n' \
+MAP_OF_THE_DAY_MESSAGE = u'🔴 Трек дня: <b>{}</b>\n' \
                          '\n' \
                          '<b>Ласкаво просимо на щоденний онлайн-турнір з дрон перегонів ім. Віктора Дзензеля!</b>\n' \
                          '\n' \
@@ -103,9 +103,9 @@ Section: Publish resutls
 """
 
 
-PUBLISH_RESULTS_HELLO_MESSAGE = '🇺🇦🇺🇦🇺🇦 Результати 🇺🇦🇺🇦🇺🇦'
+PUBLISH_RESULTS_HELLO_MESSAGE = u'🇺🇦🇺🇦🇺🇦 Результати 🇺🇦🇺🇦🇺🇦'
 
-PUBLISH_RESULTS_LINE_TEMPLATE = '<b>#{}</b> - <b>{}</b> - {}s / (#{} в загальному заліку)'
+PUBLISH_RESULTS_LINE_TEMPLATE = u'<b>#{}</b> - <b>{}</b> - {}s / (#{} в загальному заліку)'
 
 RESULTS_SUPPORTED_COUNTRIES = [
     'Ukraine',
