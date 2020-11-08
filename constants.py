@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 """
 Common/shared constants
 """
@@ -100,7 +103,7 @@ Section: Publish resutls
 """
 
 
-PUBLISH_RESULTS_HELLO_MESSAGE = 'RESULTS'  # with UA flag emojis
+PUBLISH_RESULTS_HELLO_MESSAGE = '🇺🇦🇺🇦🇺🇦 Результати 🇺🇦🇺🇦🇺🇦'
 
 PUBLISH_RESULTS_LINE_TEMPLATE = '<b>#{}</b> - <b>{}</b> - {}s / (#{} в загальному заліку)'
 

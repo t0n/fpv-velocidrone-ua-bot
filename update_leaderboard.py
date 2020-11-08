@@ -70,6 +70,8 @@ def main():
     except Exception as error:
         print('Uncaught error: ')
         print(error)
+        import traceback
+        traceback.print_exc()
         bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text='Error in update_leaderboard: ' + str(error), parse_mode=ParseMode.HTML)
 
 
