@@ -141,7 +141,7 @@ def add_track_to_the_history(track_info):
         _create_history_table_if_not_exists(connection)
         cur = connection.cursor()
         sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'tracks_history(scenery_name,track_name) VALUES(?,?)'
-        cur.execute(sql, track_info)
+        cur.execute(sql, (track_info[1], track_info[2]))  # scenery_name + track_name
         connection.commit()
     else:
         print("Error! cannot create database connection.")
