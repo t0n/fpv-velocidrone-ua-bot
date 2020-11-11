@@ -1,7 +1,7 @@
 """
 Common/shared functions
 """
-
+import logging
 from _decimal import Decimal
 from datetime import datetime, timedelta
 
@@ -10,6 +10,11 @@ from bs4 import BeautifulSoup
 
 from constants import TRACK_NAMES_BLOCK_LIST, CONFIG_SCENERIES, VERSION_GET_TRACKS, SOUP_TRACK_LINK_CLASS, \
     VERSIONS_GET_LEADERBOARDS, LEADERBOARD_DATE_FORMAT, LEADERBOARD_DAYS_LOOKBACK
+
+logging.basicConfig(filename='log.txt', filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    # datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
 
 
 def parse_leaderboard(track_info):
@@ -84,10 +89,6 @@ def compare_leaderboards(old, new):
         # Update: sometimes there are 2 records by same player but different versions, so we need to dedup
         for old_record in old:
 
-            # TODO remove this later
-            # if 'version' not in old_record:
-            #     old_record['version'] = -1
-
             if old_record['name'] == new_record['name'] and old_record['version'] == new_record['version']:
                 old_record_found = True
                 if Decimal(new_record['time']) < Decimal(old_record['time']):
@@ -101,6 +102,7 @@ def compare_leaderboards(old, new):
                 'record': new_record,
             })
 
+    print('updates: ' + str(updates))
     return updates
 
 

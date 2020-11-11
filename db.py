@@ -44,6 +44,20 @@ def _create_leaderboard_table_if_not_exists(connection):
         print(e)
 
 
+def _create_history_table_if_not_exists(connection):
+    query = 'CREATE TABLE IF NOT EXISTS ' + DB_TABLE_PREFIX + 'tracks_history (' \
+            'id integer PRIMARY KEY,' \
+            'date datetime DEFAULT CURRENT_TIMESTAMP, ' \
+            'scenery_name integer NOT NULL, ' \
+            'track_name text NOT NULL' \
+            ');'
+    try:
+        c = connection.cursor()
+        c.execute(query)
+    except sqlite3.Error as e:
+        print(e)
+
+
 def update_track_of_the_day(track_info):
     connection = _create_connection(DB_FILE)
     if connection is not None:
@@ -112,3 +126,31 @@ def get_leaderboard():
         print("get_leaderboard - Error! cannot create database connection.")
     return leaderboard
 
+
+def add_track_to_the_history(track_info):
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_totd_table_if_not_exists(connection)
+        cur = connection.cursor()
+        sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'tracks_history(scenery_name,track_name) VALUES(?,?)'
+        cur.execute(sql, track_info)
+        connection.commit()
+    else:
+        print("Error! cannot create database connection.")
+
+
+def get_tracks_history(days):
+    """
+    return id / date / scenery_name / track_name
+    :param days:
+    :return:
+    """
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_totd_table_if_not_exists(connection)
+        cur = connection.cursor()
+        cur.execute('SELECT * FROM ' + DB_TABLE_PREFIX + 'tracks_history WHERE <= date(\'now\', \'-' + days + ' day\')')
+        rows = cur.fetchall()
+        return rows
+    else:
+        print("Error! cannot create database connection.")

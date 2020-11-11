@@ -1,15 +1,21 @@
+import logging
+
 import telegram
 import flag
-from telegram import ParseMode
 
 from constants import LEADERBOARD_UPDATE_MESSAGE, LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES
 from db import get_track_of_the_day, save_leaderboard, get_leaderboard
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 from utils import parse_leaderboard, compare_leaderboards
 
+logging.basicConfig(filename='log.txt', filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    # datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
+
 
 def main():
-    print("Leaderboard updates script started!")
+    logging.info("Leaderboard updates script started!")
 
     bot = telegram.Bot(TELEGRAM_KEY)
     print(bot)
@@ -33,6 +39,7 @@ def main():
         print('new_leaderboard:')
         print(new_leaderboard)
 
+        print('-' * 80)
         message_parts = []
         for diff in compare_leaderboards(previous_leaderboard, new_leaderboard):
 
@@ -52,7 +59,7 @@ def main():
                 text_name = diff['record']['name']
                 country_flag = flag.flag(LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES[diff['record']['country']])
                 message_text = LEADERBOARD_UPDATE_MESSAGE.format(country_flag, text_name, text_time, text_position)
-                print('message_text: ' + message_text)
+                # print('message_text: ' + message_text)  # might have some non-ascii chars
 
                 message_parts.append(message_text)
 
@@ -61,16 +68,21 @@ def main():
 
         if message_parts:
             message = '\n\n'.join(message_parts)
-            bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=ParseMode.HTML)
+            bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
+            logging.info("Leaderboard updated")
         else:
+            logging.info("No updates!")
             print('No updates!')
 
     except Exception as error:
+        logging.exception(error)
         print('Uncaught error: ')
         print(error)
         import traceback
         traceback.print_exc()
-        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text='⚠️ @antonkoba Error in update_leaderboard: ' + str(error), parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
+                         text='⚠️ @antonkoba Error in update_leaderboard: ' + str(error),
+                         parse_mode=telegram.ParseMode.HTML)
 
 
 if __name__ == "__main__":

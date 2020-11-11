@@ -1,7 +1,7 @@
 import random
 
+import logging
 import telegram
-from telegram import ParseMode
 
 from constants import MAP_OF_THE_DAY_MESSAGE
 from db import update_track_of_the_day, get_track_of_the_day, get_leaderboard, save_leaderboard
@@ -9,8 +9,14 @@ from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 from utils import parse_leaderboard, filter_tracks, get_tracks
 
 
+logging.basicConfig(filename='log.txt', filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    # datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
+
+
 def main():
-    print("Select track script started!")
+    logging.info("Select track script started!")
 
     bot = telegram.Bot(TELEGRAM_KEY)
     # print(bot)
@@ -48,16 +54,21 @@ def main():
         # post message about new track of the day
         track_text = saved_track[1] + ' - ' + saved_track[2]
         message_text = MAP_OF_THE_DAY_MESSAGE.format(track_text, track_text)
-        response = bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text, parse_mode=ParseMode.HTML)
+        response = bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text,
+                                    parse_mode=telegram.ParseMode.HTML)
         message_id = response.message_id
         bot.pin_chat_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, message_id=message_id)
+        logging.info("Track selected")
 
     except Exception as error:
+        logging.exception(error)
         print('Uncaught error: ')
         print(error)
         import traceback
         traceback.print_exc()
-        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text='⚠️ @antonkoba Error in select_track: ' + str(error), parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
+                         text='⚠️ @antonkoba Error in select_track: ' + str(error),
+                         parse_mode=telegram.ParseMode.HTML)
 
 
 if __name__ == "__main__":

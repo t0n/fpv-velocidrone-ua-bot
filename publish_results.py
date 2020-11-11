@@ -1,5 +1,5 @@
+import logging
 import telegram
-from telegram import ParseMode
 
 from constants import PUBLISH_RESULTS_HELLO_MESSAGE, PUBLISH_RESULTS_LINE_TEMPLATE, RESULTS_SUPPORTED_COUNTRIES
 from db import get_track_of_the_day
@@ -7,8 +7,14 @@ from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 from utils import parse_leaderboard
 
 
+logging.basicConfig(filename='log.txt', filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    # datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
+
+
 def main():
-    print("Leaderboard updates script started!")
+    logging.info("Publish results script started!")
 
     bot = telegram.Bot(TELEGRAM_KEY)
     print(bot)
@@ -24,6 +30,8 @@ def main():
         print('new_leaderboard:')
         print(new_leaderboard)
 
+        print('-' * 80)
+        print('all results:')
         results = []
         for result in new_leaderboard:
             print(result)
@@ -32,6 +40,8 @@ def main():
                 results.append(result)
 
         if results:
+            print('-' * 80)
+            print('filtered results:')
             messages = []
             for num, result in enumerate(results):
                 messages.append(
@@ -39,16 +49,21 @@ def main():
 
             message = '\n\n'.join(messages)
             message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
-            bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=ParseMode.HTML)
+            bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
+            logging.info("Results published")
         else:
+            logging.info("No records!")
             print('No records!')
 
     except Exception as error:
+        logging.exception(error)
         print('Uncaught error: ')
         print(error)
         import traceback
         traceback.print_exc()
-        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text='⚠️ @antonkoba Error in publish_results: ' + str(error), parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
+                         text='⚠️ @antonkoba Error in publish_results: ' + str(error),
+                         parse_mode=telegram.ParseMode.HTML)
 
 
 if __name__ == "__main__":

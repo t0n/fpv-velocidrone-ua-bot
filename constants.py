@@ -99,7 +99,7 @@ TRACK_NAMES_BLOCK_LIST = [
 
 
 """
-Section: Publish resutls
+Section: Publish results
 """
 
 
