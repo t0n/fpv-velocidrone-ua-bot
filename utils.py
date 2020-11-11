@@ -21,7 +21,7 @@ logging.getLogger('telegram').setLevel(logging.ERROR)
 def parse_leaderboard(track_info):
     print('track_info: ' + str(track_info))
 
-    # original track is saved with a default version (1.16) - see
+    # original track is saved with a default version (1.16)
     track_leaderboard_url = track_info[3]
     print('track_leaderboard_url: ' + str(track_leaderboard_url))
 
@@ -38,8 +38,14 @@ def parse_leaderboard_by_url(track_leaderboard_url, version):
 
     today_date = datetime.now().replace(hour=23, minute=59, second=59)
     older_date = (today_date - timedelta(days=LEADERBOARD_DAYS_LOOKBACK)).replace(hour=0, minute=0, second=1)
+    print('parse_leaderboard_by_url - utcnow(): ' + str(datetime.utcnow()))
+    print('parse_leaderboard_by_url - now(): ' + str(datetime.now()))
     print('parse_leaderboard_by_url - today_date: ' + str(today_date))
     print('parse_leaderboard_by_url - older_date: ' + str(older_date))
+    logging.info('parse_leaderboard_by_url - utcnow(): ' + str(datetime.utcnow()))
+    logging.info('parse_leaderboard_by_url - now(): ' + str(datetime.now()))
+    logging.info('parse_leaderboard_by_url - today_date: ' + str(today_date))
+    logging.info('parse_leaderboard_by_url - older_date: ' + str(older_date))
 
     response = requests.get(track_leaderboard_url)
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -53,7 +59,7 @@ def parse_leaderboard_by_url(track_leaderboard_url, version):
             try:
                 # print('row: ' + str(row))
                 cells = row.findAll('td')
-                record_date_text = cells[6].text  # 25/10/2020
+                record_date_text = cells[6].text  # 25/10/2020 DD MM YYYY?
                 record_date = datetime.strptime(record_date_text, LEADERBOARD_DATE_FORMAT)
                 if older_date <= record_date <= today_date:
                     new_record = {
