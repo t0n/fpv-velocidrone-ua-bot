@@ -158,7 +158,7 @@ def get_tracks_history(days):
         _create_history_table_if_not_exists(connection)
         cur = connection.cursor()
         sql_query = 'SELECT * FROM ' + \
-                    DB_TABLE_PREFIX + 'tracks_history WHERE date <= date(\'now\', \'-' + str(days) + ' day\')'
+                    DB_TABLE_PREFIX + 'tracks_history WHERE date >= date(\'now\', \'-' + str(days) + ' day\')'
         print('sql_query: ' + str(sql_query))
         cur.execute(sql_query)
         rows = cur.fetchall()
