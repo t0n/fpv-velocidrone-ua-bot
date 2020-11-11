@@ -138,7 +138,7 @@ def get_leaderboard():
 def add_track_to_the_history(track_info):
     connection = _create_connection(DB_FILE)
     if connection is not None:
-        _create_totd_table_if_not_exists(connection)
+        _create_history_table_if_not_exists(connection)
         cur = connection.cursor()
         sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'tracks_history(scenery_name,track_name) VALUES(?,?)'
         cur.execute(sql, track_info)
@@ -155,7 +155,7 @@ def get_tracks_history(days):
     """
     connection = _create_connection(DB_FILE)
     if connection is not None:
-        _create_totd_table_if_not_exists(connection)
+        _create_history_table_if_not_exists(connection)
         cur = connection.cursor()
         cur.execute('SELECT * FROM ' + DB_TABLE_PREFIX + 'tracks_history WHERE <= date(\'now\', \'-' + days + ' day\')')
         rows = cur.fetchall()
