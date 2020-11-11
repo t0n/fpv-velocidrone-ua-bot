@@ -68,6 +68,14 @@ def update_track_of_the_day(track_info):
         sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'track_of_the_day(scenery_id,scenery_name,track_name,track_url) VALUES(?,?,?,?)'
         cur.execute(sql, track_info)
         connection.commit()
+
+        # Update: add to history
+        add_track_to_the_history(track_info)
+
+        # TODO remove this DEBUG part
+        history = get_tracks_history(30)
+        print('history')
+        print(history)
     else:
         print("Error! cannot create database connection.")
 

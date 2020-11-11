@@ -57,8 +57,11 @@ def main():
                 if improved_time:
                     text_time = text_time + '(-' + improved_time + 's)'
                 text_name = diff['record']['name']
+                version = diff['record']['version']
                 country_flag = flag.flag(LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES[diff['record']['country']])
                 message_text = LEADERBOARD_UPDATE_MESSAGE.format(country_flag, text_name, text_time, text_position)
+                if version != '1.15':
+                    message_text += ' - v.' + version
                 # print('message_text: ' + message_text)  # might have some non-ascii chars
 
                 message_parts.append(message_text)
