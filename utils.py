@@ -36,14 +36,11 @@ def parse_leaderboard_by_url(track_leaderboard_url, version):
     print('parse_leaderboard_by_url - track_leaderboard_url: ' + str(track_leaderboard_url))
     print('parse_leaderboard_by_url - version: ' + str(version))
 
-    today_date = datetime.now().replace(hour=23, minute=59, second=59)
-    older_date = (today_date - timedelta(days=LEADERBOARD_DAYS_LOOKBACK)).replace(hour=0, minute=0, second=1)
-    print('parse_leaderboard_by_url - utcnow(): ' + str(datetime.utcnow()))
-    print('parse_leaderboard_by_url - now(): ' + str(datetime.now()))
+    today_date = datetime.now().replace(hour=23, minute=59, second=59, microsecond=99999)
+    older_date = (today_date - timedelta(days=LEADERBOARD_DAYS_LOOKBACK)).\
+        replace(hour=0, minute=0, second=0, microsecond=0)
     print('parse_leaderboard_by_url - today_date: ' + str(today_date))
     print('parse_leaderboard_by_url - older_date: ' + str(older_date))
-    logging.info('parse_leaderboard_by_url - utcnow(): ' + str(datetime.utcnow()))
-    logging.info('parse_leaderboard_by_url - now(): ' + str(datetime.now()))
     logging.info('parse_leaderboard_by_url - today_date: ' + str(today_date))
     logging.info('parse_leaderboard_by_url - older_date: ' + str(older_date))
 
@@ -61,11 +58,12 @@ def parse_leaderboard_by_url(track_leaderboard_url, version):
                 cells = row.findAll('td')
                 record_date_text = cells[6].text  # 25/10/2020 DD MM YYYY?
                 record_date = datetime.strptime(record_date_text, LEADERBOARD_DATE_FORMAT)
+                record_date = record_date.replace(hour=12, minute=0, second=0, microsecond=0)
                 if older_date <= record_date <= today_date:
                     new_record = {
                         'position': cells[0].text,
                         'time': cells[1].text,
-                        'name': bytes(cells[2].text.strip(), 'utf-8').decode('utf-8', 'ignore'),  # TODO: is this working?
+                        'name': bytes(cells[2].text.strip(), 'utf-8').decode('utf-8', 'ignore'),  # is this working?
                         'country': cells[3].text.strip(),
                         'ranking': cells[4].text,
                         'model': cells[5].text.strip(),
