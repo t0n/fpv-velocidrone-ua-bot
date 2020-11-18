@@ -1,7 +1,8 @@
 import logging
 import telegram
 
-from constants import PUBLISH_RESULTS_HELLO_MESSAGE, PUBLISH_RESULTS_LINE_TEMPLATE, RESULTS_SUPPORTED_COUNTRIES
+from constants import PUBLISH_RESULTS_HELLO_MESSAGE, PUBLISH_RESULTS_LINE_TEMPLATE, RESULTS_SUPPORTED_COUNTRIES, \
+    POINTS_MAP
 from db import get_track_of_the_day
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 from utils import parse_leaderboard
@@ -40,13 +41,20 @@ def main():
             if result['country'] in RESULTS_SUPPORTED_COUNTRIES:
                 results.append(result)
 
+        daily_results = []
         if results:
             print('-' * 80)
             print('filtered results:')
             messages = []
             for num, result in enumerate(results):
+                points = POINTS_MAP.get(num+1, 0)
                 messages.append(
-                    PUBLISH_RESULTS_LINE_TEMPLATE.format(num + 1, result['name'], result['time'], result['position']))
+                    PUBLISH_RESULTS_LINE_TEMPLATE.format(num + 1, result['name'], result['time'], points, result['position']))
+                daily_results.append({
+                    'position': num + 1,
+                    'name': result['name'],
+                    'points': points
+                })
 
             message = '\n\n'.join(messages)
             message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
@@ -55,6 +63,10 @@ def main():
         else:
             logging.info("No records!")
             print('No records!')
+
+        if daily_results:
+            # TODO save daily results
+            """"""
 
     except Exception as error:
         logging.exception(error)

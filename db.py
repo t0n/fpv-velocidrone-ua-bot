@@ -58,6 +58,32 @@ def _create_history_table_if_not_exists(connection):
         print(e)
 
 
+def _create_daily_results_table_if_not_exists(connection):
+    query = 'CREATE TABLE IF NOT EXISTS ' + DB_TABLE_PREFIX + 'daily_results (' \
+            'id integer PRIMARY KEY,' \
+            'date datetime DEFAULT CURRENT_TIMESTAMP, ' \
+            'data text NOT NULL' \
+            ');'
+    try:
+        c = connection.cursor()
+        c.execute(query)
+    except sqlite3.Error as e:
+        print(e)
+
+
+def _create_monthly_results_table_if_not_exists(connection):
+    query = 'CREATE TABLE IF NOT EXISTS ' + DB_TABLE_PREFIX + 'monthly_results (' \
+            'id integer PRIMARY KEY,' \
+            'date datetime DEFAULT CURRENT_TIMESTAMP, ' \
+            'data text NOT NULL' \
+            ');'
+    try:
+        c = connection.cursor()
+        c.execute(query)
+    except sqlite3.Error as e:
+        print(e)
+
+
 def update_track_of_the_day(track_info):
     connection = _create_connection(DB_FILE)
     if connection is not None:
@@ -158,5 +184,36 @@ def get_tracks_history(days):
         cur.execute(sql_query)
         rows = cur.fetchall()
         return rows
+    else:
+        print("Error! cannot create database connection.")
+
+
+def save_daily_results(daily_results):
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_daily_results_table_if_not_exists(connection)
+
+        cur = connection.cursor()
+
+        # sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'tracks_history(scenery_name,track_name) VALUES(?,?)'
+        # cur.execute(sql, (track_info[1], track_info[2]))  # scenery_name + track_name
+        # connection.commit()
+
+        # cur = connection.cursor()
+        # cur.execute('DELETE FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date >= CURDATE() && date < (CURDATE() + INTERVAL 1 DAY')
+        # connection.commit()
+
+        sql_query = 'SELECT FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date >= CURDATE() && date < (CURDATE() + INTERVAL 1 DAY'
+        print('sql_query: ' + str(sql_query))
+        cur.execute(sql_query)
+        rows = cur.fetchall()
+        return rows
+
+        # json_data = json.dumps(daily_results)
+        # print('save_leaderboard - json_data: ' + json_data)
+        # sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'leaderboard(data)  VALUES(?)'
+        # cur.execute(sql, (json_data,))
+        # connection.commit()
+
     else:
         print("Error! cannot create database connection.")
