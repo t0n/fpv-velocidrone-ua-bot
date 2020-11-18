@@ -212,7 +212,7 @@ def save_daily_results(daily_results):
 
         json_data = json.dumps(daily_results)
         print('save_leaderboard - json_data: ' + json_data)
-        sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'leaderboard(data)  VALUES(?)'
+        sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'daily_results(data)  VALUES(?)'
         cur.execute(sql, (json_data,))
         connection.commit()
 
