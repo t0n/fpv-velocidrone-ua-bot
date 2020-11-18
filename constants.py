@@ -95,6 +95,7 @@ VERSIONS_GET_LEADERBOARDS = ['1.15', '1.16', '1.17']
 TRACK_NAMES_BLOCK_LIST = [
     'pylons',  # too easy
     'covid',  # whoops
+    'beta',  # IndoorGoKart - Beta 2S Power Race 8
 ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 30
@@ -107,7 +108,7 @@ Section: Publish results
 
 PUBLISH_RESULTS_HELLO_MESSAGE = '🇺🇦🏁🇺🇦 Результати 🇺🇦🏁🇺🇦'
 
-PUBLISH_RESULTS_LINE_TEMPLATE = '<b>#{}</b> - <b>{}</b> - {}s / Балів: {}<br/>(#{} в загальному заліку треку)'
+PUBLISH_RESULTS_LINE_TEMPLATE = '<b>#{}</b> - <b>{}</b> - {}s / Балів: {}\n(#{} в загальному заліку треку)'
 
 RESULTS_SUPPORTED_COUNTRIES = [
     'Ukraine',
