@@ -9,7 +9,8 @@ import requests
 from bs4 import BeautifulSoup
 
 from constants import TRACK_NAMES_BLOCK_LIST, CONFIG_SCENERIES, VERSION_GET_TRACKS, SOUP_TRACK_LINK_CLASS, \
-    VERSIONS_GET_LEADERBOARDS, LEADERBOARD_DATE_FORMAT, LEADERBOARD_DAYS_LOOKBACK
+    VERSIONS_GET_LEADERBOARDS, LEADERBOARD_DATE_FORMAT, LEADERBOARD_DAYS_LOOKBACK, DO_NOT_REPEAT_TRACK_FOR_DAYS
+from db import get_tracks_history
 
 logging.basicConfig(filename='log.txt', filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
@@ -113,12 +114,28 @@ def compare_leaderboards(old, new):
 
 def filter_tracks(tracks_in):
     tracks_out = []
+
+    history = get_tracks_history(DO_NOT_REPEAT_TRACK_FOR_DAYS)
+    print('history')
+    print(history)
+
     for scenery_id, scenery_name, track_name, track_url in tracks_in:
         excluded = False
+
+        # block list
         for block_name in TRACK_NAMES_BLOCK_LIST:
             if block_name in track_name.lower():
                 excluded = True
-                print('TRACK EXCLUDED: ' + str((scenery_id, scenery_name, track_name, track_url)))
+                print('TRACK EXCLUDED (BLOCK LIST): ' + str((scenery_id, scenery_name, track_name, track_url)))
+
+        # check history
+        if not excluded:
+            for track_in_history in history:
+                if scenery_name.lower() == track_in_history[1].lower() and \
+                        track_name.lower() == track_in_history[2].lower():
+                    excluded = True
+                    print('TRACK EXCLUDED (HISTORY): ' + str((scenery_id, scenery_name, track_name, track_url)))
+
         if not excluded:
             tracks_out.append((scenery_id, scenery_name, track_name, track_url))
     return tracks_out
