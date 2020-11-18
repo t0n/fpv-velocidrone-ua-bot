@@ -203,7 +203,19 @@ def save_daily_results(daily_results):
         # cur.execute('DELETE FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date >= CURDATE() && date < (CURDATE() + INTERVAL 1 DAY')
         # connection.commit()
 
-        sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date == date(\'now\')'
+        sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results'
+        print('save_daily_results - sql_query: ' + str(sql_query))
+        cur.execute(sql_query)
+        rows = cur.fetchall()
+        print('rows: ' + str(rows))
+
+        sql_query = 'SELECT date(\'now\')'
+        print('save_daily_results - sql_query: ' + str(sql_query))
+        cur.execute(sql_query)
+        rows = cur.fetchall()
+        print('rows: ' + str(rows))
+
+        sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date >= date(\'now\') AND date < date(\'now\', \'+1 day\')'
         # sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results'
         print('save_daily_results - sql_query: ' + str(sql_query))
         cur.execute(sql_query)
