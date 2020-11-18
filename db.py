@@ -203,15 +203,15 @@ def save_daily_results(daily_results):
         # cur.execute('DELETE FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date >= CURDATE() && date < (CURDATE() + INTERVAL 1 DAY')
         # connection.commit()
 
-        # sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date == date(\'now\')'
-        sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results'
-        print('sql_query: ' + str(sql_query))
+        sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date == date(\'now\')'
+        # sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results'
+        print('save_daily_results - sql_query: ' + str(sql_query))
         cur.execute(sql_query)
         rows = cur.fetchall()
         print('rows: ' + str(rows))
 
         json_data = json.dumps(daily_results)
-        print('save_leaderboard - json_data: ' + json_data)
+        print('save_daily_results - json_data: ' + json_data)
         sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'daily_results(data)  VALUES(?)'
         cur.execute(sql, (json_data,))
         connection.commit()
