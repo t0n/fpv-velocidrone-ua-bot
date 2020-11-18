@@ -108,7 +108,7 @@ Section: Publish results
 
 PUBLISH_RESULTS_HELLO_MESSAGE = '🇺🇦🏁🇺🇦 Результати 🇺🇦🏁🇺🇦'
 
-PUBLISH_RESULTS_LINE_TEMPLATE = '<b>#{}</b> - <b>{}</b> - {}s / Балів: {}\n(#{} в загальному заліку треку)'
+PUBLISH_RESULTS_LINE_TEMPLATE = '<b>#{}</b> - <b>{}</b> - {}s / <b>Балів: {}</b>\n<i>(#{} в загальному заліку треку)</i>'
 
 RESULTS_SUPPORTED_COUNTRIES = [
     'Ukraine',
@@ -116,13 +116,13 @@ RESULTS_SUPPORTED_COUNTRIES = [
 
 POINTS_MAP = {
     1: 25,
-    2: 18,
-    3: 15,
-    4: 12,
-    5: 10,
-    6: 8,
-    7: 6,
-    8: 4,
-    9: 2,
-    10: 1
+    # 2: 18,
+    # 3: 15,
+    # 4: 12,
+    # 5: 10,
+    # 6: 8,
+    # 7: 6,
+    # 8: 4,
+    # 9: 2,
+    # 10: 1
 }
