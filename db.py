@@ -207,13 +207,13 @@ def save_daily_results(daily_results):
         print('sql_query: ' + str(sql_query))
         cur.execute(sql_query)
         rows = cur.fetchall()
-        return rows
+        print('rows: ' + str(rows))
 
-        # json_data = json.dumps(daily_results)
-        # print('save_leaderboard - json_data: ' + json_data)
-        # sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'leaderboard(data)  VALUES(?)'
-        # cur.execute(sql, (json_data,))
-        # connection.commit()
+        json_data = json.dumps(daily_results)
+        print('save_leaderboard - json_data: ' + json_data)
+        sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'leaderboard(data)  VALUES(?)'
+        cur.execute(sql, (json_data,))
+        connection.commit()
 
     else:
         print("Error! cannot create database connection.")

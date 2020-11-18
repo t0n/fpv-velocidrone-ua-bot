@@ -3,7 +3,7 @@ import telegram
 
 from constants import PUBLISH_RESULTS_HELLO_MESSAGE, PUBLISH_RESULTS_LINE_TEMPLATE, RESULTS_SUPPORTED_COUNTRIES, \
     POINTS_MAP
-from db import get_track_of_the_day
+from db import get_track_of_the_day, save_daily_results
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 from utils import parse_leaderboard
 
@@ -60,13 +60,13 @@ def main():
             message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
             bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
             logging.info("Results published")
+
+            if daily_results:
+                save_daily_results(daily_results)
+
         else:
             logging.info("No records!")
             print('No records!')
-
-        if daily_results:
-            # TODO save daily results
-            """"""
 
     except Exception as error:
         logging.exception(error)
