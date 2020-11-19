@@ -219,13 +219,13 @@ def get_daily_results(previous_month=True):
         if previous_month:
             sql_query = 'SELECT * FROM ' + \
                         DB_TABLE_PREFIX + 'daily_results ' + \
-                        'WHERE date BETWEEN date(\'now\', \'-1 month\', \'start of month\') AND ' + \
+                        'WHERE date BETWEEN date(\'now\', \'-1 month\', \'start of month\', \'+1 day\') AND ' + \
                         'date(\'now\', \'start of month\', \'-1 day\')'
         else:
             # current month
             sql_query = 'SELECT * FROM ' + \
                         DB_TABLE_PREFIX + 'daily_results ' + \
-                        'WHERE date BETWEEN date(\'now\', \'start of month\') AND ' + \
+                        'WHERE date BETWEEN date(\'now\', \'start of month\', \'+1 day\') AND ' + \
                         'date(\'now\', \'+1 month\', \'start of month\')'
         cur.execute(sql_query)
         rows = cur.fetchall()
