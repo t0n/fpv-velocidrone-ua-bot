@@ -1,10 +1,17 @@
 # add these lines to crontab:
 
+# Update leaderboard
 # run each 5 minutes
 */5 * * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/update_leaderboard.py
 
+# Select new track
 # run once a day at 17:00 (12:00 GMT)
 0 12 * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/select_track.py
 
+# Daily results
 # run once a day at 16:59 (11:59 GMT)
 59 11 * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/publish_results.py
+
+# Monthly results - show daily, on 1st of each months it get final results
+# run once a day at 17:59 (12:59 GMT)
+59 12 * * *	cd /home/<path>/fpv-velocidrone-ua-bot/ && /home/<path>/fpv-velocidrone-ua-bot/.env/bin/python /home/<path>/fpv-velocidrone-ua-bot/publish_monthly_results.py

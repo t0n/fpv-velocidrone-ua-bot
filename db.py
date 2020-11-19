@@ -195,38 +195,41 @@ def save_daily_results(daily_results):
 
         cur = connection.cursor()
 
-        # sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'tracks_history(scenery_name,track_name) VALUES(?,?)'
-        # cur.execute(sql, (track_info[1], track_info[2]))  # scenery_name + track_name
-        # connection.commit()
-
-        # cur = connection.cursor()
-        # cur.execute('DELETE FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date >= CURDATE() && date < (CURDATE() + INTERVAL 1 DAY')
-        # connection.commit()
-
-        sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results'
-        print('save_daily_results - sql_query: ' + str(sql_query))
-        cur.execute(sql_query)
-        rows = cur.fetchall()
-        print('rows: ' + str(rows))
-
-        sql_query = 'SELECT date(\'now\')'
-        print('save_daily_results - sql_query: ' + str(sql_query))
-        cur.execute(sql_query)
-        rows = cur.fetchall()
-        print('rows: ' + str(rows))
-
-        sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date >= date(\'now\') AND date < date(\'now\', \'+1 day\')'
-        # sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results'
-        print('save_daily_results - sql_query: ' + str(sql_query))
-        cur.execute(sql_query)
-        rows = cur.fetchall()
-        print('rows: ' + str(rows))
+        # clear all possible previous versions
+        cur.execute('DELETE FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date >= date(\'now\') AND date < date(\'now\', \'+1 day\')')
+        connection.commit()
 
         json_data = json.dumps(daily_results)
         print('save_daily_results - json_data: ' + json_data)
         sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'daily_results(data)  VALUES(?)'
         cur.execute(sql, (json_data,))
         connection.commit()
+
+    else:
+        print("Error! cannot create database connection.")
+
+
+def get_daily_results(previous_month=True):
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_daily_results_table_if_not_exists(connection)
+
+        cur = connection.cursor()
+
+        if previous_month:
+            sql_query = 'SELECT * FROM ' + \
+                        DB_TABLE_PREFIX + 'daily_results ' + \
+                        'WHERE date BETWEEN date(\'now\', \'-1 month\', \'start of month\') AND ' + \
+                        'date(\'now\', \'start of month\', \'-1 day\')'
+        else:
+            # current month
+            sql_query = 'SELECT * FROM ' + \
+                        DB_TABLE_PREFIX + 'daily_results ' + \
+                        'WHERE date BETWEEN date(\'now\', \'start of month\') AND ' + \
+                        'date(\'now\', \'+1 month\', \'start of month\')'
+        cur.execute(sql_query)
+        rows = cur.fetchall()
+        return rows
 
     else:
         print("Error! cannot create database connection.")

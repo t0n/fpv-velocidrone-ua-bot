@@ -126,3 +126,12 @@ POINTS_MAP = {
     9: 2,
     10: 1
 }
+
+
+"""
+Monthly results
+"""
+
+MONTHLY_RESULTS_LINE = '<b>#{}</b> - <b>{}</b> - {} балів'
+MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця🇺🇦🏁🇺🇦'
+MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця🇺🇦🏆🥇🏆🇺🇦'

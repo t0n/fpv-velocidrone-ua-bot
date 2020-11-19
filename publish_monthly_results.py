@@ -1,6 +1,10 @@
 import logging
+from datetime import datetime
+
 import telegram
 
+from constants import PUBLISH_RESULTS_LINE_TEMPLATE, MONTHLY_RESULTS_LINE, MONTHLY_FINAL_RESULTS, MONTHLY_DAILY_RESULTS
+from db import get_daily_results
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 
 
@@ -19,53 +23,59 @@ def main():
 
     try:
 
-        pass
+        day = datetime.today().day
 
-        #
-        # saved_track = get_track_of_the_day()
-        # print('-' * 80)
-        # print('Track of the day: ' + str(saved_track))
-        #
-        # new_leaderboard = parse_leaderboard(saved_track)
-        # print('-' * 80)
-        # print('new_leaderboard:')
-        # print(new_leaderboard)
-        #
-        # print('-' * 80)
-        # print('all results:')
-        # results = []
-        # for result in new_leaderboard:
-        #     print(result)
-        #     # filter by country
-        #     if result['country'] in RESULTS_SUPPORTED_COUNTRIES:
-        #         results.append(result)
-        #
-        # daily_results = []
-        # if results:
-        #     print('-' * 80)
-        #     print('filtered results:')
-        #     messages = []
-        #     for num, result in enumerate(results):
-        #         points = POINTS_MAP.get(num+1, 0)
-        #         messages.append(
-        #             PUBLISH_RESULTS_LINE_TEMPLATE.format(num + 1, result['name'], result['time'], points, result['position']))
-        #         daily_results.append({
-        #             'position': num + 1,
-        #             'name': result['name'],
-        #             'points': points
-        #         })
-        #
-        #     message = '\n\n'.join(messages)
-        #     message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
-        #     bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
-        #     logging.info("Results published")
-        # else:
-        #     logging.info("No records!")
-        #     print('No records!')
-        #
-        # if daily_results:
-        #     # TODO save daily results
-        #     """"""
+        if 1 == day:
+            # this is real monthly announcement of final results for previous month
+            get_previous_month = True
+        else:
+            # this is testing or intermediate results
+            get_previous_month = False
+
+        all_daily_results = get_daily_results(get_previous_month)
+
+        points_per_name = {}
+
+        for day_results in all_daily_results:
+            results = day_results[2]  # data column
+            print('-' * 80)
+            print('results: ' + str(results))
+
+            for result in results:
+                print('result: ' + str(result))
+
+                """
+                {
+                    'position': ...,
+                    'name': ...
+                    'points': ...
+                }
+                """
+
+                total_points_for_name = points_per_name.get(result['name'], 0)
+                total_points_for_name += result['points']
+                total_points_for_name[result['name']] = total_points_for_name
+
+        print('=' * 80)
+        print('points_per_name: ' + str(points_per_name))
+
+        monthly_leaderboard = sorted(points_per_name.items(), key=lambda x: x[1], reverse=True)
+        print('points_per_name: ' + str(points_per_name))
+
+        messages = []
+        for monthly_leaderboard_item in monthly_leaderboard:
+            messages.append(MONTHLY_RESULTS_LINE.format(monthly_leaderboard_item[0], monthly_leaderboard_item[1]))
+        message = '\n\n'.join(messages)
+
+        if 1 == day:
+            # this is real monthly announcement of final results for previous month
+            message = MONTHLY_DAILY_RESULTS + '\n\n' + message
+        else:
+            # this is testing or intermediate results
+            message = MONTHLY_FINAL_RESULTS + '\n\n' + message
+
+        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
+        logging.info("Results published")
 
     except Exception as error:
         logging.exception(error)
