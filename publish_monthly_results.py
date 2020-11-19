@@ -61,10 +61,11 @@ def main():
         print('points_per_name: ' + str(points_per_name))
 
         monthly_leaderboard = sorted(points_per_name.items(), key=lambda x: x[1], reverse=True)
-        print('points_per_name: ' + str(points_per_name))
+        print('monthly_leaderboard: ' + str(monthly_leaderboard))
 
         messages = []
         for monthly_leaderboard_item in monthly_leaderboard:
+            print('monthly_leaderboard_item: ' + str(monthly_leaderboard_item))
             messages.append(MONTHLY_RESULTS_LINE.format(monthly_leaderboard_item[0], monthly_leaderboard_item[1]))
         message = '\n\n'.join(messages)
 
