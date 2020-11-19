@@ -66,6 +66,8 @@ def main():
         messages = []
         for monthly_leaderboard_item in monthly_leaderboard:
             print('monthly_leaderboard_item: ' + str(monthly_leaderboard_item))
+            print('monthly_leaderboard_item[0]: ' + str(monthly_leaderboard_item[0]))
+            print('monthly_leaderboard_item[1]: ' + str(monthly_leaderboard_item[1]))
             messages.append(MONTHLY_RESULTS_LINE.format(monthly_leaderboard_item[0], monthly_leaderboard_item[1]))
         message = '\n\n'.join(messages)
 
