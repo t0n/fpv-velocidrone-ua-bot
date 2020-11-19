@@ -64,11 +64,10 @@ def main():
         print('monthly_leaderboard: ' + str(monthly_leaderboard))
 
         messages = []
-        for monthly_leaderboard_item in monthly_leaderboard:
+        for pos, monthly_leaderboard_item in enumerate(monthly_leaderboard):
+            print('pos: ' + str(pos))
             print('monthly_leaderboard_item: ' + str(monthly_leaderboard_item))
-            print('monthly_leaderboard_item[0]: ' + str(monthly_leaderboard_item[0]))
-            print('monthly_leaderboard_item[1]: ' + str(monthly_leaderboard_item[1]))
-            messages.append(MONTHLY_RESULTS_LINE.format(monthly_leaderboard_item[0], monthly_leaderboard_item[1]))
+            messages.append(MONTHLY_RESULTS_LINE.format(pos, monthly_leaderboard_item[0], monthly_leaderboard_item[1]))
         message = '\n\n'.join(messages)
 
         if 1 == day:
