@@ -133,5 +133,5 @@ Monthly results
 """
 
 MONTHLY_RESULTS_LINE = '<b>#{}</b> - <b>{}</b> - {} балів'
-MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця🇺🇦🏁🇺🇦'
-MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця🇺🇦🏆🥇🏆🇺🇦'
+MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця🇺🇦🏁🇺🇦\n\n{}\n\nБорітеся — поборете!'
+MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця🇺🇦🏆🥇🏆🇺🇦\n\n{}\n\n'

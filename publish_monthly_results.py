@@ -65,17 +65,17 @@ def main():
 
         messages = []
         for pos, monthly_leaderboard_item in enumerate(monthly_leaderboard):
-            print('pos: ' + str(pos))
+            print('pos: ' + str(pos+1))
             print('monthly_leaderboard_item: ' + str(monthly_leaderboard_item))
-            messages.append(MONTHLY_RESULTS_LINE.format(pos, monthly_leaderboard_item[0], monthly_leaderboard_item[1]))
+            messages.append(MONTHLY_RESULTS_LINE.format(pos+1, monthly_leaderboard_item[0], monthly_leaderboard_item[1]))
         message = '\n\n'.join(messages)
 
         if 1 == day:
             # this is real monthly announcement of final results for previous month
-            message = MONTHLY_DAILY_RESULTS + '\n\n' + message
+            message = MONTHLY_FINAL_RESULTS.format(message)
         else:
             # this is testing or intermediate results
-            message = MONTHLY_FINAL_RESULTS + '\n\n' + message
+            message = MONTHLY_DAILY_RESULTS.format(message)
 
         bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
         logging.info("Results published")
