@@ -55,7 +55,7 @@ def main():
 
                 total_points_for_name = points_per_name.get(result['name'], 0)
                 total_points_for_name += result['points']
-                total_points_for_name[result['name']] = total_points_for_name
+                points_per_name[result['name']] = total_points_for_name
 
         print('=' * 80)
         print('points_per_name: ' + str(points_per_name))
