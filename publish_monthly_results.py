@@ -1,3 +1,4 @@
+import json
 import logging
 from datetime import datetime
 
@@ -37,7 +38,7 @@ def main():
         points_per_name = {}
 
         for day_results in all_daily_results:
-            results = day_results[2]  # data column
+            results = json.loads(day_results[2])  # data column
             print('-' * 80)
             print('results: ' + str(results))
 
