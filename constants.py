@@ -93,9 +93,10 @@ VERSIONS_GET_LEADERBOARDS = ['1.15', '1.16', '1.17']
 # VERSIONS_GET_LEADERBOARDS = ['1.16', ]
 
 TRACK_NAMES_BLOCK_LIST = [
-    'pylons',  # too easy
+    'beta',  # 'IndoorGoKart - Beta 2S Power Race 8' - whoops
     'covid',  # whoops
-    'beta',  # IndoorGoKart - Beta 2S Power Race 8
+    'micro',  # whoops
+    'pylons',  # too easy
 ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 30
@@ -133,5 +134,5 @@ Monthly results
 """
 
 MONTHLY_RESULTS_LINE = '<b>#{}</b> - <b>{}</b> - {} балів'
-MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця🇺🇦🏁🇺🇦\n\n{}\n\nБорітеся — поборете!'
+MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця🇺🇦🏁🇺🇦\n\n{}\n\n'
 MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця🇺🇦🏆🥇🏆🇺🇦\n\n{}\n\n'
