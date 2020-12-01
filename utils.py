@@ -131,8 +131,8 @@ def filter_tracks(tracks_in):
         # check history
         if not excluded:
             for track_in_history in history:
-                if scenery_name.lower() == track_in_history[1].lower() and \
-                        track_name.lower() == track_in_history[2].lower():
+                if scenery_name.lower() == track_in_history[2].lower() and \
+                        track_name.lower() == track_in_history[3].lower():
                     excluded = True
                     print('TRACK EXCLUDED (HISTORY): ' + str((scenery_id, scenery_name, track_name, track_url)))
 
