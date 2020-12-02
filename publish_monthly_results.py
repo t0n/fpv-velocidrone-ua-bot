@@ -54,7 +54,13 @@ def main():
                 """
 
                 total_points_for_name = points_per_name.get(result['name'], 0)
-                total_points_for_name += result['points']
+                results_of_the_day = result['points']
+
+                # TODO remove later
+                # fix for those who get 0 points at the beginning
+                results_of_the_day = results_of_the_day if results_of_the_day > 0 else 1
+
+                total_points_for_name += results_of_the_day
                 points_per_name[result['name']] = total_points_for_name
 
         print('=' * 80)

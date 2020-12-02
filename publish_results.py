@@ -47,7 +47,7 @@ def main():
             print('filtered results:')
             messages = []
             for num, result in enumerate(results):
-                points = POINTS_MAP.get(num+1, 0)
+                points = POINTS_MAP.get(num+1, 1)   # as requested, everybody gets at least 1
                 messages.append(
                     PUBLISH_RESULTS_LINE_TEMPLATE.format(num + 1, result['name'], result['time'], points, result['position']))
                 daily_results.append({
