@@ -69,7 +69,9 @@ def main():
         traceback.print_exc()
         bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
                          text='⚠️ @antonkoba Error in select_track: ' + str(error),
-                         parse_mode=telegram.ParseMode.HTML)
+                         parse_mode=telegram.ParseMode.HTML,
+                         disable_web_page_preview=True
+                         )
 
 
 if __name__ == "__main__":
