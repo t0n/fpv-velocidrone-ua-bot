@@ -87,8 +87,11 @@ def main():
             messages.append(MONTHLY_RESULTS_LINE.format(pos+1, monthly_leaderboard_item[0], monthly_leaderboard_item[1]))
         message = '\n\n'.join(messages)
 
-        min_date = min(all_dates).strftime('%d.%m.%Y')
-        max_date = max(all_dates).strftime('%d.%m.%Y')
+        # not real dates
+        # min_date = min(all_dates).strftime('%d.%m.%Y')
+        # max_date = max(all_dates).strftime('%d.%m.%Y')
+        min_date = min(all_dates)[:10]
+        max_date = max(all_dates)[:10]
         print('days min: ' + min_date)
         print('days max: ' + max_date)
         time_interval = MONTHLY_RESULTS_TIME_INTERVAL.format(min_date, max_date)
