@@ -39,7 +39,7 @@ def main():
         points_per_name = {}
 
         for day_results in all_daily_results:
-            results_date = json.loads(day_results[1])
+            results_date = day_results[1]
             print('results_date: ' + str(results_date))
 
             results = json.loads(day_results[2])  # data column
