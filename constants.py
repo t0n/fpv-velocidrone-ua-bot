@@ -118,6 +118,7 @@ TRACK_NAMES_BLOCK_LIST = [
     'covid',  # whoops
     'micro',  # whoops
     'pylons',  # too easy
+    'collision',  # 'Countryside - Collision' - boring
 ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 30

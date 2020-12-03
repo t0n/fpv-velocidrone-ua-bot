@@ -217,16 +217,21 @@ def get_daily_results(previous_month=True):
         cur = connection.cursor()
 
         if previous_month:
+            # 1st of the month - this is the final results day from previous month, so ignore it
+            # start counting from 2nd day of month
+            # but count till 1st day of current month
             sql_query = 'SELECT * FROM ' + \
                         DB_TABLE_PREFIX + 'daily_results ' + \
                         'WHERE date BETWEEN date(\'now\', \'-1 month\', \'start of month\', \'+1 day\') AND ' + \
-                        'date(\'now\', \'start of month\', \'-1 day\')'
+                        'date(\'now\', \'start of month\', \'-1 day\')'  # this -1 day is wrong
         else:
             # current month
             sql_query = 'SELECT * FROM ' + \
                         DB_TABLE_PREFIX + 'daily_results ' + \
                         'WHERE date BETWEEN date(\'now\', \'start of month\', \'+1 day\') AND ' + \
                         'date(\'now\', \'+1 month\', \'start of month\')'
+
+        print('get_daily_results - sql_query: ' + sql_query)
         cur.execute(sql_query)
         rows = cur.fetchall()
         return rows

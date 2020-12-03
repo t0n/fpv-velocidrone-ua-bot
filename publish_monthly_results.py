@@ -33,6 +33,7 @@ def main():
             # this is testing or intermediate results
             get_previous_month = False
 
+        get_previous_month = True  # TODO remove this is a debug
         all_daily_results = get_daily_results(get_previous_month)
 
         points_per_name = {}
@@ -83,8 +84,9 @@ def main():
             # this is testing or intermediate results
             message = MONTHLY_DAILY_RESULTS.format(message)
 
-        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
-        logging.info("Results published")
+        # TODO uncomment this is a debug
+        # bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
+        # logging.info("Results published")
 
     except Exception as error:
         logging.exception(error)
