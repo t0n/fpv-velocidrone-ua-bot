@@ -34,7 +34,6 @@ def main():
             # this is testing or intermediate results
             get_previous_month = False
 
-        get_previous_month = True  # TODO remove this is a debug
         all_daily_results = get_daily_results(get_previous_month)
 
         points_per_name = {}
@@ -54,7 +53,6 @@ def main():
 
             for result in results:
                 print('result: ' + str(result))
-
                 """
                 {
                     'position': ...,

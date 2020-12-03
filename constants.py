@@ -157,5 +157,5 @@ Monthly results
 
 MONTHLY_RESULTS_LINE = '<b>#{}</b> - <b>{}</b> - {} балів'
 MONTHLY_RESULTS_TIME_INTERVAL = '({} - {})'
-MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця🇺🇦🏁🇺🇦\n{}\n\n{}\n\n'
-MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця🇺🇦🏆🥇🏆🇺🇦\n{}\n\n{}\n\n'
+MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця 🇺🇦🏁🇺🇦\n{}\n\n{}\n\n'
+MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця 🇺🇦🏆🥇🏆🇺🇦\n{}\n\n{}\n\n'
