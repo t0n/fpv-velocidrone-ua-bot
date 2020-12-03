@@ -223,7 +223,7 @@ def get_daily_results(previous_month=True):
             sql_query = 'SELECT * FROM ' + \
                         DB_TABLE_PREFIX + 'daily_results ' + \
                         'WHERE date BETWEEN date(\'now\', \'-1 month\', \'start of month\', \'+1 day\', \'15 hours\', \'5 minutes\') AND ' + \
-                        'date(\'now\', \'start of month\', \'23 hours\', \'5 minutes\')'
+                        'date(\'now\', \'start of month\', \'+1 day\', \'23 hours\', \'5 minutes\')'
         else:
             # current month
             sql_query = 'SELECT * FROM ' + \
