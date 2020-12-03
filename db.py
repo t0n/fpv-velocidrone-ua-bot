@@ -222,14 +222,14 @@ def get_daily_results(previous_month=True):
             # but count till 1st day of current month
             sql_query = 'SELECT * FROM ' + \
                         DB_TABLE_PREFIX + 'daily_results ' + \
-                        'WHERE date BETWEEN date(\'now\', \'-1 month\', \'start of month\', \'+1 day\') AND ' + \
-                        'date(\'now\', \'start of month\', \'-1 day\')'  # this -1 day is wrong
+                        'WHERE date BETWEEN date(\'now\', \'-1 month\', \'start of month\', \'+1 day\', \'15 hours\', \'5 minutes\') AND ' + \
+                        'date(\'now\', \'start of month\', \'15 hours\', \'5 minutes\')'
         else:
             # current month
             sql_query = 'SELECT * FROM ' + \
                         DB_TABLE_PREFIX + 'daily_results ' + \
-                        'WHERE date BETWEEN date(\'now\', \'start of month\', \'+1 day\') AND ' + \
-                        'date(\'now\', \'+1 month\', \'start of month\')'
+                        'WHERE date BETWEEN date(\'now\', \'start of month\', \'+1 day\', \'15 hours\', \'5 minutes\') AND ' + \
+                        'date(\'now\', \'+1 month\', \'start of month\',  \'15 hours\', \'5 minutes\')'
 
         print('get_daily_results - sql_query: ' + sql_query)
         cur.execute(sql_query)
