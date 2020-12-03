@@ -103,9 +103,8 @@ def main():
             # this is testing or intermediate results
             message = MONTHLY_DAILY_RESULTS.format(time_interval, message)
 
-        # TODO uncomment this is a debug
-        # bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
-        # logging.info("Results published")
+        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
+        logging.info("Results published")
 
     except Exception as error:
         logging.exception(error)
