@@ -119,6 +119,7 @@ TRACK_NAMES_BLOCK_LIST = [
     'micro',  # whoops
     'pylons',  # too easy
     'collision',  # 'Countryside - Collision' - boring
+    'redbull dr.one',  # 'Redbull Ring - Redbull DR.ONE' - finish gates hard to hit
 ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 30

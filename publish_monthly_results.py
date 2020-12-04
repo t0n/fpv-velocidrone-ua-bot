@@ -101,8 +101,9 @@ def main():
             # this is testing or intermediate results
             message = MONTHLY_DAILY_RESULTS.format(time_interval, message)
 
-        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
-        logging.info("Results published")
+        # TODO bring back
+        # bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
+        # logging.info("Results published")
 
     except Exception as error:
         logging.exception(error)
@@ -110,9 +111,10 @@ def main():
         print(error)
         import traceback
         traceback.print_exc()
-        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
-                         text='⚠️ @antonkoba Error in publish_monthly_results: ' + str(error),
-                         parse_mode=telegram.ParseMode.HTML)
+        # TODO bring back
+        # bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
+        #                  text='⚠️ @antonkoba Error in publish_monthly_results: ' + str(error),
+        #                  parse_mode=telegram.ParseMode.HTML)
 
 
 if __name__ == "__main__":
