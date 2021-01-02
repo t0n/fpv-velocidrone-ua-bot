@@ -120,6 +120,8 @@ TRACK_NAMES_BLOCK_LIST = [
     'pylons',  # too easy
     'collision',  # 'Countryside - Collision' - boring
     'redbull dr.one',  # 'Redbull Ring - Redbull DR.ONE' - finish gates hard to hit
+    'vrl season 3 track 3',  # too long, moving obstacles
+    'vrl team championships',  # too long
 ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 30
@@ -138,17 +140,31 @@ RESULTS_SUPPORTED_COUNTRIES = [
     'Ukraine',
 ]
 
+# new suggestion for 30 winners
+# 2, 3, 5, 7, 10, 13, 16, 19, 23, 27,
+# 31, 35, 39, 44, 49, 54, 60, 66, 72, 79,
+# 86, 94, 102, 112, 123, 135, 150, 167, 186, 225
 POINTS_MAP = {
-    1: 25,
-    2: 18,
-    3: 15,
-    4: 12,
-    5: 10,
-    6: 8,
-    7: 6,
-    8: 4,
-    9: 2,
-    10: 1
+    1: 85,
+    2: 72,
+    3: 66,
+    4: 60,
+    5: 54,
+    6: 49,
+    7: 44,
+    8: 39,
+    9: 35,
+    10: 31,
+    11: 27,
+    12: 23,
+    13: 19,
+    14: 16,
+    15: 13,
+    16: 10,
+    17: 7,
+    18: 5,
+    19: 3,
+    20: 2,
 }
 
 
