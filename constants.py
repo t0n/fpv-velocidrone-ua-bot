@@ -122,9 +122,14 @@ TRACK_NAMES_BLOCK_LIST = [
     'redbull dr.one',  # 'Redbull Ring - Redbull DR.ONE' - finish gates hard to hit
     'vrl season 3 track 3',  # too long, moving obstacles
     'vrl team championships',  # too long
+    'growers rock garden',  # 'Dynamic Weather - Growers Rock Garden' - long/ bad navigation
+    'vrl season 7 championships',  # 'Dynamic Weather - VRL Season 7 Championships' - too long?
+    # 'quad rivals trainer level 3 dw',  # 'Dynamic Weather - Quad Rivals Trainer Level 3 DW' -- this should be ok
+    'gokartrelay',  # slow or  something
+    'gods_of_quadhalla',  # ppl didn't like it
 ]
 
-DO_NOT_REPEAT_TRACK_FOR_DAYS = 30
+DO_NOT_REPEAT_TRACK_FOR_DAYS = 60
 
 
 """
