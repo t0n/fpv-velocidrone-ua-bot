@@ -127,6 +127,7 @@ TRACK_NAMES_BLOCK_LIST = [
     # 'quad rivals trainer level 3 dw',  # 'Dynamic Weather - Quad Rivals Trainer Level 3 DW' -- this should be ok
     'gokartrelay',  # slow or  something
     'gods_of_quadhalla',  # ppl didn't like it
+    'vrl-freestyle-country',  #
 ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 60
