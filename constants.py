@@ -3,6 +3,16 @@ Common/shared constants
 """
 
 
+GAME_MODE_1_LAP = '1lap'
+GAME_MODE_3_LAPS = '3laps'
+GAME_MODE_URLS = {
+    GAME_MODE_1_LAP: 'https://www.velocidrone.com/set_race_mode/3',  # Race Mode: Single Class
+    GAME_MODE_3_LAPS: 'https://www.velocidrone.com/set_race_mode/6',  # 3 Lap: Single Class
+}
+
+ACTIVE_GAME_MODE = GAME_MODE_3_LAPS
+
+
 """
 Section: Leaderboard Updates
 """
@@ -79,7 +89,7 @@ CONFIG_SCENERIES = [
     (8, 'Football Stadium'),
     (12, 'Countryside'),
     (13, 'Night Factory'),
-    (14, 'Karting Track'),
+    # (14, 'Karting Track'),  # all tracks have bad performance
     (15, 'Subway'),
     (16, 'Empty Scene Day'),
     (17, 'Empty Scene Night'),
@@ -92,7 +102,7 @@ CONFIG_SCENERIES = [
     (24, 'City'),
     (25, 'Redbull Ring'),
     (26, 'Large Carpark'),
-    (29, 'Basketball Stadium'),
+    # (29, 'Basketball Stadium'),  # guys said there are no good tracks there
     (30, 'Bando'),
     (31, 'IndoorGoKart'),
     # (32, 'Slovenia Krvavec'),  # premium
@@ -127,7 +137,10 @@ TRACK_NAMES_BLOCK_LIST = [
     # 'quad rivals trainer level 3 dw',  # 'Dynamic Weather - Quad Rivals Trainer Level 3 DW' -- this should be ok
     'gokartrelay',  # slow or  something
     'gods_of_quadhalla',  # ppl didn't like it
-    'vrl-freestyle-country',  #
+    'vrl-freestyle-country',
+    # metro?
+    # all baskterball
+    # all karting tracks?
 ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 60

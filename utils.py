@@ -9,7 +9,8 @@ import requests
 from bs4 import BeautifulSoup
 
 from constants import TRACK_NAMES_BLOCK_LIST, CONFIG_SCENERIES, VERSION_GET_TRACKS, SOUP_TRACK_LINK_CLASS, \
-    VERSIONS_GET_LEADERBOARDS, LEADERBOARD_DATE_FORMAT, LEADERBOARD_DAYS_LOOKBACK, DO_NOT_REPEAT_TRACK_FOR_DAYS
+    VERSIONS_GET_LEADERBOARDS, LEADERBOARD_DATE_FORMAT, LEADERBOARD_DAYS_LOOKBACK, DO_NOT_REPEAT_TRACK_FOR_DAYS, \
+    ACTIVE_GAME_MODE, GAME_MODE_3_LAPS, GAME_MODE_URLS
 from db import get_tracks_history
 
 logging.basicConfig(filename='log.txt', filemode='a',
@@ -45,6 +46,16 @@ def parse_leaderboard_by_url(track_leaderboard_url, version):
     logging.info('parse_leaderboard_by_url - today_date: ' + str(today_date))
     logging.info('parse_leaderboard_by_url - older_date: ' + str(older_date))
 
+    print('parse_leaderboard_by_url - current game mode: ' + str(ACTIVE_GAME_MODE))
+    if ACTIVE_GAME_MODE == GAME_MODE_3_LAPS:
+        # open leaderboard page
+        requests.get(track_leaderboard_url)
+
+        # switch game mode if needed
+        # one lap seems to be default?
+        requests.get(GAME_MODE_URLS[ACTIVE_GAME_MODE])
+
+    # now actually read it
     response = requests.get(track_leaderboard_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
