@@ -49,12 +49,18 @@ def parse_leaderboard_by_url(track_leaderboard_url, version):
     print('parse_leaderboard_by_url - current game mode: ' + str(ACTIVE_GAME_MODE))
     if ACTIVE_GAME_MODE == GAME_MODE_3_LAPS:
         # open leaderboard page
+        print('parse_leaderboard_by_url - open URL first: ' + str(track_leaderboard_url))
         requests.get(track_leaderboard_url)
 
         # switch game mode if needed
         # one lap seems to be default?
         # this will load the results so no need to open again
+        print('parse_leaderboard_by_url - switch game mode URL: ' + str(GAME_MODE_URLS[ACTIVE_GAME_MODE]))
         response = requests.get(GAME_MODE_URLS[ACTIVE_GAME_MODE])
+
+        print('parse_leaderboard_by_url - game mode switch response:')
+        print(response)
+        print(response.content)
     else:
         response = requests.get(track_leaderboard_url)
 
