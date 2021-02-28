@@ -53,10 +53,12 @@ def parse_leaderboard_by_url(track_leaderboard_url, version):
 
         # switch game mode if needed
         # one lap seems to be default?
-        requests.get(GAME_MODE_URLS[ACTIVE_GAME_MODE])
+        # this will load the results so no need to open again
+        response = requests.get(GAME_MODE_URLS[ACTIVE_GAME_MODE])
+    else:
+        response = requests.get(track_leaderboard_url)
 
     # now actually read it
-    response = requests.get(track_leaderboard_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
     records = []
