@@ -20,8 +20,8 @@ def main():
     bot = telegram.Bot(TELEGRAM_KEY)
     print(bot)
 
-    rename_from = 'AntonKoba'
-    rename_to = 'AntonTest'
+    rename_from = 'AntonTest'
+    rename_to = 'AntonKoba'
     print('Renaming player from ' + rename_from + ' to ' + rename_to)
 
     affected_results = 0
