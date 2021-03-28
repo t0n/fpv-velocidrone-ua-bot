@@ -261,7 +261,7 @@ def update_daily_results(id, daily_results):
 
         cur = connection.cursor()
 
-        cur.execute('UPDATE ' + DB_TABLE_PREFIX + 'daily_results SET data=VALUES(?) WHERE id=???')
+        cur.execute('UPDATE ' + DB_TABLE_PREFIX + 'daily_results SET data=? WHERE id=?', (daily_results, id))
         connection.commit()
 
     else:
