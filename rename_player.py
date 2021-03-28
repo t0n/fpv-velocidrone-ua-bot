@@ -35,7 +35,7 @@ def main():
 
         for daily_result in all_daily_results:
             res_id = daily_result[0]
-            res_data = daily_result[1]
+            res_data = daily_result[2]
             print('=' * 80)
             print(res_id)
             print('=' * 80)
