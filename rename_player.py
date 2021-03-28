@@ -1,3 +1,4 @@
+import json
 import logging
 import telegram
 
@@ -33,8 +34,24 @@ def main():
         print(all_daily_results)
 
         for daily_result in all_daily_results:
-            # data =
-            pass
+            res_id = daily_result[0]
+            res_data = daily_result[1]
+            print('=' * 80)
+            print(res_id)
+            print('=' * 80)
+            data = json.loads(res_data)
+            found_changes = False
+            for single_res in data:
+                print(single_res)
+                if single_res['name'] == rename_from:
+                    single_res['name'] = rename_to
+                    found_changes = True
+                    print('making replacement')
+            if found_changes:
+                affected_results += 1
+                data_to_write = json.dumps(data)
+                print('data_to_write: ' + str(data_to_write))
+            # TODO write res_id, data_to_write
 
         if affected_results:
             pass
