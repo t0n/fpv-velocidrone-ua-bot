@@ -238,3 +238,32 @@ def get_daily_results(previous_month=True):
 
     else:
         print("Error! cannot create database connection.")
+
+
+def get_all_daily_results():
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_daily_results_table_if_not_exists(connection)
+        cur = connection.cursor()
+        sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results'
+        print('get_daily_results - sql_query: ' + sql_query)
+        cur.execute(sql_query)
+        rows = cur.fetchall()
+        return rows
+    else:
+        print("Error! cannot create database connection.")
+
+
+def update_daily_results(id, daily_results):
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_daily_results_table_if_not_exists(connection)
+
+        cur = connection.cursor()
+
+        cur.execute('UPDATE ' + DB_TABLE_PREFIX + 'daily_results SET data=VALUES(?) WHERE id=???')
+        connection.commit()
+
+    else:
+        print("Error! cannot create database connection.")
+
