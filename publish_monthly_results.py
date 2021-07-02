@@ -21,7 +21,7 @@ def main():
     logging.info("Publish MONTHLY results script started!")
 
     bot = telegram.Bot(TELEGRAM_KEY)
-    print(bot)
+    logging.debug(bot)
 
     try:
 
@@ -40,19 +40,22 @@ def main():
 
         all_dates = []
 
-        for day_results in all_daily_results:
+        logging.debug('all_daily_results: ' + str(all_daily_results))
 
-            print('-' * 80)
+        for day_results in all_daily_results:
+            logging.debug('day_results in all_daily_results: ' + str(day_results))
+
+            logging.debug('-' * 80)
 
             results_date = day_results[1]
-            print('results_date: ' + str(results_date))
+            logging.debug('results_date: ' + str(results_date))
             all_dates.append(results_date)
 
             results = json.loads(day_results[2])  # data column
-            print('results: ' + str(results))
+            logging.debug('results: ' + str(results))
 
             for result in results:
-                print('result: ' + str(result))
+                logging.debug('result: ' + str(result))
                 """
                 {
                     'position': ...,
@@ -72,27 +75,34 @@ def main():
                 total_points_for_name += results_of_the_day
                 points_per_name[result['name']] = total_points_for_name
 
-        print('=' * 80)
-        print('points_per_name: ' + str(points_per_name))
+        logging.debug('=' * 80)
+        logging.debug('points_per_name: ' + str(points_per_name))
 
         monthly_leaderboard = sorted(points_per_name.items(), key=lambda x: x[1], reverse=True)
-        print('monthly_leaderboard: ' + str(monthly_leaderboard))
+        logging.debug('monthly_leaderboard: ' + str(monthly_leaderboard))
 
         messages = []
         for pos, monthly_leaderboard_item in enumerate(monthly_leaderboard):
-            print('pos: ' + str(pos+1))
-            print('monthly_leaderboard_item: ' + str(monthly_leaderboard_item))
+            logging.debug('pos: ' + str(pos+1))
+            logging.debug('monthly_leaderboard_item: ' + str(monthly_leaderboard_item))
             messages.append(MONTHLY_RESULTS_LINE.format(pos+1, monthly_leaderboard_item[0], monthly_leaderboard_item[1]))
         message = '\n\n'.join(messages)
 
-        # not real dates
-        # min_date = min(all_dates).strftime('%d.%m.%Y')
-        # max_date = max(all_dates).strftime('%d.%m.%Y')
-        min_date = min(all_dates)[:10]
-        max_date = max(all_dates)[:10]
-        print('days min: ' + min_date)
-        print('days max: ' + max_date)
-        time_interval = MONTHLY_RESULTS_TIME_INTERVAL.format(min_date, max_date)
+        logging.debug('all_dates: ' + all_dates)
+        if all_dates:
+
+            # not real dates
+            # min_date = min(all_dates).strftime('%d.%m.%Y')
+            # max_date = max(all_dates).strftime('%d.%m.%Y')
+            min_date = min(all_dates)[:10]
+            max_date = max(all_dates)[:10]
+            logging.debug('days min: ' + min_date)
+            logging.debug('days max: ' + max_date)
+            time_interval = MONTHLY_RESULTS_TIME_INTERVAL.format(min_date, max_date)
+
+        else:
+            logging.error("all_dates is empty")
+            time_interval = '???'
 
         if 1 == day:
             # this is real monthly announcement of final results for previous month
@@ -106,12 +116,13 @@ def main():
 
     except Exception as error:
         logging.exception(error)
-        print('Uncaught error: ')
-        print(error)
+        logging.debug('Uncaught error: ')
+        logging.debug(error)
         import traceback
-        traceback.print_exc()
+        exc = traceback.format_exc()
+        logging.error(exc)
         bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
-                         text='⚠️ @antonkoba Error in publish_monthly_results: ' + str(error),
+                         text='⚠️ @antonkoba Error in publish_monthly_results: ' + str(exc),
                          parse_mode=telegram.ParseMode.HTML)
 
 

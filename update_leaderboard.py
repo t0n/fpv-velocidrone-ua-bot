@@ -19,32 +19,32 @@ def main():
     logging.info("Leaderboard updates script started!")
 
     bot = telegram.Bot(TELEGRAM_KEY)
-    print(bot)
+    logging.debug(bot)
 
     try:
 
         saved_track = get_track_of_the_day()
-        print('-' * 80)
-        print('Track of the day: ' + str(saved_track))
+        logging.debug('-' * 80)
+        logging.debug('Track of the day: ' + str(saved_track))
 
         previous_leaderboard = get_leaderboard()
 
         new_leaderboard = parse_leaderboard(saved_track)
         save_leaderboard(new_leaderboard)
 
-        print('-' * 80)
-        print('old leaderboard:')
-        print(previous_leaderboard)
+        logging.debug('-' * 80)
+        logging.debug('old leaderboard:')
+        logging.debug(previous_leaderboard)
 
-        print('-' * 80)
-        print('new_leaderboard:')
-        print(new_leaderboard)
+        logging.debug('-' * 80)
+        logging.debug('new_leaderboard:')
+        logging.debug(new_leaderboard)
 
-        print('-' * 80)
+        logging.debug('-' * 80)
         message_parts = []
         for diff in compare_leaderboards(previous_leaderboard, new_leaderboard):
 
-            print(diff)
+            logging.debug(diff)
 
             # filter by country
             if diff['record']['country'] in list(LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES.keys()):
@@ -59,18 +59,21 @@ def main():
                     text_time = text_time + '(-' + improved_time + 's)'
                 text_name = diff['record']['name']
                 version = diff['record']['version']
-                country_flag = flag.flag(LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES[diff['record']['country']])
+                if LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES.get(diff['record']['country']):
+                    country_flag = flag.flag(LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES[diff['record']['country']])
+                else:
+                    country_flag = '🏳️'
                 message_text = LEADERBOARD_UPDATE_MESSAGE.format(country_flag, text_name, text_time, text_position)
 
                 # just to add some visibility
                 if version != '1.16':
                     message_text = message_text + ' - v' + version
-                # print('message_text: ' + message_text)  # might have some non-ascii chars
+                # logging.debug('message_text: ' + message_text)  # might have some non-ascii chars
 
                 message_parts.append(message_text)
 
             else:
-                print('not supported country: ' + diff['record']['country'])
+                logging.debug('not supported country: ' + diff['record']['country'])
 
         if message_parts:
             message = '\n\n'.join(message_parts)
@@ -78,16 +81,15 @@ def main():
             logging.info("Leaderboard updated")
         else:
             logging.info("No updates!")
-            print('No updates!')
 
     except Exception as error:
-        logging.exception(error)
-        print('Uncaught error: ')
-        print(error)
+        logging.exception('Uncaught error: ')
+        logging.debug(error)
         import traceback
-        traceback.print_exc()
+        exc = traceback.format_exc()
+        logging.error(exc)
         bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
-                         text='⚠️ @antonkoba Error in update_leaderboard: ' + str(error),
+                         text='⚠️ @antonkoba Error in update_leaderboard: ' + str(exc),
                          parse_mode=telegram.ParseMode.HTML)
 
 

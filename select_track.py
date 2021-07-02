@@ -20,7 +20,7 @@ def main():
     logging.info("Select track script started!")
 
     bot = telegram.Bot(TELEGRAM_KEY)
-    # print(bot)
+    # logging.debug(bot)
 
     try:
 
@@ -28,29 +28,28 @@ def main():
         # hacky fix
         try:
             old_track = get_track_of_the_day()
-            print('Old track: ' + str(old_track))
+            logging.debug('Old track: ' + str(old_track))
             previous_leaderboard = get_leaderboard()
-            print('Old leaderboard: ' + str(previous_leaderboard))
+            logging.debug('Old leaderboard: ' + str(previous_leaderboard))
         except Exception as e:
-            print('Error while printing old leaderboard:')
-            print(e)
+            logging.exception('Error while printing old leaderboard:')
 
         # get list of all sceneries X all tracks
         tracks = get_tracks()
         tracks = filter_tracks(tracks)
         random_track = random.choice(tracks)
-        print('Random track: ' + str(random_track))
+        logging.debug('Random track: ' + str(random_track))
 
         # save ToD
         update_track_of_the_day(random_track)
         saved_track = get_track_of_the_day()
-        print('Saved track: ' + str(saved_track))
+        logging.debug('Saved track: ' + str(saved_track))
 
         # save new leaderboard
         new_leaderboard = parse_leaderboard(saved_track)
         save_leaderboard(new_leaderboard)
         saved_leaderboard = get_leaderboard()
-        print('Saved leaderboard: ' + str(saved_leaderboard))
+        logging.debug('Saved leaderboard: ' + str(saved_leaderboard))
 
         # post message about new track of the day
         track_text = saved_track[1] + ' - ' + saved_track[2]
@@ -63,15 +62,13 @@ def main():
 
     except Exception as error:
         logging.exception(error)
-        print('Uncaught error: ')
-        print(error)
+        logging.debug('Uncaught error: ')
         import traceback
-        traceback.print_exc()
+        exc = traceback.format_exc()
+        logging.error(exc)
         bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
-                         text='⚠️ @antonkoba Error in select_track: ' + str(error),
-                         parse_mode=telegram.ParseMode.HTML,
-                         disable_web_page_preview=True
-                         )
+                         text='⚠️ @antonkoba Error in select_track: ' + str(exc),
+                         parse_mode=telegram.ParseMode.HTML)
 
 
 if __name__ == "__main__":

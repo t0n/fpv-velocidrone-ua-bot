@@ -209,6 +209,28 @@ def save_daily_results(daily_results):
         print("Error! cannot create database connection.")
 
 
+def save_daily_results_for_day(daily_results, day_from, day_to):
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_daily_results_table_if_not_exists(connection)
+
+        cur = connection.cursor()
+
+        # clear all possible previous versions
+        cur.execute('DELETE FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date >= ' + day_from + ' AND date < ' + day_to)
+        connection.commit()
+
+        json_data = json.dumps(daily_results)
+        print('save_daily_results - json_data: ' + json_data)
+        date_to_insert = ''
+        sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'daily_results(date, data)  VALUES(?)'
+        cur.execute(sql, (date_to_insert, json_data))
+        connection.commit()
+
+    else:
+        print("Error! cannot create database connection.")
+
+
 def get_daily_results(previous_month=True):
     connection = _create_connection(DB_FILE)
     if connection is not None:

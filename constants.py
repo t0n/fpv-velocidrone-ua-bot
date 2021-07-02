@@ -22,11 +22,7 @@ LEADERBOARD_UPDATE_MESSAGE = '{} <b>{}</b> - {} / <b>{}</b>'  # starts with flag
 
 LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES = {
     'Ukraine': 'UA',
-    'Russian Federation': 'RU',  # do we need it?
-    'Belarus': 'BY',
-    # 'Poland': 'PL',
-    # 'Hungary': 'HU',
-    # 'Czech Republic': 'CZ',
+    'Russian Federation': '',
 }
 
 LEADERBOARD_DAYS_LOOKBACK = 1
@@ -125,6 +121,8 @@ Section: Publish results
 
 
 PUBLISH_RESULTS_HELLO_MESSAGE = '🇺🇦🏁🇺🇦 Результати дня 🇺🇦🏁🇺🇦'
+
+RECRAWL_RESULTS_HELLO_MESSAGE = 'FIXED FIXED - Результати дня - FIXED FIXED'
 
 PUBLISH_RESULTS_LINE_TEMPLATE = '<b>#{}</b> - <b>{}</b> - {}s / <b>Балів: {}</b>\n<i>(#{} в загальному заліку треку)</i>'
 

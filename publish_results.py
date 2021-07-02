@@ -19,32 +19,32 @@ def main():
     logging.info("Publish results script started!")
 
     bot = telegram.Bot(TELEGRAM_KEY)
-    print(bot)
+    logging.debug(bot)
 
     try:
 
         saved_track = get_track_of_the_day()
-        print('-' * 80)
-        print('Track of the day: ' + str(saved_track))
+        logging.debug('-' * 80)
+        logging.debug('Track of the day: ' + str(saved_track))
 
         new_leaderboard = parse_leaderboard(saved_track)
-        print('-' * 80)
-        print('new_leaderboard:')
-        print(new_leaderboard)
+        logging.debug('-' * 80)
+        logging.debug('new_leaderboard:')
+        logging.debug(new_leaderboard)
 
-        print('-' * 80)
-        print('all results:')
+        logging.debug('-' * 80)
+        logging.debug('all results:')
         results = []
         for result in new_leaderboard:
-            print(result)
+            logging.debug(result)
             # filter by country
             if result['country'] in RESULTS_SUPPORTED_COUNTRIES:
                 results.append(result)
 
         daily_results = []
         if results:
-            print('-' * 80)
-            print('filtered results:')
+            logging.debug('-' * 80)
+            logging.debug('filtered results:')
             messages = []
             for num, result in enumerate(results):
                 points = POINTS_MAP.get(num+1, 1)   # as requested, everybody gets at least 1
@@ -66,16 +66,17 @@ def main():
 
         else:
             logging.info("No records!")
-            print('No records!')
+            logging.debug('No records!')
 
     except Exception as error:
         logging.exception(error)
-        print('Uncaught error: ')
-        print(error)
+        logging.debug('Uncaught error: ')
+        logging.debug(error)
         import traceback
-        traceback.print_exc()
+        exc = traceback.format_exc()
+        logging.error(exc)
         bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
-                         text='⚠️ @antonkoba Error in publish_results: ' + str(error),
+                         text='⚠️ @antonkoba Error in publish_results: ' + str(exc),
                          parse_mode=telegram.ParseMode.HTML)
 
 
