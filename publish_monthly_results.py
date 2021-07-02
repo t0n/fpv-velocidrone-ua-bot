@@ -88,7 +88,7 @@ def main():
             messages.append(MONTHLY_RESULTS_LINE.format(pos+1, monthly_leaderboard_item[0], monthly_leaderboard_item[1]))
         message = '\n\n'.join(messages)
 
-        logging.debug('all_dates: ' + all_dates)
+        logging.debug('all_dates: ' + str(all_dates))
         if all_dates:
 
             # not real dates
@@ -96,8 +96,8 @@ def main():
             # max_date = max(all_dates).strftime('%d.%m.%Y')
             min_date = min(all_dates)[:10]
             max_date = max(all_dates)[:10]
-            logging.debug('days min: ' + min_date)
-            logging.debug('days max: ' + max_date)
+            logging.debug('days min: ' + str(min_date))
+            logging.debug('days max: ' + str(max_date))
             time_interval = MONTHLY_RESULTS_TIME_INTERVAL.format(min_date, max_date)
 
         else:
