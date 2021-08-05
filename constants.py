@@ -71,19 +71,19 @@ CONFIG_SCENERIES = [
     (7, 'Industrial Wasteland'),
     (8, 'Football Stadium'),
     (12, 'Countryside'),
-    (13, 'Night Factory'),
+    # (13, 'Night Factory'),  # removed in new version
     # (14, 'Karting Track'),  # all tracks have bad performance
     (15, 'Subway'),
     (16, 'Empty Scene Day'),
     (17, 'Empty Scene Night'),
     (18, 'NEC Birmingham'),
-    (19, 'Warehouse'),
+    # (19, 'Warehouse'),  # removed in new version
     (20, 'Underground Carpark'),
     # (21, 'Sports Hall'),  # too small maps here / micros?
     (22, 'Coastal'),
     (23, 'River2'),
     (24, 'City'),
-    (25, 'Redbull Ring'),
+    # (25, 'Redbull Ring'),  # removed in new version
     (26, 'Large Carpark'),
     # (29, 'Basketball Stadium'),  # guys said there are no good tracks there
     (30, 'Bando'),
@@ -121,6 +121,7 @@ TRACK_NAMES_BLOCK_LIST = [
     'gokartrelay',  # slow or  something
     'gods_of_quadhalla',  # ppl didn't like it
     'vrl-freestyle-country',
+    'newbeedrone',  # whoop tracks
     # metro?
     # all baskterball
     # all karting tracks?
