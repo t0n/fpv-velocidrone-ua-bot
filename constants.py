@@ -22,7 +22,6 @@ LEADERBOARD_UPDATE_MESSAGE = '{} <b>{}</b> - {} / <b>{}</b>'  # starts with flag
 
 LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES = {
     'Ukraine': 'UA',
-    'Russian Federation': '',
 }
 
 LEADERBOARD_DAYS_LOOKBACK = 1
@@ -33,35 +32,17 @@ LEADERBOARD_DATE_FORMAT = '%d/%m/%Y'
 Section: Select Track
 """
 
-# MAP_OF_THE_DAY_MESSAGE = '🔴 Трек дня: <b>{}</b>\n' \
-#                          '\n' \
-#                          '<b>Ласкаво просимо на щоденний онлайн-турнір з дрон перегонів ім. Віктора Дзензеля!</b>\n' \
-#                          '\n' \
-#                          '<b>Кращі пілоти місяця отримають призи від Drono.store!</b>' \
-#                          '\n' \
-#                          '\n' \
-#                          'Умови за посиланням:' \
-#                          '\n' \
-#                          'https://drono.store/content/8-dzendzel-cup' \
-#                          '\n' \
-#                          '\n' \
-#                          '🔵 Запрошуй друзів та покращуй свої результати разом із ними!\n' \
-#                          '\n' \
-#                          '🔵 Gentlemen, start your drones! Goggles down, thumbs up!\n' \
-#                          '\n' \
-#                          '🔴 Трек дня: <b>{}</b>' \
-#                          '\n\n\n'
 
 MAP_OF_THE_DAY_MESSAGE = '🔴 Трек дня: <b>{}</b>\n' \
                          '\n' \
                          '<b>Ласкаво просимо на щоденний онлайн-турнір з дрон перегонів ім. Віктора Дзензеля!</b>\n' \
                          '\n' \
-                         'Умови все ще за посиланням:' \
+                         'Умови за посиланням:' \
                          '\n' \
-                         'https://drono.store/content/8-dzendzel-cup' \
+                         'http://sim.droner.com.ua' \
                          '\n' \
                          '\n' \
-                         '🔵 Запрошуй друзів та покращуй свої результати разом із ними!\n' \
+                         'Запрошуй друзів та покращуй свої результати разом із ними!\n' \
                          '\n' \
                          '🔴 Трек дня: <b>{}</b>' \
                          '\n\n\n'
@@ -122,9 +103,10 @@ TRACK_NAMES_BLOCK_LIST = [
     'gods_of_quadhalla',  # ppl didn't like it
     'vrl-freestyle-country',
     'newbeedrone',  # whoop tracks
-    # metro?
-    # all baskterball
-    # all karting tracks?
+    'boners journey',  # 246 gates
+    'world of war',  # bugs
+    'corona',
+    'whoop',
 ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 90
