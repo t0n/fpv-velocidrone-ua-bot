@@ -44,6 +44,8 @@ MAP_OF_THE_DAY_MESSAGE = '🔴 Трек дня: <b>{}</b>\n' \
                          '\n' \
                          'Запрошуй друзів та покращуй свої результати разом із ними!\n' \
                          '\n' \
+                         '#velocibottotd\n' \
+                         '\n' \
                          '🔴 Трек дня: <b>{}</b>' \
                          '\n\n\n'
 
@@ -107,6 +109,7 @@ TRACK_NAMES_BLOCK_LIST = [
     'world of war',  # bugs
     'corona',
     'whoop',
+    'neon cage',  # whoops?
 ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 90
@@ -162,8 +165,8 @@ Monthly results
 
 MONTHLY_RESULTS_LINE = '<b>#{}</b> - <b>{}</b> - {} балів'
 MONTHLY_RESULTS_TIME_INTERVAL = '({} - {})'
-MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця 🇺🇦🏁🇺🇦\n{}\n\n{}\n\n'
-MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця 🇺🇦🏆🥇🏆🇺🇦\n{}\n\n{}\n\n'
+MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця 🇺🇦🏁🇺🇦\n{}\n\n{}\n#velocibotdaily\n\n'
+MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця 🇺🇦🏆🥇🏆🇺🇦\n{}\n\n{}\n#velocibotmonthly\n\n'
 
 
 """
