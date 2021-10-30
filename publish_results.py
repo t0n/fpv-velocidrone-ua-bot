@@ -1,10 +1,10 @@
 import logging
 import telegram
 
-from constants import PUBLISH_RESULTS_HELLO_MESSAGE, PUBLISH_RESULTS_LINE_TEMPLATE, RESULTS_SUPPORTED_COUNTRIES, \
-    POINTS_MAP
+from constants import PUBLISH_RESULTS_HELLO_MESSAGE, PUBLISH_RESULTS_TRACK_NAME, \
+    PUBLISH_RESULTS_LINE_TEMPLATE, RESULTS_SUPPORTED_COUNTRIES, POINTS_MAP, PUBLISH_RESULTS_TAG
 from db import get_track_of_the_day, save_daily_results
-from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
+from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID, DB_TABLE_PREFIX
 from utils import parse_leaderboard
 
 
@@ -41,6 +41,31 @@ def main():
             if result['country'] in RESULTS_SUPPORTED_COUNTRIES:
                 results.append(result)
 
+        # mock for testing
+        if 'test_' == DB_TABLE_PREFIX:
+            results = [
+                {
+                    'position': '0',
+                    'time': '29.5',
+                    'name': 'TEST1',
+                    'country': 'Ukraine',
+                    'ranking': '',
+                    'model': '',
+                    'date': '',
+                    'version': '1.16',
+                },
+                {
+                    'position': '2',
+                    'time': '31.5',
+                    'name': 'TEST2',
+                    'country': 'Ukraine',
+                    'ranking': '',
+                    'model': '',
+                    'date': '',
+                    'version': '',
+                }
+            ]
+
         daily_results = []
         if results:
             logging.debug('-' * 80)
@@ -57,7 +82,9 @@ def main():
                 })
 
             message = '\n\n'.join(messages)
-            message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n\n' + message + '\n\n\n' + saved_track[3]  # add URL
+            message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n\n' + \
+                      PUBLISH_RESULTS_TRACK_NAME.format(saved_track[1] + ' - ' + saved_track[2]) + \
+                      '\n\n' + message + '\n\n' + PUBLISH_RESULTS_TAG + '\n\n'
             bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
             logging.info("Results published")
 

@@ -33,7 +33,7 @@ Section: Select Track
 """
 
 
-MAP_OF_THE_DAY_MESSAGE = '🔴 Трек дня: <b>{}</b>\n' \
+MAP_OF_THE_DAY_MESSAGE = '🎃 Трек дня: <b>{}</b>\n' \
                          '\n' \
                          '<b>Ласкаво просимо на щоденний онлайн-турнір з дрон перегонів ім. Віктора Дзензеля!</b>\n' \
                          '\n' \
@@ -46,7 +46,7 @@ MAP_OF_THE_DAY_MESSAGE = '🔴 Трек дня: <b>{}</b>\n' \
                          '\n' \
                          '#velocibottotd\n' \
                          '\n' \
-                         '🔴 Трек дня: <b>{}</b>' \
+                         '👻 Трек дня: <b>{}</b>' \
                          '\n\n\n'
 
 CONFIG_SCENERIES = [
@@ -121,6 +121,8 @@ Section: Publish results
 
 
 PUBLISH_RESULTS_HELLO_MESSAGE = '🇺🇦🏁🇺🇦 Результати дня 🇺🇦🏁🇺🇦'
+PUBLISH_RESULTS_TRACK_NAME = '\nТрек дня: <b>{}</b>\n'
+PUBLISH_RESULTS_TAG = 'velocibotdaily'
 
 RECRAWL_RESULTS_HELLO_MESSAGE = 'FIXED FIXED - Результати дня - FIXED FIXED'
 
@@ -165,8 +167,8 @@ Monthly results
 
 MONTHLY_RESULTS_LINE = '<b>#{}</b> - <b>{}</b> - {} балів'
 MONTHLY_RESULTS_TIME_INTERVAL = '({} - {})'
-MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця 🇺🇦🏁🇺🇦\n{}\n\n{}\n#velocibotdaily\n\n'
-MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця 🇺🇦🏆🥇🏆🇺🇦\n{}\n\n{}\n#velocibotmonthly\n\n'
+MONTHLY_DAILY_RESULTS = '🇺🇦🧛🇺🇦 Проміжні результати місяця 🇺🇦🧛🇺🇦\n{}\n\n{}\n#velocibotmonthly\n\n'
+MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця 🇺🇦🏆🥇🏆🇺🇦\n{}\n\n{}\n#velocibotmonthlyfinal\n\n'
 
 
 """
@@ -175,3 +177,9 @@ Rename player
 
 RENAME_PLAYER_TEMPLATE = 'Пілот <b>{}</b> був переіменований в <b>{}</b> (офіційно)\n' \
                          '<i>Наступні результати дня/місяця можуть бути перераховані</i>'
+
+
+"""
+More talking
+"""
+# TODO add bot responses for resulst in top-3, top-10 and others (whether improved time or not)

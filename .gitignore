@@ -2,3 +2,4 @@
 .idea
 main.db
 secrets.py
+.push.sh
