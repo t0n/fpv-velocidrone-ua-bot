@@ -42,7 +42,7 @@ def main():
                 results.append(result)
 
         # mock for testing
-        if 'test_' == DB_TABLE_PREFIX:
+        if DB_TABLE_PREFIX and DB_TABLE_PREFIX.startswith('test'):
             results = [
                 {
                     'position': '0',
