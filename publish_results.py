@@ -2,7 +2,8 @@ import logging
 import telegram
 
 from constants import PUBLISH_RESULTS_HELLO_MESSAGE, PUBLISH_RESULTS_TRACK_NAME, \
-    PUBLISH_RESULTS_LINE_TEMPLATE, RESULTS_SUPPORTED_COUNTRIES, POINTS_MAP, PUBLISH_RESULTS_TAG
+    PUBLISH_RESULTS_LINE_TEMPLATE, RESULTS_SUPPORTED_COUNTRIES, POINTS_MAP, PUBLISH_RESULTS_TAG, PATRONS_LIST, \
+    PATRONS_TEXT
 from db import get_track_of_the_day, save_daily_results
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID, DB_TABLE_PREFIX
 from utils import parse_leaderboard
@@ -85,6 +86,9 @@ def main():
             message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n\n' + \
                       PUBLISH_RESULTS_TRACK_NAME.format(saved_track[1] + ' - ' + saved_track[2]) + \
                       '\n\n\n' + message + '\n\n' + PUBLISH_RESULTS_TAG + '\n\n'
+            patreons_list = ', '.join(PATRONS_LIST)
+            patreons_text = PATRONS_TEXT.format(patreons_list)
+            message = message + patreons_text + '\n\n'
             bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
             logging.info("Results published")
 
