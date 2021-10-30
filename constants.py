@@ -38,7 +38,6 @@ MAP_OF_THE_DAY_MESSAGE = '🎃 Трек дня: <b>{}</b>\n' \
                          '<b>Ласкаво просимо на щоденний онлайн-турнір з дрон перегонів ім. Віктора Дзензеля!</b>\n' \
                          '\n' \
                          'Умови за посиланням:' \
-                         '\n' \
                          'http://sim.droner.com.ua' \
                          '\n' \
                          '\n' \
@@ -120,9 +119,9 @@ Section: Publish results
 """
 
 
-PUBLISH_RESULTS_HELLO_MESSAGE = '🇺🇦🏁🇺🇦 Результати дня 🇺🇦🏁🇺🇦'
-PUBLISH_RESULTS_TRACK_NAME = '\nТрек дня: <b>{}</b>\n'
-PUBLISH_RESULTS_TAG = 'velocibotdaily'
+PUBLISH_RESULTS_HELLO_MESSAGE = '🇺🇦💀🇺🇦 Результати дня 🇺🇦💀🇺🇦'
+PUBLISH_RESULTS_TRACK_NAME = 'Трек дня: <b>{}</b>'
+PUBLISH_RESULTS_TAG = '#velocibotdaily'
 
 RECRAWL_RESULTS_HELLO_MESSAGE = 'FIXED FIXED - Результати дня - FIXED FIXED'
 

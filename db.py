@@ -263,6 +263,9 @@ def get_daily_results(previous_month=True):
 
 
 def get_all_daily_results():
+    """
+    ID, DATE, DATA
+    """
     connection = _create_connection(DB_FILE)
     if connection is not None:
         _create_daily_results_table_if_not_exists(connection)

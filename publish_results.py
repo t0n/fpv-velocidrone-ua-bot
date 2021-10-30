@@ -84,7 +84,7 @@ def main():
             message = '\n\n'.join(messages)
             message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n\n' + \
                       PUBLISH_RESULTS_TRACK_NAME.format(saved_track[1] + ' - ' + saved_track[2]) + \
-                      '\n\n' + message + '\n\n' + PUBLISH_RESULTS_TAG + '\n\n'
+                      '\n\n\n' + message + '\n\n' + PUBLISH_RESULTS_TAG + '\n\n'
             bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
             logging.info("Results published")
 
