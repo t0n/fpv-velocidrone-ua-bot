@@ -25,7 +25,9 @@ def main():
     try:
         results = get_all_daily_results()
         for res in results:
-            print(res[1] + ';' + len(json.load(res[2])))
+            # print(res)
+            # print(json.load(res[2]))
+            print(res[1] + ';' + str(len(json.load(res[2]))))
 
     except Exception as error:
         logging.exception(error)
@@ -34,6 +36,7 @@ def main():
         import traceback
         exc = traceback.format_exc()
         logging.error(exc)
+        print(exc)
         # bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
         #                  text='⚠️ @antonkoba Error in publish_results: ' + str(exc),
         #                  parse_mode=telegram.ParseMode.HTML)
