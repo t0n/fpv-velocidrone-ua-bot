@@ -1,3 +1,4 @@
+import json
 import logging
 import telegram
 
@@ -24,8 +25,7 @@ def main():
     try:
         results = get_all_daily_results()
         for res in results:
-            print(res[1])
-            print(len(res[2]))
+            print(res[1] + ';' + len(json.load(res[2])))
 
     except Exception as error:
         logging.exception(error)
