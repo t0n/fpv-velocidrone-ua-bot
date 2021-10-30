@@ -26,8 +26,8 @@ def main():
         results = get_all_daily_results()
         for res in results:
             # print(res)
-            # print(json.load(res[2]))
-            print(res[1] + ';' + str(len(json.load(res[2]))))
+            # print(json.loads(res[2]))
+            print(res[1] + ';' + str(len(json.loads(res[2]))))
 
     except Exception as error:
         logging.exception(error)
