@@ -83,7 +83,7 @@ def main():
                 })
 
             message = '\n\n'.join(messages)
-            message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n\n' + \
+            message = PUBLISH_RESULTS_HELLO_MESSAGE + '\n' + \
                       PUBLISH_RESULTS_TRACK_NAME.format(saved_track[1] + ' - ' + saved_track[2]) + \
                       '\n\n\n' + message + '\n\n' + PUBLISH_RESULTS_TAG + '\n\n'
             patreons_list = ', '.join(PATRONS_LIST)

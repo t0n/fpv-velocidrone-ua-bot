@@ -238,19 +238,20 @@ def get_daily_results(previous_month=True):
 
         cur = connection.cursor()
 
+        # because of a DST it might be 14-00 and might be 15-00 when daily_results are saved
         if previous_month:
             # 1st of the month - this is the final results day from previous month, so ignore it
             # start counting from 2nd day of month
             # but count till 1st day of current month
             sql_query = 'SELECT * FROM ' + \
                         DB_TABLE_PREFIX + 'daily_results ' + \
-                        'WHERE date BETWEEN datetime(\'now\', \'-1 month\', \'start of month\', \'+1 day\', \'14 hours\', \'59 minutes\') AND ' + \
+                        'WHERE date BETWEEN datetime(\'now\', \'-1 month\', \'start of month\', \'+1 day\', \'13 hours\', \'59 minutes\') AND ' + \
                         'datetime(\'now\', \'start of month\', \'15 hours\', \'10 minutes\')'
         else:
             # current month
             sql_query = 'SELECT * FROM ' + \
                         DB_TABLE_PREFIX + 'daily_results ' + \
-                        'WHERE date BETWEEN datetime(\'now\', \'start of month\', \'+1 day\', \'14 hours\', \'59 minutes\') AND ' + \
+                        'WHERE date BETWEEN datetime(\'now\', \'start of month\', \'+1 day\', \'13 hours\', \'59 minutes\') AND ' + \
                         'datetime(\'now\', \'+1 month\', \'start of month\',  \'15 hours\', \'10 minutes\')'
 
         print('get_daily_results - sql_query: ' + sql_query)
