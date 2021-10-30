@@ -185,7 +185,8 @@ PATRONS_LIST = [
     'Влад',
 ]
 
+
 """
 More talking
 """
-# TODO add bot responses for resulst in top-3, top-10 and others (whether improved time or not)
+# TODO add bot responses for resulst in top-3, top-10, >190 and others (whether improved time or not)

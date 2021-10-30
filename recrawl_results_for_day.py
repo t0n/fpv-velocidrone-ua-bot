@@ -18,8 +18,8 @@ logging.getLogger('telegram').setLevel(logging.ERROR)
 def main():
     logging.info("Publish results script started!")
 
-    bot = telegram.Bot(TELEGRAM_KEY)
-    logging.debug(bot)
+    # bot = telegram.Bot(TELEGRAM_KEY)
+    # logging.debug(bot)
 
     try:
 
@@ -80,9 +80,10 @@ def main():
         logging.debug(error)
         import traceback
         traceback.print_exc()
-        bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
-                         text='⚠️ @antonkoba Error in publish_results: ' + str(error),
-                         parse_mode=telegram.ParseMode.HTML)
+        # bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
+        #                  text='⚠️ @antonkoba Error in publish_results: ' + str(error),
+        #                  parse_mode=telegram.ParseMode.HTML)
+        print(error)
 
 
 if __name__ == "__main__":
