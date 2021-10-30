@@ -89,7 +89,8 @@ def main():
             patreons_list = ', '.join(PATRONS_LIST)
             patreons_text = PATRONS_TEXT.format(patreons_list)
             message = message + patreons_text + '\n\n'
-            bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML)
+            bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message, parse_mode=telegram.ParseMode.HTML,
+                             disable_web_page_preview=True)
             logging.info("Results published")
 
             if daily_results:
