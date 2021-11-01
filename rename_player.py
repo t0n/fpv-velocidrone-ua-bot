@@ -20,8 +20,8 @@ def main():
     bot = telegram.Bot(TELEGRAM_KEY)
     logging.debug(bot)
 
-    rename_from = 'Slashchev[SHO]'
-    rename_to = 'Slashchev'
+    rename_from = 'KRoKMoT1K_FPV'
+    rename_to = 'krokomotik'
     logging.debug('Renaming player from ' + rename_from + ' to ' + rename_to)
 
     affected_results = 0
