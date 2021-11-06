@@ -3,7 +3,7 @@ import telegram
 
 from constants import PUBLISH_RESULTS_HELLO_MESSAGE, PUBLISH_RESULTS_TRACK_NAME, \
     PUBLISH_RESULTS_LINE_TEMPLATE, RESULTS_SUPPORTED_COUNTRIES, POINTS_MAP, PUBLISH_RESULTS_TAG, PATRONS_LIST, \
-    PATRONS_TEXT
+    PATRONS_TEXT, USERS_BAN_LIST
 from db import get_track_of_the_day, save_daily_results
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID, DB_TABLE_PREFIX
 from utils import parse_leaderboard
@@ -40,7 +40,8 @@ def main():
             logging.debug(result)
             # filter by country
             if result['country'] in RESULTS_SUPPORTED_COUNTRIES:
-                results.append(result)
+                if result['name'].lower() not in USERS_BAN_LIST:
+                    results.append(result)
 
         # mock for testing
         if DB_TABLE_PREFIX and DB_TABLE_PREFIX.startswith('test'):
