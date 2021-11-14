@@ -109,6 +109,7 @@ TRACK_NAMES_BLOCK_LIST = [
     'corona',
     'whoop',
     'neon cage',  # whoops?
+    'tbs spec 4',  # (Bando) wires, stupid track
 ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 90
@@ -184,6 +185,7 @@ PATRONS_LIST = [
     'Lef',
     'Влад',
     'Alexey Gorbach',
+    'K1R',
 ]
 
 
