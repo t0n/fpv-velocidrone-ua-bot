@@ -110,6 +110,7 @@ TRACK_NAMES_BLOCK_LIST = [
     'whoop',
     'neon cage',  # whoops?
     'tbs spec 4',  # (Bando) wires, stupid track
+    'tdl races - gamex 2019',  # sometimes gates does not count
 ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 90
@@ -186,6 +187,7 @@ PATRONS_LIST = [
     'Влад',
     'Alexey Gorbach',
     'K1R',
+    'Alexandr Malovanchuk',
 ]
 
 
