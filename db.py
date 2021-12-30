@@ -293,3 +293,39 @@ def update_daily_results(id, daily_results):
     else:
         print("Error! cannot create database connection.")
 
+
+def get_year_daily_results(year):
+    """
+    ID, DATE, DATA
+    """
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_daily_results_table_if_not_exists(connection)
+        cur = connection.cursor()
+        sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'daily_results WHERE date BETWEEN \'' + str(year) + \
+                    '-01-01\' AND \'' + str(year+1) + '-01-01\''
+        print('get_daily_results - sql_query: ' + sql_query)
+        cur.execute(sql_query)
+        rows = cur.fetchall()
+        return rows
+    else:
+        print("Error! cannot create database connection.")
+
+
+def get_year_monthly_results(year):
+    """
+    ID, DATE, DATA
+    """
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_daily_results_table_if_not_exists(connection)
+        cur = connection.cursor()
+        sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'monthly_results WHERE date BETWEEN \'' + str(year) + \
+                    '-01-01\' AND \'' + str(year+1) + '-01-01\''
+        print('get_daily_results - sql_query: ' + sql_query)
+        cur.execute(sql_query)
+        rows = cur.fetchall()
+        return rows
+    else:
+        print("Error! cannot create database connection.")
+

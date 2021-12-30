@@ -77,6 +77,9 @@ def main():
                 points = POINTS_MAP.get(num+1, 1)   # as requested, everybody gets at least 1
                 messages.append(
                     PUBLISH_RESULTS_LINE_TEMPLATE.format(num + 1, result['name'], result['time'], points, result['position']))
+                # TODO add to results:
+                # - result['time']
+                # - result['position']
                 daily_results.append({
                     'position': num + 1,
                     'name': result['name'],

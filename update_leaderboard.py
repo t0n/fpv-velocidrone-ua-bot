@@ -3,7 +3,8 @@ import logging
 import telegram
 import flag
 
-from constants import LEADERBOARD_UPDATE_MESSAGE, LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES, USERS_BAN_LIST
+from constants import LEADERBOARD_UPDATE_MESSAGE, LEADERBOARD_UPDATES_SUPPORTED_COUNTRIES, USERS_BAN_LIST, \
+    USERS_ALLOW_LIST
 from db import get_track_of_the_day, save_leaderboard, get_leaderboard
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 from utils import parse_leaderboard, compare_leaderboards
@@ -71,7 +72,8 @@ def main():
                 # logging.debug('message_text: ' + message_text)  # might have some non-ascii chars
 
                 if text_name.lower() not in USERS_BAN_LIST:
-                    message_parts.append(message_text)
+                    if ('*' in USERS_ALLOW_LIST) or (text_name.lower() in USERS_ALLOW_LIST):
+                        message_parts.append(message_text)
 
             else:
                 logging.debug('not supported country: ' + diff['record']['country'])

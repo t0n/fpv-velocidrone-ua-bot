@@ -3,7 +3,7 @@ import random
 import logging
 import telegram
 
-from constants import MAP_OF_THE_DAY_MESSAGE
+from constants import MAP_OF_THE_DAY_MESSAGE, TRACK_POLL_TEXT, TRACK_POLL_OPTIONS
 from db import update_track_of_the_day, get_track_of_the_day, get_leaderboard, save_leaderboard
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
 from utils import parse_leaderboard, filter_tracks, get_tracks
@@ -59,6 +59,15 @@ def main():
         message_id = response.message_id
         bot.pin_chat_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, message_id=message_id)
         logging.info("Track selected")
+
+        poll_message = bot.send_poll(
+            chat_id=TELEGRAM_CHAT_MESSAGE_ID,
+            question=TRACK_POLL_TEXT,
+            options=TRACK_POLL_OPTIONS,
+            is_anonymous=False,
+            open_period=24*60*60,
+        )
+        logging.debug(f'poll_message: {poll_message}')
 
     except Exception as error:
         logging.exception(error)

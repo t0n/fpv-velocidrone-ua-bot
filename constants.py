@@ -1,7 +1,7 @@
 """
 Common/shared constants
 """
-
+from secrets import PRO_MODE
 
 GAME_MODE_1_LAP = '1lap'
 GAME_MODE_3_LAPS = '3laps'
@@ -47,6 +47,11 @@ MAP_OF_THE_DAY_MESSAGE = '🏁 Трек дня: <b>{}</b>\n' \
                          '\n' \
                          '🏁 Трек дня: <b>{}</b>' \
                          '\n\n\n'
+if PRO_MODE:
+    MAP_OF_THE_DAY_MESSAGE = '👑 Трек дня: <b>{}</b>\n' \
+                             '\n' \
+                             '#velocibotPROtotd\n' \
+                             '\n\n\n'
 
 CONFIG_SCENERIES = [
     (3, 'Hangar'),
@@ -80,6 +85,13 @@ CONFIG_SCENERIES = [
     # (40, 'Future Hangar'),  # seems to be not loading / unable to fly tracks here
     # (43, 'Future Hangar Empty'),  # not visible in Velocidrone?
 ]
+if PRO_MODE:
+    CONFIG_SCENERIES = [
+        (8, 'Football Stadium'),
+        (12, 'Countryside'),
+        (16, 'Empty Scene Day'),
+        (33, 'Dynamic Weather'),
+    ]
 
 SOUP_TRACK_LINK_CLASS = 'track-grid__li'
 
@@ -112,9 +124,37 @@ TRACK_NAMES_BLOCK_LIST = [
     'tbs spec 4',  # (Bando) wires, stupid track
     'tdl races - gamex 2019',  # sometimes gates does not count
 ]
+if PRO_MODE:
+    TRACK_NAMES_BLOCK_LIST = [
+        'beta',  # 'IndoorGoKart - Beta 2S Power Race 8' - whoops
+        'covid',  # whoops
+        'micro',  # whoops
+        'pylons',  # too easy
+        'collision',  # 'Countryside - Collision' - boring
+        'redbull dr.one',  # 'Redbull Ring - Redbull DR.ONE' - finish gates hard to hit
+        'vrl season 3 track 3',  # too long, moving obstacles
+        'vrl team championships',  # too long
+        'growers rock garden',  # 'Dynamic Weather - Growers Rock Garden' - long/ bad navigation
+        'vrl season 7 championships',  # 'Dynamic Weather - VRL Season 7 Championships' - too long?
+        # 'quad rivals trainer level 3 dw',  # 'Dynamic Weather - Quad Rivals Trainer Level 3 DW' -- this should be ok
+        'gokartrelay',  # slow or  something
+        'gods_of_quadhalla',  # ppl didn't like it
+        'vrl-freestyle-country',
+        'newbeedrone',  # whoop tracks
+        'boners journey',  # 246 gates
+        'world of war',  # bugs
+        'corona',
+        'whoop',
+        'neon cage',  # whoops?
+        'tbs spec 4',  # (Bando) wires, stupid track
+        'tdl races - gamex 2019',  # sometimes gates does not count
+        'vrl',  # ALL VRL :)
+        'school is cancelled',
+    ]
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 90
-
+if PRO_MODE:
+    DO_NOT_REPEAT_TRACK_FOR_DAYS = 120
 
 """
 Section: Publish results
@@ -122,6 +162,9 @@ Section: Publish results
 
 
 PUBLISH_RESULTS_HELLO_MESSAGE = '🇺🇦🏁🇺🇦 Результати дня 🇺🇦🏁🇺🇦'
+if PRO_MODE:
+    PUBLISH_RESULTS_HELLO_MESSAGE = '👑 Результати дня 👑'
+
 PUBLISH_RESULTS_TRACK_NAME = 'Трек дня: <b>{}</b>'
 PUBLISH_RESULTS_TAG = '#velocibotdaily'
 
@@ -170,6 +213,9 @@ MONTHLY_RESULTS_LINE = '<b>#{}</b> - <b>{}</b> - {} балів'
 MONTHLY_RESULTS_TIME_INTERVAL = '({} - {})'
 MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця 🇺🇦🏁🇺🇦\n{}\n\n{}\n\n#velocibotmonthly\n\n'
 MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця 🇺🇦🏆🥇🏆🇺🇦\n{}\n\n{}\n\n#velocibotmonthlyfinal\n\n'
+if PRO_MODE:
+    MONTHLY_DAILY_RESULTS = '👑 Проміжні результати місяця 👑\n{}\n\n{}\n\n#velocibotmonthly\n\n'
+    MONTHLY_FINAL_RESULTS = '👑 Фінальні результати місяця 👑\n{}\n\n{}\n\n#velocibotmonthlyfinal\n\n'
 
 
 """
@@ -189,7 +235,9 @@ PATRONS_LIST = [
     'K1R',
     'Alexandr Malovanchuk',
 ]
-
+if PRO_MODE:
+    PATRONS_TEXT = '{}'
+    PATRONS_LIST = []
 
 """
 More talking
@@ -202,4 +250,20 @@ Ban list
 """
 USERS_BAN_LIST = [
     '.scissors',
+]
+USERS_ALLOW_LIST = ['*', ]
+if PRO_MODE:
+    USERS_BAN_LIST = []
+    USERS_ALLOW_LIST = [
+        'K1R',
+    ]
+
+TRACK_POLL_TEXT = 'Як вам трек {}?'
+TRACK_POLL_OPTIONS = [
+    'Кращий трек в моєму житті!',
+    'В фейворітс!',
+    'Нормальний трек',
+    'Так собі, можна літати',
+    'Не гоночний!',
+    'Є критичні проблеми',
 ]
