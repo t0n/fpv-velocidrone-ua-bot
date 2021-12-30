@@ -66,7 +66,7 @@ def main():
 
         poll_message = bot.send_poll(
             chat_id=TELEGRAM_CHAT_MESSAGE_ID,
-            question=TRACK_POLL_TEXT,
+            question=TRACK_POLL_TEXT.format(track_text),
             options=TRACK_POLL_OPTIONS,
             is_anonymous=True,
             open_period=24*60*60,
