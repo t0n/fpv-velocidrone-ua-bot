@@ -1,6 +1,8 @@
 import random
 
 import logging
+import time
+
 import telegram
 
 from constants import MAP_OF_THE_DAY_MESSAGE, TRACK_POLL_TEXT, TRACK_POLL_OPTIONS
@@ -60,6 +62,8 @@ def main():
         bot.pin_chat_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, message_id=message_id)
         logging.info("Track selected")
 
+        time.sleep(3)
+
         poll_message = bot.send_poll(
             chat_id=TELEGRAM_CHAT_MESSAGE_ID,
             question=TRACK_POLL_TEXT,
@@ -67,7 +71,7 @@ def main():
             is_anonymous=False,
             open_period=24*60*60,
         )
-        logging.debug(f'poll_message: {poll_message}')
+        logging.debug('poll_message: ' + str(poll_message))
 
     except Exception as error:
         logging.exception(error)
