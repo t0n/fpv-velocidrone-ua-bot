@@ -68,7 +68,7 @@ def main():
             chat_id=TELEGRAM_CHAT_MESSAGE_ID,
             question=TRACK_POLL_TEXT,
             options=TRACK_POLL_OPTIONS,
-            is_anonymous=False,
+            is_anonymous=True,
             open_period=24*60*60,
         )
         logging.debug('poll_message: ' + str(poll_message))
