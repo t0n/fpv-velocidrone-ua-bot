@@ -234,6 +234,7 @@ PATRONS_LIST = [
     'Alexey Gorbach',
     'K1R',
     'Alexandr Malovanchuk',
+    'Oleh Novosad',
 ]
 if PRO_MODE:
     PATRONS_TEXT = '{}'
@@ -253,12 +254,18 @@ USERS_BAN_LIST = [
 ]
 USERS_ALLOW_LIST = ['*', ]
 if PRO_MODE:
-    USERS_BAN_LIST = []
+    USERS_BAN_LIST = [
+        '.scissors',
+    ]
     USERS_ALLOW_LIST = [
         'K1R',
     ]
 
-TRACK_POLL_TEXT = 'Як вам трек {}?'
+
+"""
+Polls
+"""
+TRACK_POLL_TEXT = 'Як вам трек {}?\n\n#velocibotpoll'
 TRACK_POLL_OPTIONS = [
     'Кращий трек в моєму житті!',
     'В фейворітс!',

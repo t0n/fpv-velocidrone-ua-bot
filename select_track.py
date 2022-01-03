@@ -69,7 +69,6 @@ def main():
             question=TRACK_POLL_TEXT.format(track_text),
             options=TRACK_POLL_OPTIONS,
             is_anonymous=True,
-            open_period=24*60*60,
         )
         logging.debug('poll_message: ' + str(poll_message))
 
