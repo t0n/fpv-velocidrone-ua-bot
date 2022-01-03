@@ -81,19 +81,20 @@ def main():
         print('Year 2021 [' + str(min(all_dates)) + ' - ' + str(max(all_dates)) + ']')
         print('-' * 80)
         print('Total points')
-        for n, kv in enumerate(total_points.items()):
+        # for n, kv in enumerate(total_points.items()):
+        for n, kv in enumerate(sorted(total_points.items(), key=lambda item: item[1], reverse=True)):
             print(str(n+1) + '. ' + kv[0] + ': ' + str(kv[1]))
         print('-' * 80)
         print('Total rounds')
-        for n, kv in enumerate(total_rounds.items()):
+        for n, kv in enumerate(sorted(total_rounds.items(), key=lambda item: item[1], reverse=True)):
             print(str(n+1) + '. ' + kv[0] + ': ' + str(kv[1]))
         print('-' * 80)
         print('Average position')
-        for n, kv in enumerate(total_positions.items()):
+        for n, kv in enumerate(sorted(total_positions.items(), key=lambda item: item[1])):
             print(str(n+1) + '. ' + kv[0] + ': ' + str(kv[1])[:5])
         print('-' * 80)
         print('Average position / round')
-        for n, kv in enumerate(points_per_round.items()):
+        for n, kv in enumerate(sorted(points_per_round.items(), key=lambda item: item[1], reverse=True)):
             print(str(n+1) + '. ' + kv[0] + ': ' + str(kv[1])[:5])
 
     except Exception as error:
