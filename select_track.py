@@ -1,13 +1,15 @@
+import datetime
 import random
 
 import logging
 import time
+import urllib
 
 import telegram
 
-from constants import MAP_OF_THE_DAY_MESSAGE, TRACK_POLL_TEXT, TRACK_POLL_OPTIONS
-from db import update_track_of_the_day, get_track_of_the_day, get_leaderboard, save_leaderboard
-from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID
+from constants import MAP_OF_THE_DAY_MESSAGE, TRACK_POLL_TEXT, TRACK_POLL_OPTIONS, VERSION_GET_TRACKS
+from db import update_track_of_the_day, get_track_of_the_day, get_leaderboard, save_leaderboard, add_track_poll
+from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID, PRO_MODE
 from utils import parse_leaderboard, filter_tracks, get_tracks
 
 
@@ -55,22 +57,52 @@ def main():
 
         # post message about new track of the day
         track_text = saved_track[1] + ' - ' + saved_track[2]
-        message_text = MAP_OF_THE_DAY_MESSAGE.format(track_text, track_text)
+        date_text = datetime.datetime.now().strftime('%d.%m.%Y') + ' - ' + \
+                    (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%d.%m.%Y')
+        search_string = urllib.parse.quote_plus(saved_track[1] + ' ' + saved_track[2])
+        url_text = saved_track[3].replace(VERSION_GET_TRACKS, 'All')
+        url_text = 'http://www.youtube.com/results?search_query={}&oq={}'.format(url_text, url_text)
+        message_text = MAP_OF_THE_DAY_MESSAGE.format(date_text, track_text, url_text, search_string)
         response = bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text,
                                     parse_mode=telegram.ParseMode.HTML)
         message_id = response.message_id
         bot.pin_chat_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, message_id=message_id)
         logging.info("Track selected")
 
-        time.sleep(3)
+        if not PRO_MODE:
+            time.sleep(3)
+            poll_message_response = bot.send_poll(
+                chat_id=TELEGRAM_CHAT_MESSAGE_ID,
+                question=TRACK_POLL_TEXT.format(track_text),
+                options=TRACK_POLL_OPTIONS,
+                is_anonymous=True,
+            )
+            logging.debug('poll_message: ' + str(poll_message_response))
 
-        poll_message = bot.send_poll(
-            chat_id=TELEGRAM_CHAT_MESSAGE_ID,
-            question=TRACK_POLL_TEXT.format(track_text),
-            options=TRACK_POLL_OPTIONS,
-            is_anonymous=True,
-        )
-        logging.debug('poll_message: ' + str(poll_message))
+            # # save poll message id to the DB
+            # add_track_poll(saved_track[0], saved_track[1], saved_track[2], saved_track[3],
+            #                poll_message_response.message_id, TRACK_POLL_OPTIONS)
+
+            # test_data = {'chat': {'username': 'fpv_velocidrone_ua', 'type': 'channel', 'title': 'FPV Велосідрон 🇺🇦',
+            #                       'id': -1001152818373},
+            #              'photo': [], 'delete_chat_photo': False,
+            #              'supergroup_chat_created': False, 'channel_chat_created': False, 'entities': [],
+            #              'caption_entities': [], 'message_id': 17418,
+            #              'poll': {'close_date': None, 'is_anonymous': True, 'explanation_entities': [],
+            #                       'is_closed': False,
+            #                       'options': [{'text': 'Кращий трек в моєму житті!', 'voter_count': 0},
+            #                                   {'text': 'В фейворітс!', 'voter_count': 0},
+            #                                   {'text': 'Нормальний трек', 'voter_count': 0},
+            #                                   {'text': 'Так собі, можна літати', 'voter_count': 0},
+            #                                   {'text': 'Не гоночний!', 'voter_count': 0},
+            #                                   {'text': 'Є критичні проблеми', 'voter_count': 0}],
+            #                       'total_voter_count': 0, 'allows_multiple_answers': False, 'type': 'regular',
+            #                       'question': 'Як вам трек Dynamic Weather - Quad Rivals Ladders from Hell DW?\n\n#velocibotpoll',
+            #                       'id': '5424730049184006219'
+            #                       },
+            #              'date': 1642690932, 'new_chat_members': [],
+            #              'new_chat_photo': [], 'group_chat_created': False
+            #              }
 
     except Exception as error:
         logging.exception(error)

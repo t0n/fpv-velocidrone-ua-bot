@@ -17,6 +17,11 @@ def _create_connection(db_file):
     return conn
 
 
+# --------------------------------------------
+# CREATE ALL DBS
+# --------------------------------------------
+
+
 def _create_totd_table_if_not_exists(connection):
     query = 'CREATE TABLE IF NOT EXISTS ' + DB_TABLE_PREFIX + 'track_of_the_day (' \
             'id integer PRIMARY KEY,' \
@@ -84,6 +89,77 @@ def _create_monthly_results_table_if_not_exists(connection):
         print(e)
 
 
+# for statistics
+def _create_all_tracks_table_if_not_exists(connection):
+    query = 'CREATE TABLE IF NOT EXISTS ' + DB_TABLE_PREFIX + 'all_tracks (' \
+            'id integer PRIMARY KEY,' \
+            'scenery_id integer NOT NULL, ' \
+            'scenery_name text NOT NULL, ' \
+            'track_name text NOT NULL, ' \
+            'track_url  text NOT NULL,' \
+            'position  integer NOT NULL,' \
+            'time  text NOT NULL,' \
+            'name  text NOT NULL,' \
+            'country  text NOT NULL,' \
+            'ranking  text NOT NULL,' \
+            'model  text NOT NULL,' \
+            'date  text NOT NULL,' \
+            'version  text NOT NULL' \
+            ');'
+    try:
+        c = connection.cursor()
+        c.execute(query)
+    except sqlite3.Error as e:
+        print(e)
+
+
+def _create_track_feedback_poll_table_if_not_exists(connection):
+    query = 'CREATE TABLE IF NOT EXISTS ' + DB_TABLE_PREFIX + 'track_feedback_poll (' \
+            'id integer PRIMARY KEY,' \
+            'date datetime DEFAULT CURRENT_TIMESTAMP, ' \
+            'scenery_id integer NOT NULL, ' \
+            'scenery_name text NOT NULL, ' \
+            'track_name text NOT NULL, ' \
+            'track_url  text NOT NULL,' \
+            'poll_message_id  text NOT NULL,' \
+            'options  text NOT NULL,' \
+            ');'
+    try:
+        c = connection.cursor()
+        c.execute(query)
+    except sqlite3.Error as e:
+        print(e)
+
+
+def _create_track_feedback_history_table_if_not_exists(connection):
+    query = 'CREATE TABLE IF NOT EXISTS ' + DB_TABLE_PREFIX + 'track_feedback_history (' \
+            'id integer PRIMARY KEY,' \
+            'date datetime DEFAULT CURRENT_TIMESTAMP, ' \
+            'scenery_id integer NOT NULL, ' \
+            'scenery_name text NOT NULL, ' \
+            'track_name text NOT NULL, ' \
+            'track_url  text NOT NULL,' \
+            'poll_message_id  text NOT NULL,' \
+            'rating  text NOT NULL,' \
+            'results  text NOT NULL,' \
+            ');'
+    try:
+        c = connection.cursor()
+        c.execute(query)
+    except sqlite3.Error as e:
+        print(e)
+
+
+# --------------------------------------------
+# CRUD OPERATIONS
+# --------------------------------------------
+
+
+# --------------------------------------------
+# Select track of the day
+# --------------------------------------------
+
+
 def update_track_of_the_day(track_info):
     connection = _create_connection(DB_FILE)
     if connection is not None:
@@ -136,6 +212,12 @@ def save_leaderboard(leaderboard):
         print("save_leaderboard - Error! cannot create database connection.")
 
 
+
+# --------------------------------------------
+# Leaderboard - each time something is updated
+# --------------------------------------------
+
+
 def get_leaderboard():
     leaderboard = None
     connection = _create_connection(DB_FILE)
@@ -154,6 +236,11 @@ def get_leaderboard():
     else:
         print("get_leaderboard - Error! cannot create database connection.")
     return leaderboard
+
+
+# --------------------------------------------
+# Track history - to exclude tracks that been flown recently
+# --------------------------------------------
 
 
 def add_track_to_the_history(track_info):
@@ -186,6 +273,11 @@ def get_tracks_history(days):
         return rows
     else:
         print("Error! cannot create database connection.")
+
+
+# --------------------------------------------
+# Daily results summary
+# --------------------------------------------
 
 
 def save_daily_results(daily_results):
@@ -329,3 +421,76 @@ def get_year_monthly_results(year):
     else:
         print("Error! cannot create database connection.")
 
+
+# --------------------------------------------
+# All tracks for stats and analysis
+# --------------------------------------------
+
+
+def get_all_track_results():
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_all_tracks_table_if_not_exists(connection)
+        cur = connection.cursor()
+        sql_query = 'SELECT * FROM ' + DB_TABLE_PREFIX + 'all_tracks'
+        cur.execute(sql_query)
+        rows = cur.fetchall()
+        return rows
+    else:
+        print("Error! cannot create database connection.")
+
+
+def add_all_track_result(scenery_id, scenery_name, track_name, track_url, position, time, name, country, ranking,
+                          model, date, version):
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_all_tracks_table_if_not_exists(connection)
+        cur = connection.cursor()
+
+        sql = 'INSERT INTO ' + DB_TABLE_PREFIX + 'all_tracks(scenery_id, scenery_name, track_name, track_url, ' \
+                                                 'position, time, name, country, ranking, model, date, version ) ' \
+                                                 ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        # print('sql: ' + sql)
+        cur.execute(sql, (scenery_id, scenery_name, track_name, track_url, position, time, name, country, ranking,
+                          model, date, version))
+        connection.commit()
+
+    else:
+        print("Error! cannot create database connection.")
+
+
+def clear_all_track_results():
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_all_tracks_table_if_not_exists(connection)
+        cur = connection.cursor()
+
+        cur.execute('DELETE FROM ' + DB_TABLE_PREFIX + 'all_tracks')
+        connection.commit()
+
+    else:
+        print("Error! cannot create database connection.")
+
+
+# --------------------------------------------
+# How was the track poll
+# --------------------------------------------
+
+
+def add_track_poll(scenery_id, scenery_name, track_name, track_url, poll_message_id, options):
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_track_feedback_poll_table_if_not_exists(connection)
+        cur = connection.cursor()
+        sql = 'INSERT INTO ' + DB_TABLE_PREFIX + \
+              'track_feedback_poll(scenery_id,scenery_name,track_name,track_url,poll_message_id,options) VALUES(?,?)'
+        params = (scenery_id, scenery_name, track_name, track_url, poll_message_id, options)
+        cur.execute(sql, params)
+        connection.commit()
+    else:
+        print("Error! cannot create database connection.")
+
+
+# TODO
+
+# TODO all tracks total feedback

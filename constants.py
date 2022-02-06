@@ -33,11 +33,11 @@ Section: Select Track
 """
 
 
-MAP_OF_THE_DAY_MESSAGE = '🏁 Трек дня: <b>{}</b>\n' \
+MAP_OF_THE_DAY_MESSAGE = '🏁 Трек дня {}: <b>{}</b>\n' \
                          '\n' \
                          '<b>Ласкаво просимо на щоденний онлайн-турнір з дрон перегонів ім. Віктора Дзензеля!</b>\n' \
                          '\n' \
-                         'Умови за посиланням:' \
+                         'Умови за посиланням: ' \
                          'http://sim.droner.com.ua' \
                          '\n' \
                          '\n' \
@@ -45,12 +45,18 @@ MAP_OF_THE_DAY_MESSAGE = '🏁 Трек дня: <b>{}</b>\n' \
                          '\n' \
                          '#velocibottotd\n' \
                          '\n' \
-                         '🏁 Трек дня: <b>{}</b>' \
+                         'Лідерборд:\n<b>{}</b>' \
+                         '\n' \
+                         'Шукати трек на YouTube:\n<b>{}</b>' \
                          '\n\n\n'
 if PRO_MODE:
-    MAP_OF_THE_DAY_MESSAGE = '👑 Трек дня: <b>{}</b>\n' \
+    MAP_OF_THE_DAY_MESSAGE = '👑 Трек дня {}: <b>{}</b>\n' \
                              '\n' \
                              '#velocibotPROtotd\n' \
+                             '\n' \
+                             'Лідерборд:\n<b>{}</b>' \
+                             '\n' \
+                             'Шукати трек на YouTube:\n<b>{}</b>' \
                              '\n\n\n'
 
 CONFIG_SCENERIES = [
@@ -88,10 +94,10 @@ CONFIG_SCENERIES = [
 if PRO_MODE:
     CONFIG_SCENERIES = [
         (8, 'Football Stadium'),
-        (12, 'Countryside'),
         (16, 'Empty Scene Day'),
         (33, 'Dynamic Weather'),
     ]
+
 
 SOUP_TRACK_LINK_CLASS = 'track-grid__li'
 
@@ -123,38 +129,70 @@ TRACK_NAMES_BLOCK_LIST = [
     'neon cage',  # whoops?
     'tbs spec 4',  # (Bando) wires, stupid track
     'tdl races - gamex 2019',  # sometimes gates does not count
+    'opg ',  # freestyle maps
+    'boners bando towers',  # crazy track (
+    'vrl-freestyle-coast',  # we hate freestyle
+    'boners bonsai fpv 4 freestyle',
+    'freestyle_tower_of_magical_power',  # just seems suspicious
+    'dragons_and_wizards',  # just seems suspicious
+    'trainer',
+    'tropical heat',
+    # TODO check these tracks - too few results/strange titles?
+    # Dutchman ?
+    # Rock around the rocks ?
+    # Football Stadium - Inflatable Insanity ?
+    # River2 - SFPV Matterhorn ?
+    # Reindeer-Raceoff ?
+    # River2 - SFPV Game of Drones ?
+    # trollrace ?
+    # Dynamic Weather - Kumos_Purgatory ?
+    # Quadcopters Track ?
+    # RollerCoasterRace1 ?
+    # River2 - SFPV H20Fire ?
+    # Dynamic Weather - Quad Rivals Who Works DW ?
+    # Dynamic Weather - Palmtree fpv 4 ?
+    # Dynamic Weather - QuadLantis ?
+    # TOG - Rona Masters ?
+    # Dynamic Weather - aquafpv 2 ?
+    # Dynamic Weather - medieval fpv ?
+    # Dynamic Weather - Why Nut ?
+    # Proximity ?
+    # Dynamic Weather - X-mas fpv 2021 ?
+    # Prodangles pylon race ?
+    # Dynamic Weather - Growers Rock Garden ?
+    # Empty Scene Day - Quad Rivals 2021 Race 9 - Holiday Hootenanny ?
+    # Empty Scene Day - TOG - Shake-It-Off ?
+    # Empty Scene Day - Laxton-June-2019 ?
+    # Dynamic Weather - Lord of the Rings ?
+    # Dynamic Weather - Haunted forest 4  ?
+    # Empty Scene Night - Skatfpv ?
+    # Dynamic Weather - Boners Woody II ?
 ]
 if PRO_MODE:
-    TRACK_NAMES_BLOCK_LIST = [
-        'beta',  # 'IndoorGoKart - Beta 2S Power Race 8' - whoops
-        'covid',  # whoops
-        'micro',  # whoops
-        'pylons',  # too easy
-        'collision',  # 'Countryside - Collision' - boring
-        'redbull dr.one',  # 'Redbull Ring - Redbull DR.ONE' - finish gates hard to hit
-        'vrl season 3 track 3',  # too long, moving obstacles
-        'vrl team championships',  # too long
-        'growers rock garden',  # 'Dynamic Weather - Growers Rock Garden' - long/ bad navigation
-        'vrl season 7 championships',  # 'Dynamic Weather - VRL Season 7 Championships' - too long?
-        # 'quad rivals trainer level 3 dw',  # 'Dynamic Weather - Quad Rivals Trainer Level 3 DW' -- this should be ok
-        'gokartrelay',  # slow or  something
-        'gods_of_quadhalla',  # ppl didn't like it
-        'vrl-freestyle-country',
-        'newbeedrone',  # whoop tracks
-        'boners journey',  # 246 gates
-        'world of war',  # bugs
-        'corona',
-        'whoop',
-        'neon cage',  # whoops?
-        'tbs spec 4',  # (Bando) wires, stupid track
-        'tdl races - gamex 2019',  # sometimes gates does not count
+    TRACK_NAMES_BLOCK_LIST += [
         'vrl',  # ALL VRL :)
         'school is cancelled',
+        'train insane',  # good for training though
+        '2014',
+        '2015',
+        '2016',
+        '2017',
+        '2018',
+        '2019',
+        '2020',
+        'level',  # all those training tracks
+        'fpv dutchman mad house',  # Alexander says it's khuinya
+        'full of flow',  # Alexander says it's pizdets
+        'mayhem dawn till dusk',  # Alexandre says it's shit
+        'firedrill',
     ]
+else:
+    # add blocked tracks for normal mode only (block too 'tight' over-flown tracks)
+    TRACK_NAMES_BLOCK_LIST += []
 
 DO_NOT_REPEAT_TRACK_FOR_DAYS = 90
 if PRO_MODE:
-    DO_NOT_REPEAT_TRACK_FOR_DAYS = 120
+    DO_NOT_REPEAT_TRACK_FOR_DAYS = 60
 
 """
 Section: Publish results
@@ -257,8 +295,26 @@ if PRO_MODE:
     USERS_BAN_LIST = [
         '.scissors',
     ]
+    # top-12 for 2021 & top-12 for Jan 2022
     USERS_ALLOW_LIST = [
         'K1R',
+        'lef',
+        'YANIS FPV',
+        'Dmytro Avdosiev',
+        'WordyN',
+        'Dronius',
+        'alexfmn',
+        'Slashchev',
+        'Sergii Send_it',
+        'g0rsky',
+        'aviakpdu',
+        'StDuck',
+        'severteka',
+        '4ndro1d78',
+        'FalconFPV',
+        '_ra',
+        'anton. fpv',
+        'SashPRO',
     ]
 
 
@@ -267,10 +323,11 @@ Polls
 """
 TRACK_POLL_TEXT = 'Як вам трек {}?\n\n#velocibotpoll'
 TRACK_POLL_OPTIONS = [
-    'Кращий трек в моєму житті!',
-    'В фейворітс!',
-    'Нормальний трек',
-    'Так собі, можна літати',
-    'Не гоночний!',
-    'Є критичні проблеми',
+    '[ 10] - Кращий трек в моєму житті!',
+    '[  5] - В фейворітс!',
+    '[  3] - Нормальний трек',
+    '[  1] - Так собі, можна літати',
+    '[ -1] - Не гоночний!',
+    '[ -5] - Трек лайно!',
+    '[-10] - Є критичні проблеми (не зараховуються ворота і тд)',
 ]

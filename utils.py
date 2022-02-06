@@ -181,3 +181,73 @@ def get_tracks():
             print(track_info)
 
     return tracks
+
+
+def parse_full_leaderboard(track_info):
+    print('track_info: ' + str(track_info))
+
+    # original track is saved with a default version (1.16)
+    track_leaderboard_url = track_info[3]
+    print('track_leaderboard_url: ' + str(track_leaderboard_url))
+
+    version_specific_url = track_leaderboard_url.replace(VERSION_GET_TRACKS, 'All')
+    print('parse_leaderboard_by_url - version_specific_url: ' + str(version_specific_url))
+
+    s = requests.Session()
+
+    print('parse_leaderboard_by_url - current game mode: ' + str(ACTIVE_GAME_MODE))
+    if ACTIVE_GAME_MODE == GAME_MODE_3_LAPS:
+        # open leaderboard page
+        print('parse_leaderboard_by_url - open URL first: ' + str(track_leaderboard_url))
+        s.get(track_leaderboard_url)
+
+        # switch game mode if needed
+        # one lap seems to be default?
+        # this will load the results so no need to open again
+        print('parse_leaderboard_by_url - switch game mode URL: ' + str(GAME_MODE_URLS[ACTIVE_GAME_MODE]))
+        response = s.get(GAME_MODE_URLS[ACTIVE_GAME_MODE])
+
+        print('parse_leaderboard_by_url - game mode switch response:')
+        print(response)
+        # print(response.content)
+    else:
+        response = s.get(track_leaderboard_url)
+
+    # now actually read it
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    records = []
+    table = soup.find('tbody')
+    if table:
+        rows = table.findAll('tr')
+        for row in rows:
+            new_record = None
+            try:
+                # print('row: ' + str(row))
+                cells = row.findAll('td')
+                record_date_text = cells[6].text  # 25/10/2020 DD MM YYYY?
+                record_date = datetime.strptime(record_date_text, LEADERBOARD_DATE_FORMAT)
+                record_date = record_date.replace(hour=12, minute=0, second=0, microsecond=0)
+                new_record = {
+                    'position': int(cells[0].text),
+                    'time': cells[1].text,
+                    'name': bytes(cells[2].text.strip(), 'utf-8').decode('utf-8', 'ignore'),
+                    'country': cells[3].text.strip(),
+                    'ranking': cells[4].text,
+                    'model': cells[5].text.strip(),
+                    'date': cells[6].text,
+                    'version': cells[7].text if len(cells) > 7 else 'All',
+                }
+                print('new_record: ' + str(new_record))
+                records.append(new_record)
+            except Exception as e:
+                print('Cannot parse row!')
+                print('e')
+                try:
+                    print(row.encode('utf-8'))
+                except Exception:
+                    pass
+                print('continuing...')
+    else:
+        print('table empty!')
+    return records

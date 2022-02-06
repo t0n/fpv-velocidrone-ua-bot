@@ -43,30 +43,30 @@ def main():
                 if result['name'].lower() not in USERS_BAN_LIST:
                     results.append(result)
 
-        # mock for testing
-        if DB_TABLE_PREFIX and DB_TABLE_PREFIX.startswith('test'):
-            results = [
-                {
-                    'position': '0',
-                    'time': '29.5',
-                    'name': 'TEST1',
-                    'country': 'Ukraine',
-                    'ranking': '',
-                    'model': '',
-                    'date': '',
-                    'version': '1.16',
-                },
-                {
-                    'position': '2',
-                    'time': '31.5',
-                    'name': 'TEST2',
-                    'country': 'Ukraine',
-                    'ranking': '',
-                    'model': '',
-                    'date': '',
-                    'version': '',
-                }
-            ]
+        # # mock for testing
+        # if DB_TABLE_PREFIX and DB_TABLE_PREFIX.startswith('test'):
+        #     results = [
+        #         {
+        #             'position': '0',
+        #             'time': '29.5',
+        #             'name': 'TEST1',
+        #             'country': 'Ukraine',
+        #             'ranking': '',
+        #             'model': '',
+        #             'date': '',
+        #             'version': '1.16',
+        #         },
+        #         {
+        #             'position': '2',
+        #             'time': '31.5',
+        #             'name': 'TEST2',
+        #             'country': 'Ukraine',
+        #             'ranking': '',
+        #             'model': '',
+        #             'date': '',
+        #             'version': '',
+        #         }
+        #     ]
 
         daily_results = []
         if results:
