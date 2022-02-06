@@ -13,8 +13,8 @@ from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID, PRO_MODE
 from utils import parse_leaderboard, filter_tracks, get_tracks
 
 
-logging.basicConfig(filename='log.txt', filemode='a',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+logging.basicConfig(endfilename='log.txt', filemode='a',
+                    format=u'%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     # datefmt='%H:%M:%S',
                     level=logging.DEBUG)
 logging.getLogger('telegram').setLevel(logging.ERROR)
