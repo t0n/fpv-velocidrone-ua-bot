@@ -500,7 +500,7 @@ def get_latest_track_poll():
         rows = cur.fetchall()
         print('all track_feedback_poll:')
         print(rows)
-        if rows and len(rows) > 1:
+        if rows and len(rows) >= 1:
             sorted_latest = sorted(rows, key=lambda x: x[2], reverse=True)
             print('sorted_latest from track_feedback_poll:')
             print(sorted_latest)
