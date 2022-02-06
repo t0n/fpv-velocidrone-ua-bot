@@ -484,13 +484,39 @@ def add_track_poll(scenery_id, scenery_name, track_name, track_url, poll_message
         cur = connection.cursor()
         sql = 'INSERT INTO ' + DB_TABLE_PREFIX + \
               'track_feedback_poll(scenery_id,scenery_name,track_name,track_url,poll_message_id,options) VALUES(?,?)'
-        params = (scenery_id, scenery_name, track_name, track_url, poll_message_id, options)
+        params = (scenery_id, scenery_name, track_name, track_url, poll_message_id, json.dumps(options))
         cur.execute(sql, params)
         connection.commit()
     else:
         print("Error! cannot create database connection.")
 
 
-# TODO
+def get_latest_track_poll():
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_track_feedback_poll_table_if_not_exists(connection)
+        cur = connection.cursor()
+        cur.execute('SELECT * FROM ' + DB_TABLE_PREFIX + 'track_feedback_poll')
+        rows = cur.fetchall()
+        print('all track_feedback_poll:')
+        print(rows)
+        if rows and len(rows) > 1:
+            sorted_latest = sorted(rows, key=lambda x: x[2], reverse=True)
+            print('sorted_latest from track_feedback_poll:')
+            print(sorted_latest)
+            return (sorted_latest[0][0], sorted_latest[0][1], sorted_latest[0][2], sorted_latest[0][3],
+                    sorted_latest[0][4], sorted_latest[0][5], sorted_latest[0][6], json.loads(sorted_latest[0][7]), )
+        """
+        'id integer PRIMARY KEY,' \
+        'date datetime DEFAULT CURRENT_TIMESTAMP, ' \
+        'scenery_id integer NOT NULL, ' \
+        'scenery_name text NOT NULL, ' \
+        'track_name text NOT NULL, ' \
+        'track_url  text NOT NULL,' \
+        'poll_message_id  text NOT NULL,' \
+        'options  text NOT NULL,' \
+        """
+    else:
+        print("Error! cannot create database connection.")
 
 # TODO all tracks total feedback

@@ -79,9 +79,9 @@ def main():
             )
             logging.debug('poll_message: ' + str(poll_message_response))
 
-            # # save poll message id to the DB
-            # add_track_poll(saved_track[0], saved_track[1], saved_track[2], saved_track[3],
-            #                poll_message_response.message_id, TRACK_POLL_OPTIONS)
+            # save poll message id to the DB
+            add_track_poll(saved_track[0], saved_track[1], saved_track[2], saved_track[3],
+                           poll_message_response.message_id, TRACK_POLL_OPTIONS)
 
             # test_data = {'chat': {'username': 'fpv_velocidrone_ua', 'type': 'channel', 'title': 'FPV Велосідрон 🇺🇦',
             #                       'id': -1001152818373},
