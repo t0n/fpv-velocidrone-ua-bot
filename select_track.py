@@ -1,5 +1,6 @@
 import datetime
 import random
+import os
 
 import logging
 import time
@@ -12,19 +13,27 @@ from db import update_track_of_the_day, get_track_of_the_day, get_leaderboard, s
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID, PRO_MODE
 from utils import parse_leaderboard, filter_tracks, get_tracks
 
-
-logging.basicConfig(endfilename='log.txt', filemode='a',
-                    format=u'%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    # datefmt='%H:%M:%S',
-                    level=logging.DEBUG)
+#
+# logging.basicConfig(endfilename='log.txt', filemode='a',
+#                     format=u'%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+#                     # datefmt='%H:%M:%S',
+#                     level=logger.debug)
 logging.getLogger('telegram').setLevel(logging.ERROR)
+
+logger = logging.getLogger(__name__)
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+log_path = os.path.dirname(os.path.realpath(__file__))
+log_file = '%s/log.txt' % (log_path, )
+handler = logging.FileHandler(log_file, encoding='utf8')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 
 def main():
-    logging.info("Select track script started!")
+    logger.info("Select track script started!")
 
     bot = telegram.Bot(TELEGRAM_KEY)
-    # logging.debug(bot)
+    # logger.debug(bot)
 
     try:
 
@@ -32,9 +41,9 @@ def main():
         # hacky fix
         try:
             old_track = get_track_of_the_day()
-            logging.debug('Old track: ' + str(old_track))
+            logger.debug('Old track: ' + str(old_track))
             previous_leaderboard = get_leaderboard()
-            logging.debug('Old leaderboard: ' + str(previous_leaderboard))
+            logger.debug('Old leaderboard: ' + str(previous_leaderboard))
         except Exception as e:
             logging.exception('Error while printing old leaderboard:')
 
@@ -42,18 +51,18 @@ def main():
         tracks = get_tracks()
         tracks = filter_tracks(tracks)
         random_track = random.choice(tracks)
-        logging.debug('Random track: ' + str(random_track))
+        logger.debug('Random track: ' + str(random_track))
 
         # save ToD
         update_track_of_the_day(random_track)
         saved_track = get_track_of_the_day()
-        logging.debug('Saved track: ' + str(saved_track))
+        logger.debug('Saved track: ' + str(saved_track))
 
         # save new leaderboard
         new_leaderboard = parse_leaderboard(saved_track)
         save_leaderboard(new_leaderboard)
         saved_leaderboard = get_leaderboard()
-        logging.debug('Saved leaderboard: ' + str(saved_leaderboard))
+        logger.debug('Saved leaderboard: ' + str(saved_leaderboard))
 
         # post message about new track of the day
         track_text = saved_track[1] + ' - ' + saved_track[2]
@@ -67,7 +76,7 @@ def main():
                                     parse_mode=telegram.ParseMode.HTML, disable_web_page_preview=True)
         message_id = response.message_id
         bot.pin_chat_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, message_id=message_id)
-        logging.info("Track selected")
+        logger.info("Track selected")
 
         if not PRO_MODE:
             time.sleep(3)
@@ -77,7 +86,7 @@ def main():
                 options=TRACK_POLL_OPTIONS,
                 is_anonymous=True,
             )
-            logging.debug('poll_message: ' + str(poll_message_response))
+            logger.debug('poll_message: ' + str(poll_message_response))
 
             # save poll message id to the DB
             add_track_poll(saved_track[0], saved_track[1], saved_track[2], saved_track[3],
@@ -106,10 +115,10 @@ def main():
 
     except Exception as error:
         logging.exception(error)
-        logging.debug('Uncaught error: ')
+        logger.debug('Uncaught error: ')
         import traceback
         exc = traceback.format_exc()
-        logging.error(exc)
+        logger.error(exc)
         bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID,
                          text='⚠️ @antonkoba Error in select_track: ' + str(exc),
                          parse_mode=telegram.ParseMode.HTML)
