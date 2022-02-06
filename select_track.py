@@ -15,18 +15,21 @@ from utils import parse_leaderboard, filter_tracks, get_tracks
 
 #
 # logging.basicConfig(endfilename='log.txt', filemode='a',
-#                     format=u'%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+#                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
 #                     # datefmt='%H:%M:%S',
 #                     level=logger.debug)
 logging.getLogger('telegram').setLevel(logging.ERROR)
 
 logger = logging.getLogger(__name__)
-formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+formatter = logging.Formatter('%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s')
 log_path = os.path.dirname(os.path.realpath(__file__))
 log_file = '%s/log.txt' % (log_path, )
 handler = logging.FileHandler(log_file, encoding='utf8')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
+consoleHandler = logging.StreamHandler()
+consoleHandler.setFormatter(formatter)
+logger.addHandler(logging.StreamHandler())
 
 
 def main():
