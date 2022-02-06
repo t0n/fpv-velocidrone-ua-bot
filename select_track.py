@@ -64,7 +64,7 @@ def main():
         search_string = 'http://www.youtube.com/results?search_query={}&oq={}'.format(search_string, search_string)
         message_text = MAP_OF_THE_DAY_MESSAGE.format(date_text, track_text, url_text, search_string)
         response = bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text,
-                                    parse_mode=telegram.ParseMode.HTML)
+                                    parse_mode=telegram.ParseMode.HTML, disable_web_page_preview=True)
         message_id = response.message_id
         bot.pin_chat_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, message_id=message_id)
         logging.info("Track selected")

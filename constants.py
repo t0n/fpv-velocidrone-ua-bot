@@ -45,7 +45,7 @@ MAP_OF_THE_DAY_MESSAGE = '🏁 Трек дня {}:\n<b>{}</b>\n' \
                          '\n' \
                          '#velocibottotd\n' \
                          '\n' \
-                         'Лідерборд:\n<b>{}</b>' \
+                         'Лідерборд:\n<b>{}</b>\n' \
                          '\n' \
                          'Шукати трек на YouTube:\n<b>{}</b>' \
                          '\n\n\n'
@@ -54,7 +54,7 @@ if PRO_MODE:
                              '\n' \
                              '#velocibotPROtotd\n' \
                              '\n' \
-                             'Лідерборд:\n<b>{}</b>' \
+                             'Лідерборд:\n<b>{}</b>\n' \
                              '\n' \
                              'Шукати трек на YouTube:\n<b>{}</b>' \
                              '\n\n\n'
@@ -137,6 +137,8 @@ TRACK_NAMES_BLOCK_LIST = [
     'dragons_and_wizards',  # just seems suspicious
     'trainer',
     'tropical heat',
+    'boners bando',
+    'rona masters',
     # TODO check these tracks - too few results/strange titles?
     # Dutchman ?
     # Rock around the rocks ?
@@ -185,6 +187,7 @@ if PRO_MODE:
         'full of flow',  # Alexander says it's pizdets
         'mayhem dawn till dusk',  # Alexandre says it's shit
         'firedrill',
+        'bando',
     ]
 else:
     # add blocked tracks for normal mode only (block too 'tight' over-flown tracks)
