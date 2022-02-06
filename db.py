@@ -122,7 +122,7 @@ def _create_track_feedback_poll_table_if_not_exists(connection):
             'track_name text NOT NULL, ' \
             'track_url  text NOT NULL,' \
             'poll_message_id  text NOT NULL,' \
-            'options  text NOT NULL,' \
+            'options  text NOT NULL' \
             ');'
     try:
         c = connection.cursor()
@@ -141,7 +141,7 @@ def _create_track_feedback_history_table_if_not_exists(connection):
             'track_url  text NOT NULL,' \
             'poll_message_id  text NOT NULL,' \
             'rating  text NOT NULL,' \
-            'results  text NOT NULL,' \
+            'results  text NOT NULL' \
             ');'
     try:
         c = connection.cursor()
