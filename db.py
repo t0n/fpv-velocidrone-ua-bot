@@ -483,7 +483,7 @@ def add_track_poll(scenery_id, scenery_name, track_name, track_url, poll_message
         _create_track_feedback_poll_table_if_not_exists(connection)
         cur = connection.cursor()
         sql = 'INSERT INTO ' + DB_TABLE_PREFIX + \
-              'track_feedback_poll(scenery_id,scenery_name,track_name,track_url,poll_message_id,options) VALUES(?,?)'
+              'track_feedback_poll(scenery_id,scenery_name,track_name,track_url,poll_message_id,options) VALUES(?,?,?,?,?,?)'
         params = (scenery_id, scenery_name, track_name, track_url, poll_message_id, json.dumps(options))
         cur.execute(sql, params)
         connection.commit()
