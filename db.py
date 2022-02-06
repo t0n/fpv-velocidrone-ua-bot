@@ -501,7 +501,7 @@ def get_latest_track_poll():
         print('all track_feedback_poll:')
         print(rows)
         if rows and len(rows) >= 1:
-            sorted_latest = sorted(rows, key=lambda x: x[2], reverse=True)
+            sorted_latest = sorted(rows, key=lambda x: x[1], reverse=True)
             print('sorted_latest from track_feedback_poll:')
             print(sorted_latest)
             return (sorted_latest[0][0], sorted_latest[0][1], sorted_latest[0][2], sorted_latest[0][3],

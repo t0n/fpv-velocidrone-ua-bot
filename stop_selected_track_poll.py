@@ -33,7 +33,7 @@ def main():
     try:
 
         latest_poll_data = get_latest_track_poll()
-        logger.info('latest_poll_data: ' + latest_poll_data)
+        logger.info('latest_poll_data: ' + str(latest_poll_data))
 
         if latest_poll_data:
 
