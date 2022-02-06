@@ -61,7 +61,7 @@ def main():
                     (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%d.%m.%Y')
         search_string = urllib.parse.quote_plus(saved_track[1] + ' ' + saved_track[2])
         url_text = saved_track[3].replace(VERSION_GET_TRACKS, 'All')
-        url_text = 'http://www.youtube.com/results?search_query={}&oq={}'.format(url_text, url_text)
+        search_string = 'http://www.youtube.com/results?search_query={}&oq={}'.format(search_string, search_string)
         message_text = MAP_OF_THE_DAY_MESSAGE.format(date_text, track_text, url_text, search_string)
         response = bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=message_text,
                                     parse_mode=telegram.ParseMode.HTML)
