@@ -208,6 +208,8 @@ if PRO_MODE:
 
 PUBLISH_RESULTS_TRACK_NAME = 'Трек дня: <b>{}</b>'
 PUBLISH_RESULTS_TAG = '#velocibotdaily'
+if PRO_MODE:
+    PUBLISH_RESULTS_TAG = '#velocibotPROdaily'
 
 RECRAWL_RESULTS_HELLO_MESSAGE = 'FIXED FIXED - Результати дня - FIXED FIXED'
 
@@ -255,8 +257,8 @@ MONTHLY_RESULTS_TIME_INTERVAL = '({} - {})'
 MONTHLY_DAILY_RESULTS = '🇺🇦🏁🇺🇦 Проміжні результати місяця 🇺🇦🏁🇺🇦\n{}\n\n{}\n\n#velocibotmonthly\n\n'
 MONTHLY_FINAL_RESULTS = '🇺🇦🏆🥇🏆🇺🇦 Фінальні результати місяця 🇺🇦🏆🥇🏆🇺🇦\n{}\n\n{}\n\n#velocibotmonthlyfinal\n\n'
 if PRO_MODE:
-    MONTHLY_DAILY_RESULTS = '👑 Проміжні результати місяця 👑\n{}\n\n{}\n\n#velocibotmonthly\n\n'
-    MONTHLY_FINAL_RESULTS = '👑 Фінальні результати місяця 👑\n{}\n\n{}\n\n#velocibotmonthlyfinal\n\n'
+    MONTHLY_DAILY_RESULTS = '👑 Проміжні результати місяця 👑\n{}\n\n{}\n\n#velocibotPROmonthly\n\n'
+    MONTHLY_FINAL_RESULTS = '👑 Фінальні результати місяця 👑\n{}\n\n{}\n\n#velocibotPROmonthlyfinal\n\n'
 
 
 """
@@ -334,5 +336,6 @@ TRACK_POLL_OPTIONS = [
     '[ -5] - Трек лайно!',
     '[-10] - Є критичні проблеми (не зараховуються ворота і тд)',
 ]
-TRACK_POLL_RESULTS = 'Голосування за трек {} завершено!\n\nВсього голосів: {}\nСередня оцінка траси: {}\n\n' \
+TRACK_POLL_RESULTS = 'Голосування за трек <b>{}</b> завершено!\n\nВсього голосів: {}\n' \
+                     'Середня оцінка траси: <b>{}</b>\n\n' \
                      '#velocibotpollresults'
