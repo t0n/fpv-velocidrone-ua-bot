@@ -506,17 +506,31 @@ def get_latest_track_poll():
             print(sorted_latest)
             return (sorted_latest[0][0], sorted_latest[0][1], sorted_latest[0][2], sorted_latest[0][3],
                     sorted_latest[0][4], sorted_latest[0][5], sorted_latest[0][6], json.loads(sorted_latest[0][7]), )
-        """
-        'id integer PRIMARY KEY,' \
-        'date datetime DEFAULT CURRENT_TIMESTAMP, ' \
-        'scenery_id integer NOT NULL, ' \
-        'scenery_name text NOT NULL, ' \
-        'track_name text NOT NULL, ' \
-        'track_url  text NOT NULL,' \
-        'poll_message_id  text NOT NULL,' \
-        'options  text NOT NULL,' \
-        """
     else:
         print("Error! cannot create database connection.")
 
-# TODO all tracks total feedback
+
+def add_track_feedback_history(scenery_id, scenery_name, track_name, track_url, poll_message_id, rating, results):
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_track_feedback_history_table_if_not_exists(connection)
+        cur = connection.cursor()
+        sql = 'INSERT INTO ' + DB_TABLE_PREFIX + \
+              'track_feedback_history(scenery_id,scenery_name,track_name,track_url,poll_message_id,rating,results) VALUES(?,?,?,?,?,?,?)'
+        params = (scenery_id, scenery_name, track_name, track_url, poll_message_id, str(rating), json.dumps(results))
+        cur.execute(sql, params)
+        connection.commit()
+    else:
+        print("Error! cannot create database connection.")
+
+
+def get_all_track_feedback_history():
+    connection = _create_connection(DB_FILE)
+    if connection is not None:
+        _create_track_feedback_poll_table_if_not_exists(connection)
+        cur = connection.cursor()
+        cur.execute('SELECT * FROM ' + DB_TABLE_PREFIX + 'track_feedback_history')
+        rows = cur.fetchall()
+        return [(x[0], x[1], x[2], x[4], x[5], x[6], x[7], json.loads(x[8])) for x in rows]
+    else:
+        print("Error! cannot create database connection.")

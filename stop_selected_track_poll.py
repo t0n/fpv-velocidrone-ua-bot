@@ -6,8 +6,9 @@ import time
 
 import telegram
 
-from constants import MAP_OF_THE_DAY_MESSAGE, TRACK_POLL_TEXT, TRACK_POLL_OPTIONS
-from db import update_track_of_the_day, get_track_of_the_day, get_leaderboard, save_leaderboard, get_latest_track_poll
+from constants import MAP_OF_THE_DAY_MESSAGE, TRACK_POLL_TEXT, TRACK_POLL_OPTIONS, TRACK_POLL_RESULTS
+from db import update_track_of_the_day, get_track_of_the_day, get_leaderboard, save_leaderboard, get_latest_track_poll, \
+    add_track_feedback_history, get_all_track_feedback_history
 from secrets import TELEGRAM_KEY, TELEGRAM_CHAT_MESSAGE_ID, PRO_MODE
 from utils import parse_leaderboard, filter_tracks, get_tracks
 
@@ -98,9 +99,22 @@ def main():
                 average_points = 0
             logger.debug('average_points: ' + str(average_points))
 
-            # TODO save to DB
+            add_track_feedback_history(latest_poll_data[2], latest_poll_data[3], latest_poll_data[4],
+                                       latest_poll_data[5], latest_poll_data[6],
+                                       average_points, answers)
 
-            # TODO write a message
+            logger.debug('all feedback history: ' + str(get_all_track_feedback_history()))
+
+            # write a message
+            poll_results_message = TRACK_POLL_RESULTS.format(
+                (latest_poll_data[3] + ' - ' + latest_poll_data[4]),
+                total_voters,
+                average_points
+            )
+            response = bot.send_message(chat_id=TELEGRAM_CHAT_MESSAGE_ID, text=poll_results_message,
+                                        parse_mode=telegram.ParseMode.HTML, disable_web_page_preview=True)
+            logger.debug('response: ' + str(response))
+
         else:
             logger.error('Cannot find latest poll data!')
     except Exception as error:
