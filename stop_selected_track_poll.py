@@ -101,7 +101,8 @@ def main():
 
             add_track_feedback_history(latest_poll_data[2], latest_poll_data[3], latest_poll_data[4],
                                        latest_poll_data[5], latest_poll_data[6],
-                                       average_points, answers)
+                                       average_points,
+                                       [{'text': x.text, 'voter_count': x.voter_count} for x in answers])
 
             logger.debug('all feedback history: ' + str(get_all_track_feedback_history()))
 
