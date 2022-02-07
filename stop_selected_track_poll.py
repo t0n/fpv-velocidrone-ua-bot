@@ -77,9 +77,9 @@ def main():
                     logger.debug('found option in answers: ' + str(found_in_answers))
                     try:
                         logger.debug('parsing: ' + str(found_in_answers.text))
-                        logger.debug('parsing: ' + str(found_in_answers.text[1, 4]))
+                        logger.debug('parsing: ' + str(found_in_answers.text[1:4]))
                         # TODO parse points e.g. `[ 10] - Кращий трек в моєму житті!`
-                        parsed_points = int(found_in_answers.text[1, 4])
+                        parsed_points = int(found_in_answers.text[1:4])
                         logger.debug('parsed_points: ' + str(parsed_points))
                         points = parsed_points * found_in_answers.voter_count
                         logger.debug('points: ' + str(points))
@@ -87,6 +87,11 @@ def main():
                         total_points += points
                     except Exception as e:
                         logger.error('Cannot parse ' + str(found_in_answers))
+                        logger.exception(e)
+                        import traceback
+                        exc = traceback.format_exc()
+                        logger.error(exc)
+
             if total_voters:
                 average_points = float(total_points) / float(total_voters)  # TODO round up
             else:
@@ -99,7 +104,7 @@ def main():
         else:
             logger.error('Cannot find latest poll data!')
     except Exception as error:
-        logging.exception(error)
+        logger.exception(error)
         logger.debug('Uncaught error: ')
         import traceback
         exc = traceback.format_exc()
