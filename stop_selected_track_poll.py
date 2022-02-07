@@ -76,6 +76,8 @@ def main():
                 if found_in_answers:
                     logger.debug('found option in answers: ' + str(found_in_answers))
                     try:
+                        logger.debug('parsing: ' + str(found_in_answers.text))
+                        logger.debug('parsing: ' + str(found_in_answers.text[1, 4]))
                         # TODO parse points e.g. `[ 10] - Кращий трек в моєму житті!`
                         parsed_points = int(found_in_answers.text[1, 4])
                         logger.debug('parsed_points: ' + str(parsed_points))
