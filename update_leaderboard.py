@@ -45,6 +45,7 @@ def main():
         message_parts = []
         for diff in compare_leaderboards(previous_leaderboard, new_leaderboard):
 
+            logging.debug('diff_item:')
             logging.debug(diff)
 
             # filter by country
@@ -74,7 +75,10 @@ def main():
                 if text_name.lower() not in USERS_BAN_LIST:
                     if ('*' in USERS_ALLOW_LIST) or (text_name.lower() in USERS_ALLOW_LIST):
                         message_parts.append(message_text)
-
+                    else:
+                        logging.debug('user not in allow list: ' + text_name)
+                else:
+                    logging.debug('user banned: ' + text_name)
             else:
                 logging.debug('not supported country: ' + diff['record']['country'])
 

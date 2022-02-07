@@ -212,7 +212,6 @@ def save_leaderboard(leaderboard):
         print("save_leaderboard - Error! cannot create database connection.")
 
 
-
 # --------------------------------------------
 # Leaderboard - each time something is updated
 # --------------------------------------------
